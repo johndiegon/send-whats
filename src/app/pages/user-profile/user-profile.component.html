@@ -1,0 +1,197 @@
+<div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center"
+  style="min-height: 100px;  background-size: cover; background-position: center top;">
+  <!-- Mask -->
+  <span class="mask bg-gradient-green2 opacity-8"></span>
+  <!-- Header container -->
+  <div class="container-fluid d-flex align-items-center">
+    <div class="row">
+      <div class="col-12">
+        <h1 class="display-2 text-white">Ola, {{client.name}}</h1>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container-fluid mt--7">
+  <div class="row">
+
+    <!-- PasswordForm -->
+    <div class="col-xl-4 order-xl-2 mb-5 mb-xl-0">
+      <div class="card card-profile shadow">
+        <div class="card-header bg-secondary shadow">
+          <div class="row align-items-center">
+            <div class="col-8">
+              <h3 class="mb-0">Minha Senha</h3>
+            </div>
+            <div class="col-4 text-right">
+              <button type="button" (click)="togglePassword()"  [ngClass]="{'btn btn-sm': true,'btn-primary': !openPassword, 'btn-danger': openPassword }">{{!openPassword ? 'Trocar' : 'Cancelar'}}</button>
+            </div>
+          </div>
+        </div>
+        <div class="card-body" *ngIf="openPassword" [ngClass]="{'card-body': true, 'close-Password': !openPassword, 'open-Password': openPassword}">
+          <form role="form" [formGroup]="passwordForm" (submit)="onSubmitPassword($event)">
+            <div class="row">
+              <div class="col-lg-12">
+                <dsw-input-control label="Senha Antiga" for="oldPassword">
+                  <input dwsInputSlot dwsShowPassword class="form-control" id="oldPassword"
+                    formControlName="oldPassword" placeholder="" type="password" />
+
+                </dsw-input-control>
+              </div>
+
+              <div class="col-lg-12">
+                <dsw-input-control label="Senha Nova" for="password">
+                  <input dwsInputSlot dwsShowPassword class="form-control" id="password"
+                    formControlName="password" placeholder="" type="password" />
+                </dsw-input-control>
+              </div>
+            </div>
+
+            <div class="text-center">
+              <button type="submit" class="btn btn-primary mt-4">
+                Salvar
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- RegisterForm -->
+    <div class="col-xl-8 order-xl-1">
+      <div class="card bg-secondary shadow">
+        <div class="card-header bg-white border-0">
+          <div class="row align-items-center">
+            <div class="col-8">
+              <h3 class="mb-0">Meus Dados</h3>
+            </div>
+            <div class="col-4 text-right">
+              <button type="button" (click)="toggleRegister()"  [ngClass]="{'btn btn-sm': true,'btn-primary': !openFormRegister, 'btn-danger': openFormRegister }">{{!openFormRegister ? 'Editar' : 'Cancelar'}}</button>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <form role="form" [formGroup]="registerForm" (submit)="onSubmit($event)">
+
+            <div class="row">
+              <div class="col-lg-4">
+                <dsw-input-control label="Primeiro nome" for="name">
+                  <input dwsInputSlot class="form-control" #refName id="name" formControlName="name"
+                    placeholder="Digite seu primeiro nome" type="text" />
+                </dsw-input-control>
+              </div>
+              <div class="col-lg-8">
+                <dsw-input-control label="Sobrenome" for="lastName">
+                  <input dwsInputSlot class="form-control" id="lastName" formControlName="lastName"
+                    placeholder="Digite seu sobrenome" type="text" />
+                </dsw-input-control>
+              </div>
+
+              <div class="col-lg-12">
+                <dsw-input-control label="E-mail" for="email" iconAddon="ni ni-email-83"
+                  [errorMsgMap]="{email: 'Formato de e-mail inválido'}">
+                  <input dwsInputSlot class="form-control" id="email" formControlName="email"
+                    placeholder="Ex.: email@gmail.com" type="email" />
+                </dsw-input-control>
+              </div>
+
+              <div class="col-lg-4">
+                <dsw-input-control label="Tipo" for="docType">
+                  <select dwsInputSlot id="docType" class="custom-select form-control" formControlName="docType">
+                    <option [ngValue]="1">CPF</option>
+                    <option [ngValue]="2">CNPJ</option>
+                  </select>
+                </dsw-input-control>
+              </div>
+              <div class="col-lg-8">
+                <dsw-input-control label="Documento" for="docNumber">
+                  <input dwsInputSlot class="form-control" id="docNumber" formControlName="docNumber"
+                    placeholder="Ex.: 111.111.111-9" type="email"
+                    [dwsMask]="registerForm.value.docType == 1 ? '000.000.000-00': '00.000.000/0000-00'" />
+                </dsw-input-control>
+              </div>
+            </div>
+
+            <hr class="my-4" />
+
+            <!-- Address -->
+            <h6 class="heading-small text-muted mb-4">Endereço de contato</h6>
+
+            <div class="row" formGroupName="address">
+              <div class="col-lg-4">
+                <dsw-input-control label="CEP" for="zipCode" [showAppend]="true">
+
+                  <input dwsInputSlot class="form-control" id="zipCode" (change)="dispatchSearchZipCode()"
+                    formControlName="zipCode" placeholder="Ex.: 00000-000" type="text" dwsMask="00000-000" />
+
+                  <button append type="button" class="input-group-text passwordshow__Button"
+                    (click)="dispatchSearchZipCode()">
+                    <i class="fas fa-search"></i>
+                  </button>
+
+                </dsw-input-control>
+              </div>
+
+              <div class="col-md-12">
+                <dsw-input-control label="Endereço" for="address">
+                  <input dwsInputSlot class="form-control" id="address" formControlName="address"
+                    placeholder="Ex.: Rua São João" type="text" />
+                </dsw-input-control>
+              </div>
+
+              <div class="col-md-3">
+                <dsw-input-control label="Número" for="number">
+                  <input dwsInputSlot class="form-control" id="number" formControlName="number"
+                    placeholder="Ex.: 200, 300 ..." type="string" />
+                </dsw-input-control>
+              </div>
+              <div class="col-md-9">
+                <dsw-input-control label="Complemento" for="complemento">
+                  <input dwsInputSlot class="form-control" id="complemento" formControlName="complemento"
+                    placeholder="Ex.: ap 20B, Casa 1, Cj 6 ..." type="text" />
+                </dsw-input-control>
+              </div>
+
+              <div class="col-lg-12">
+                <dsw-input-control label="Bairro" for="district">
+                  <input dwsInputSlot class="form-control" id="district" formControlName="district"
+                    placeholder="Digite seu Bairro" type="text" />
+                </dsw-input-control>
+              </div>
+
+              <div class="col-lg-6">
+                <dsw-input-control label="Cidade" for="city">
+                  <input dwsInputSlot class="form-control" id="city" formControlName="city" placeholder="São paulo"
+                    type="text" />
+                </dsw-input-control>
+              </div>
+              <div class="col-lg-6">
+                <dsw-input-control label="Estado" for="uf">
+                  <input dwsInputSlot class="form-control" id="uf" formControlName="uf" placeholder="Ex.: SP, RJ ..."
+                    type="text" />
+                </dsw-input-control>
+              </div>
+            </div>
+
+            <hr class="my-4" />
+
+            <!-- WhatsApp -->
+            <h4 class="heading-small text-muted mb-4">WhatssApp</h4>
+            <dsw-multi-input-list classInput="form-control" formControlName="phone"
+              [touched]="registerForm.controls?.phone?.touched" placeholder="numero" type="text"></dsw-multi-input-list>
+
+            <span class="text-danger text-xs"
+              *ngIf="!!registerForm.controls?.phone?.errors?.minlength && !!registerForm.controls?.phone?.touched">Minimo
+              obrigatório de "{{registerForm.controls?.phone?.errors?.minlength?.requiredLength}}" telefone(s)</span>
+            <hr class="my-4" />
+
+            <div class="text-center">
+              <button type="submit" [disabled]="!openFormRegister" class="btn btn-primary mt-4">
+                Salvar
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

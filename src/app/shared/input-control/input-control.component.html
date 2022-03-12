@@ -1,0 +1,23 @@
+<div class="form-group">
+  <label *ngIf="label" class="form-control-label" [for]="for">{{label}}</label>
+
+  <div [ngClass]="{'input-group': true, 'input-group-alternative': true, 'ng-invalid': !valid,'ng-touched': touched}" >
+
+    <div *ngIf="iconAddon" [ngClass]="{'input-group-prepend': true, 'disabled': inputControl.disabled}" >
+      <span firstAppend class="input-group-text"><i [ngClass]="iconAddon"></i></span>
+    </div>
+
+    <ng-content select="[dwsInputSlot]"></ng-content>
+
+    <div *ngIf="showAppend" [ngClass]="{'input-group-append': true, 'disabled': inputControl.disabled}">
+      <ng-content select="[append]"></ng-content>
+    </div>
+
+  </div>
+
+  <div class="messageError" *ngIf="!inputControl?.valid && inputControl?.touched">
+    <span class="text-danger text-xs" *ngFor="let item of inputControl.errors | keyvalue; index as indx" >{{_errorMsgMap[item.key]}}</span>
+  </div>
+
+  <ng-content select="[aboveArea]"></ng-content>
+</div>

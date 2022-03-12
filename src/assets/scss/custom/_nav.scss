@@ -1,0 +1,14 @@
+//
+// Nav
+//
+
+
+@import "../core/navs/nav";
+@import "../core/navs/nav-pills";
+
+
+
+.navbar-light .navbar-nav .nav-link.active{
+    color: $green2;
+    font-weight: bold;
+}

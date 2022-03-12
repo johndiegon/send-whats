@@ -1,0 +1,32 @@
+.whatsapp {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    .whatsapp-toolbar {
+        background-color: var(--secondary);
+        padding: 4px;
+        border-bottom: 1px solid rgb(234 234 234);
+        display: flex;
+
+        button {
+            cursor: pointer;
+            border: 0px;
+            padding: 4px 6px;
+            border-radius: 4px;
+            margin: 0 2px;
+            background-color: transparent;
+            
+            &:hover {
+                background-color: var(--default);
+            }
+        }
+    }
+
+    .whatsapp-editor {
+        padding: 10px;
+        min-height: 280px;
+        outline: none;
+        border: 0px;
+    }
+}

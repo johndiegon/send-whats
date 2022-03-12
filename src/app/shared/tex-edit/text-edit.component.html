@@ -1,0 +1,16 @@
+<div class="whatsapp">
+    <div class="whatsapp-toolbar">
+        <button type="button" class="text_edit-button" *ngIf="bold" (click)="format('bold')"><span
+                class="fa fa-bold fa-fw"></span></button>
+        <button type="button" class="text_edit-button" *ngIf="italic" (click)="format('italic')"><span
+                class="fa fa-italic fa-fw"></span></button>
+        <button type="button" class="text_edit-button" *ngIf="strikethrough" (click)="format('strikethrough')"><span
+                class="fa fa-strikethrough fa-fw"></span></button>
+        <button type="button" class="text_edit-button" *ngIf="monospace" (click)="format('monospace')"><span
+                class="fa fa-text-width fa-fw"></span></button>
+
+        <ng-content select="[dwsSlots]"></ng-content>
+    </div>
+    
+    <textarea class="whatsapp-editor" #textArea contenteditable="true" [(ngModel)]="_value" [disabled]="isDisabled" (change)="onKeypress()" (blur)="onTouch()"></textarea>
+</div>

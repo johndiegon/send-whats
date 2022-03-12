@@ -1,0 +1,35 @@
+<div class="header bg-gradient-green2 pb-8 pt-5 pt-md-8">
+  <div class="container-fluid">
+    <div class="header-body">
+
+    </div>
+  </div>
+</div>
+<!-- Page content -->
+<div class="container-fluid mt--7">
+  <div class="card shadow">
+    <div class="card-body">
+
+      <!-- Import Box -->
+      <div class="import-box" #importBox>
+        <i class="ni ni-cloud-upload-96 text-info upload-icon"></i>
+        <p>Arraste o arquivo e solte aqui, ou clique no botão abaixo:</p>
+        <input id="file-input" #fileUpload type="file" name="name" style="display: none;" [accept]="fileAccept" />
+        <button type="button" (click)="openFileUpload()" class="btn btn-info mt-5">Selecionar arquivo</button>
+      </div>
+
+      <!-- File Detail -->
+      <div class="row">
+        <div class="col">
+          <ul>
+            <li *ngFor="let item of files">
+              {{item.name}}
+            </li>
+          </ul>
+          <button class="btn btn-success" [disabled]="!files?.length" (click)="sendFile()">Enviar Arquivo</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

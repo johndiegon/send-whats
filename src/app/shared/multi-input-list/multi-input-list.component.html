@@ -1,0 +1,20 @@
+<div class="row" [id]="idGroup" *ngFor="let key of list_inputs; index as indx">
+  <div class="col-md-9">
+    <dsw-input-control for="uf">
+      <input dwsInputSlot [id]="key" dwsMask="(00) 00000-0000" dwsPhoneValidator [(ngModel)]="_val[key]"
+        (change)="dispatchChange()" (blur)="dispatchTouch()" [ngClass]="classInput" [placeholder]="placeholder"
+        [type]="type" required [disabled]="disabled" />
+    </dsw-input-control>
+  </div>
+  <div class="col-md-3">
+    <button *ngIf="_length -1 == indx" class="btn btn-icon-only btn-sm btn-success" [disabled]="disabled" (click)="addNewInput()"
+      type="button">
+      <span class="btn-inner--icon"><i class="fas fa-plus"></i></span>
+    </button>
+
+    <button *ngIf="_length -1 != indx" class="btn btn-icon-only btn-sm btn-danger" [disabled]="disabled" (click)="removeInput(key)"
+      type="button">
+      <span class="btn-inner--icon"><i class="fas fa-trash"></i></span>
+    </button>
+  </div>
+</div>

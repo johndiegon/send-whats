@@ -1,0 +1,65 @@
+<div class="header bg-gradient-green2 py-7 py-lg-8">
+  <div class="container">
+    <div class="header-body text-center mb-4">
+      <div class="row justify-content-center">
+        <div class="col-lg-5 col-md-6">
+          <h1 class="text-white">Bem vindo!</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="separator separator-bottom separator-skew zindex-100">
+    <svg x="0" y="0" viewBox="0 0 2560 100" preserveAspectRatio="none" version="1.1" xmlns="http://www.w3.org/2000/svg">
+      <polygon class="fill-default" points="2560 0 2560 100 0 100"></polygon>
+    </svg>
+  </div>
+</div>
+<!-- Page content -->
+<div class="container mt--8 pb-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-5 col-md-7">
+      <div class="card bg-secondary shadow border-0">
+        <div class="card-body px-lg-5 py-lg-5">
+
+          <form role="form" [formGroup]="loginForm" (submit)="signIn($event)">
+            <div class="form-group mb-3">
+              <dsw-input-control label="E-mail" iconAddon="ni ni-email-83">
+                <input dwsInputSlot class="form-control" placeholder="Email" formControlName="login" type="email">
+              </dsw-input-control>
+            </div>
+            <div class="form-group">
+              <dsw-input-control label="Senha" iconAddon="ni ni-lock-circle-open" [showAppend]="true">
+
+                <input dwsInputSlot class="form-control" id="password" #passwordInput formControlName="password"
+                  placeholder="Senha" type="password">
+                  
+                <button append type="button" class="input-group-text passwordshow__Button" (click)="tooglePassword()">
+                  <i [ngClass]="passwordInputIcon"></i>
+                </button>
+              </dsw-input-control>
+            </div>
+            <span *ngIf="messageApiError">{{messageApiError}}</span>
+            <!-- <div class="custom-control custom-control-alternative custom-checkbox">
+              <input class="custom-control-input" id=" customCheckLogin" type="checkbox">
+              <label class="custom-control-label" for=" customCheckLogin">
+                <span class="text-muted">Lembrar meu login</span>
+              </label>
+            </div> -->
+            <div class="text-center">
+              <button type="submit" class="btn btn-primary my-4">Entrar</button>
+            </div>
+          </form>
+
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col-6">
+          <a href="javascript:void(0)" class="text-light"><small>Esqueceu a senha?</small></a>
+        </div>
+        <div class="col-6 text-right">
+          <a [routerLink]="['/register']" class="text-light"><small>Criar novo cadastro</small></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

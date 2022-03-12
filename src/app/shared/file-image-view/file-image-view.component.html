@@ -1,0 +1,13 @@
+<div class="file_image-container">
+    <div class="file_image-view" *ngIf="value">
+        
+        <img [src]="value" />
+
+        <button class="btn btn-danger" (click)="removeImage()">
+            <i class="fa fa-trash"></i>
+            Remover imagem
+        </button>
+    </div>
+
+    <input class="form-control file_image-input" [(ngModel)]="valueInput" (change)="onchangeFile($event)" id="image" placeholder="" type="file" />
+</div>
