@@ -25,7 +25,7 @@ import { ModalBaseComponent } from './modal-base/modal-base.component';
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
-    NgbModule
+    NgbModule    
   ],
   declarations: [
     FooterComponent,
