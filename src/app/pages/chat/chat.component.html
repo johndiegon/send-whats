@@ -14,12 +14,14 @@
                 <!-- <h6 class="font-weight-bold mb-3 text-center text-lg-left">Member</h6> -->
                 <div class="white z-depth-1 px-3 pt-3 pb-0">
                     <ul *ngFor="let item of listLastMessages" class="list-unstyled friend-list">
-                        <li class="p-2">
-                            <a href="#" class="d-flex justify-content-between">
+                        <li class="p-1">
+                            <a (click)="selectDialog(item)" class="d-flex justify-content-between">
                                  <!-- <img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-8.webp" alt="avatar" class="avatar rounded-circle d-flex align-self-center mr-2 z-depth-1">  -->
                                 <div class="text-small">
-                                    <strong>{{item.nameFrom}}</strong>
-                                    <p class="last-message text-muted">{{item.message}}</p>
+                                    <strong>{{item.nameTo}}</strong>
+                                    <p class="last-message text-muted">
+                                        {{item.message && item.message.length > 70 ? item.message.substring(0, 70) + '...' : item.message }}
+                                    </p>
                                 </div>
                                  <div *ngIf="checkMessageNow(item)" class="chat-footer">
                                     <p class="text-smaller text-muted mb-0">Just now</p>
@@ -38,7 +40,7 @@
                 <div class="chat-message">
                     <ul class="list-unstyled chat">
                         <li class="d-flex justify-content-between mb-4">
-                            <img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-6.webp" alt="avatar" class="avatar rounded-circle d-flex align-self-start mr-2 z-depth-1">
+                            <!-- <img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-6.webp" alt="avatar" class="avatar rounded-circle d-flex align-self-start mr-2 z-depth-1"> -->
                             <div class="chat-body white p-3 ml-2 z-depth-1">
                                 <div class="header">
                                     <strong class="primary-font">Brad Pitt</strong>
@@ -61,7 +63,7 @@
                                     Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.
                                 </p>
                             </div>
-                            <img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-5.webp" alt="avatar" class="avatar rounded-circle d-flex align-self-start ml-2 z-depth-1">
+                            <!-- <img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-5.webp" alt="avatar" class="avatar rounded-circle d-flex align-self-start ml-2 z-depth-1"> -->
                         </li>
                         <li class="d-flex justify-content-between mb-4 pb-3">
                             <img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-6.webp" alt="avatar" class="avatar rounded-circle d-flex align-self-start mr-2 z-depth-1">
