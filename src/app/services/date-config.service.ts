@@ -17,4 +17,8 @@ export class DateConfigService {
     return timezone.tz(date, 'UTC');
   }
 
+  public convertTimeZone(specifiedUTCDate: Date) {
+    return timezone.tz(specifiedUTCDate, 'America/Sao_Paulo');
+  }
+
 }

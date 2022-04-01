@@ -19,3 +19,15 @@
 
 .card.chat-room .text-smaller {
   font-size: 0.75rem; }
+
+ .border-last-message {
+  border-top: 1px solid rgba(49,70,80,0.33)
+ }
+
+ .chat-out {
+   background-color: #00a884;
+ }
+
+ .chat-in {
+  background-color: #728795;
+ }

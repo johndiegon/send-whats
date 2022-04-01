@@ -4,5 +4,6 @@ export interface ActiveMessageLast {
     phoneTo: string;
     nameTo: string;
     dateTime: Date;
-    message: string;    
+    message: string;
+    checked: boolean;
 }

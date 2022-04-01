@@ -5,7 +5,6 @@ import { StatusEnum } from 'src/app/Enum/StatusEnum';
 import { ActiveMessageLast } from 'src/app/models/ActiveMessageLast';
 import { ClientStoreType } from 'src/app/models/ClientType';
 import { LastMessage } from 'src/app/models/LastMessage';
-import { LastMessageContact } from 'src/app/models/LastMessageContact';
 import { selectClient } from 'src/app/redux/selectors.store';
 import { ChatService } from 'src/app/services/chat.service';
 import { DateConfigService } from 'src/app/services/date-config.service';
@@ -19,7 +18,9 @@ export class ChatComponent implements OnInit {
 
   client: ClientStoreType;
   phoneUser = '';
+  phoneClient = '';
   listLastMessages: ActiveMessageLast[] = [];
+  utcNow = this.dateConfigService.utcNow();
 
   constructor(
     private chatService: ChatService,
@@ -43,16 +44,46 @@ export class ChatComponent implements OnInit {
     });
   }
   
-
-  checkMessageNow(message: ActiveMessageLast) {
-    const utcNow = this.dateConfigService.utcNow();
-    const dateLastMessage = this.dateConfigService.convertToUTC(message.dateTime);
-    var duration = moment.duration(utcNow.diff(dateLastMessage));
+  checkMessageNow(message: ActiveMessageLast) {    
+    var duration = this.getDurationDateLastMessage(message.dateTime);
     return duration.asMinutes() <= 2;
   }
 
+  getName(item: ActiveMessageLast) {
+    if (item.phoneFrom == this.phoneUser) {
+      return item.nameTo;
+    } else {
+      return item.nameFrom;
+    }
+  }
+
   selectDialog(item: ActiveMessageLast) {
-    console.log(item);
+    this.listLastMessages.map(x => x.checked = false);
+    item.checked = true;
+    this.phoneClient = item.phoneFrom == this.phoneUser ? item.phoneTo : item.phoneFrom;
+    if (this.phoneClient) {
+      this.chatService.geChat(this.phoneClient).subscribe((response: any) =>{
+        console.log(response);
+      });
+    }
+  }
+
+  convertTimeZone(date: Date) {
+    const dateLastMessage = this.dateConfigService.convertTimeZone(date);
+    var duration = this.getDurationDateLastMessage(date);
+
+    if (duration.asDays() < 1) {
+      return dateLastMessage.hour().toString() + ':' + dateLastMessage.minute().toString();
+    } else if (duration.asDays() > 1 && duration.asDays() < 7) {
+      return dateLastMessage.day().toLocaleString();
+    }
+
+    return '';
+  }
+
+  getDurationDateLastMessage(date: Date): moment.Duration {
+    const dateLastMessage = this.dateConfigService.convertToUTC(date);
+    return moment.duration(this.utcNow.diff(dateLastMessage));
   }
 
 }
