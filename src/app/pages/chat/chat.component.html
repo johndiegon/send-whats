@@ -43,9 +43,9 @@
             <!-- Lista de mensagens -->
             <div class="col-md-6 col-xl-8 pl-md-3 px-lg-auto px-0">
                 <div class="chat-message">
-                    <ul class="list-unstyled chat">
+                    <ul *ngFor="let item of selectedMessagesOnChat" class="list-unstyled chat">
                         <!-- Message out -->
-                        <li class="d-flex justify-content-between mb-4">
+                        <li *ngIf="item.phoneFrom == phoneMain" class="d-flex justify-content-between mb-4">
                             <!-- <img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-6.webp" alt="avatar" class="avatar rounded-circle d-flex align-self-start mr-2 z-depth-1"> -->
                             <div class="chat-body chat-out p-3 ml-6 z-depth-1">
                                 <div class="header">
@@ -59,7 +59,7 @@
                             </div>
                         </li>
                         <!-- Message in -->
-                        <li class="d-flex justify-content-between mb-4">
+                        <li *ngIf="item.phoneFrom != phoneMain" class="d-flex justify-content-between mb-4">
                             <div class="chat-body chat-in p-3 mr-6 z-depth-1">
                                 <div class="header">
                                     <strong class="primary-font">Lara Croft</strong>
@@ -71,28 +71,16 @@
                                 </p>
                             </div>
                             <!-- <img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-5.webp" alt="avatar" class="avatar rounded-circle d-flex align-self-start ml-2 z-depth-1"> -->
-                        </li>
-                        <li class="d-flex justify-content-between mb-4 pb-3">
-                            <img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-6.webp" alt="avatar" class="avatar rounded-circle d-flex align-self-start mr-2 z-depth-1">
-                            <div class="chat-body white p-3 ml-2 z-depth-1">
-                                <div class="header">
-                                    <strong class="primary-font">Brad Pitt</strong>
-                                    <small class="pull-right text-muted"><mdb-icon far icon="clock"></mdb-icon> 12 mins ago</small>
-                                </div>
-                                <hr class="w-100">
-                                <p class="mb-0">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                                </p>
-                            </div>
-                        </li>
-                        <li class="white">
+                        </li>                        
+                    </ul>
+                    <div *ngIf="selected">
+                        <div class="white">
                             <div class="form-group basic-textarea">
                                 <textarea class="form-control pl-2 my-0" id="exampleFormControlTextarea2" rows="3" placeholder="Type your message here..."></textarea>
                             </div>
-                        </li>
+                        </div>
                         <button type="submit" class="btn btn-success">Enviar</button>
-                    </ul>
-
+                    </div>
                 </div>
 
             </div>

@@ -1,9 +1,6 @@
-import { DataLastMessage } from "./DataLastMessage";
 import { LastMessageContact } from "./LastMessageContact";
-import { NotificationLastMessage } from "./NotificationLastMessage";
+import { MessageBase } from "./MessageBase";
 
-export interface LastMessage {
-  data: DataLastMessage;
-  notification: NotificationLastMessage
-  listLastMessages: LastMessageContact;
+export interface LastMessage extends MessageBase {
+  listLastMessages: LastMessageContact;  
 }

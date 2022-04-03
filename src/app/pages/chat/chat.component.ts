@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import * as moment from 'moment';
 import { StatusEnum } from 'src/app/Enum/StatusEnum';
 import { ActiveMessageLast } from 'src/app/models/ActiveMessageLast';
+import { Chat } from 'src/app/models/Chat';
 import { ClientStoreType } from 'src/app/models/ClientType';
 import { LastMessage } from 'src/app/models/LastMessage';
+import { MessagesOnChat } from 'src/app/models/MessagesOnChat';
 import { selectClient } from 'src/app/redux/selectors.store';
 import { ChatService } from 'src/app/services/chat.service';
 import { DateConfigService } from 'src/app/services/date-config.service';
@@ -16,9 +18,11 @@ import { DateConfigService } from 'src/app/services/date-config.service';
 })
 export class ChatComponent implements OnInit {
 
+  selected = false;
   client: ClientStoreType;
+  selectedMessagesOnChat: Chat[] = [];
   phoneUser = '';
-  phoneClient = '';
+  phoneMain = '';
   listLastMessages: ActiveMessageLast[] = [];
   utcNow = this.dateConfigService.utcNow();
 
@@ -58,12 +62,17 @@ export class ChatComponent implements OnInit {
   }
 
   selectDialog(item: ActiveMessageLast) {
+    this.selected = true;
+    this.selectedMessagesOnChat = [];
     this.listLastMessages.map(x => x.checked = false);
     item.checked = true;
-    this.phoneClient = item.phoneFrom == this.phoneUser ? item.phoneTo : item.phoneFrom;
-    if (this.phoneClient) {
-      this.chatService.geChat(this.phoneClient).subscribe((response: any) =>{
-        console.log(response);
+    this.phoneMain = item.phoneFrom == this.phoneUser ? item.phoneTo : item.phoneFrom;
+    if (this.phoneMain) {
+      this.chatService.getChat(this.phoneMain).subscribe((response: MessagesOnChat) => {
+        if (response.data.status == StatusEnum.Sucessed) {
+          this.selectedMessagesOnChat = response.messagesOnChat;
+        }
+        console.log(this.selectedMessagesOnChat);
       });
     }
   }

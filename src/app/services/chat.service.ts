@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { LastMessage } from '../models/LastMessage';
+import { MessagesOnChat } from '../models/MessagesOnChat';
 
 @Injectable({
   providedIn: 'root'
@@ -17,13 +18,13 @@ export class ChatService {
       map((response: LastMessage) => response)
     )
   }
-
-  geChat(phoneClient: string) : Observable<any> {
+  getChat(phoneClient: string) : Observable<MessagesOnChat> {
+    // terminar amanhã
     let httpParams = new HttpParams();
     httpParams = httpParams.append('phone', phoneClient);
-    return this.httpClient.get<any>(`${environment.FEATURE_API}/chat`, {params: httpParams})
+    return this.httpClient.get<MessagesOnChat>(`${environment.FEATURE_API}/chat`, {params: httpParams})
     .pipe(
-      map((response: any) => response)
+      map((response: MessagesOnChat) => response)
     )
   }
 
