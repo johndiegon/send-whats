@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { select, Store } from '@ngrx/store';
+import { ChangeDetectorRef, Component,  ElementRef,  OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { Store } from '@ngrx/store';
 import * as moment from 'moment';
 import { StatusEnum } from 'src/app/Enum/StatusEnum';
 import { ActiveMessageLast } from 'src/app/models/ActiveMessageLast';
@@ -19,18 +20,31 @@ import { DateConfigService } from 'src/app/services/date-config.service';
 export class ChatComponent implements OnInit {
 
   selected = false;
+  
+   @ViewChild("textAreaMessage", {static: false}) textAreaMessage: ElementRef;
   client: ClientStoreType;
   selectedMessagesOnChat: Chat[] = [];
-  phoneUser = '';
-  phoneMain = '';
   listLastMessages: ActiveMessageLast[] = [];
   utcNow = this.dateConfigService.utcNow();
+  messageForm: FormGroup;
+  phoneMain =  {
+    phone: '',
+    name: ''
+  }
+  phoneClient = {
+    phone: '',
+    name: ''
+  }
 
   constructor(
     private chatService: ChatService,
     private dateConfigService: DateConfigService,
     private store: Store,
-  ) { }
+    private fb: FormBuilder,
+    private changeDetector : ChangeDetectorRef
+  ) { 
+    this.createForm();
+  }
 
   ngOnInit() {
     this.store.select(selectClient).subscribe(data => {
@@ -38,11 +52,22 @@ export class ChatComponent implements OnInit {
       this.loadLastMessage();
     });
   }
+
+  createForm() {
+    this.messageForm = this.fb.group({
+      typedMessage: ''
+    });
+  }
+
+  get typedMessage() {
+    return this.messageForm.get('typedMessage');
+  }
   
   loadLastMessage() {
     this.chatService.getLastMessage().subscribe((result: LastMessage) => {
       if (result && result.data.status == StatusEnum.Sucessed) {
-        this.phoneUser = result.listLastMessages.phoneFrom;
+        this.phoneMain.phone = result.listLastMessages.phoneFrom;
+        this.phoneMain.name = this.client.name;
         this.listLastMessages = result.listLastMessages.messageList;
       }      
     });
@@ -54,7 +79,7 @@ export class ChatComponent implements OnInit {
   }
 
   getName(item: ActiveMessageLast) {
-    if (item.phoneFrom == this.phoneUser) {
+    if (item.phoneFrom == this.phoneMain.phone) {
       return item.nameTo;
     } else {
       return item.nameFrom;
@@ -62,37 +87,58 @@ export class ChatComponent implements OnInit {
   }
 
   selectDialog(item: ActiveMessageLast) {
+    this.resetPhoneCliente();
     this.selected = true;
     this.selectedMessagesOnChat = [];
     this.listLastMessages.map(x => x.checked = false);
     item.checked = true;
-    this.phoneMain = item.phoneFrom == this.phoneUser ? item.phoneTo : item.phoneFrom;
-    if (this.phoneMain) {
-      this.chatService.getChat(this.phoneMain).subscribe((response: MessagesOnChat) => {
+    this.focusMessage();  
+    this.phoneClient.phone = item.phoneFrom == this.phoneMain.phone ? item.phoneTo : item.phoneFrom;
+    this.phoneClient.name = item.phoneFrom == this.phoneMain.phone ? item.nameTo : item.nameFrom;
+    if (this.phoneClient) {
+      this.chatService.getChat(this.phoneClient.phone).subscribe((response: MessagesOnChat) => {
         if (response.data.status == StatusEnum.Sucessed) {
           this.selectedMessagesOnChat = response.messagesOnChat;
         }
-        console.log(this.selectedMessagesOnChat);
       });
     }
   }
 
-  convertTimeZone(date: Date) {
+  focusMessage() {
+    this.changeDetector.detectChanges();
+    this.textAreaMessage.nativeElement.focus();
+  }
+  resetPhoneCliente() {
+    this.phoneClient.name = '';
+    this.phoneClient.phone = '';
+  }
+
+  convertTimeZoneLastMessage(date: Date) {
     const dateLastMessage = this.dateConfigService.convertTimeZone(date);
     var duration = this.getDurationDateLastMessage(date);
-
     if (duration.asDays() < 1) {
       return dateLastMessage.hour().toString() + ':' + dateLastMessage.minute().toString();
-    } else if (duration.asDays() > 1 && duration.asDays() < 7) {
-      return dateLastMessage.day().toLocaleString();
-    }
+    } else if (duration.asDays() > 1 && duration.asDays() <= 6) {
+      return this.dateConfigService.getWeekDayDescription(dateLastMessage.day());
+    } else {
+      return dateLastMessage.format('DD/MM/YYYY');
+    }    
+  }
 
-    return '';
+  convertTimeZoneChat(date: Date) {
+    const dateLastMessage = this.dateConfigService.convertTimeZone(date);        
+    return dateLastMessage.hour().toString() + ':' + dateLastMessage.minute().toString();    
   }
 
   getDurationDateLastMessage(date: Date): moment.Duration {
     const dateLastMessage = this.dateConfigService.convertToUTC(date);
     return moment.duration(this.utcNow.diff(dateLastMessage));
+  }
+
+  sendMessage() {
+    console.log(this.typedMessage.value);
+    this.typedMessage.setValue('');
+    this.focusMessage();
   }
 
 }
