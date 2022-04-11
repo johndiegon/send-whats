@@ -98,7 +98,11 @@ export class ChatComponent implements OnInit {
     if (this.phoneClient) {
       this.chatService.getChat(this.phoneClient.phone).subscribe((response: MessagesOnChat) => {
         if (response.data.status == StatusEnum.Sucessed) {
-          this.selectedMessagesOnChat = response.messagesOnChat;
+          if(response.messagesOnChat) {
+            this.selectedMessagesOnChat = response.messagesOnChat;
+          } else {
+            this.selectedMessagesOnChat = [];
+          }
         }
       });
     }
@@ -135,9 +139,19 @@ export class ChatComponent implements OnInit {
     return moment.duration(this.utcNow.diff(dateLastMessage));
   }
 
-  sendMessage() {
-    console.log(this.typedMessage.value);
-    this.typedMessage.setValue('');
+  sendMessage() {    
+    if (this.typedMessage.value && this.typedMessage.value.length > 0) {//Criar um utils
+      const messageTyped : Chat = {
+        phoneFrom : this.phoneMain.phone,
+        phoneTo : this.phoneClient.phone,
+        dateTime : this.dateConfigService.utcNow(),
+        message : this.typedMessage.value,
+        wasVisible: true,
+        urlPicture : '',        
+      }
+      this.selectedMessagesOnChat.push(messageTyped);
+      this.typedMessage.setValue('');
+    }
     this.focusMessage();
   }
 
