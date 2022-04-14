@@ -50,7 +50,10 @@
                             <div class="chat-body chat-out p-3 ml-6 z-depth-1">
                                 <div class="header">
                                     <strong class="primary-font">{{ phoneMain.name }}</strong>
-                                    <small class="pull-right text-muted"><mdb-icon far icon="clock"></mdb-icon> {{convertTimeZoneChat(item.dateTime)}}</small>
+                                    <small class="pull-right text-muted">
+                                        <mdb-icon *ngIf="!item.wasVisible" far icon="clock"></mdb-icon>
+                                        <mdb-icon *ngIf="item.wasVisible" fas icon="check"></mdb-icon>
+                                         {{convertTimeZoneChat(item.dateTime)}}</small>
                                 </div>
                                 <hr class="w-100">
                                 <p class="mb-0">

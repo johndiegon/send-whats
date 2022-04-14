@@ -7,6 +7,7 @@ import { ActiveMessageLast } from 'src/app/models/ActiveMessageLast';
 import { Chat } from 'src/app/models/Chat';
 import { ClientStoreType } from 'src/app/models/ClientType';
 import { LastMessage } from 'src/app/models/LastMessage';
+import { MessageBase } from 'src/app/models/MessageBase';
 import { MessagesOnChat } from 'src/app/models/MessagesOnChat';
 import { selectClient } from 'src/app/redux/selectors.store';
 import { ChatService } from 'src/app/services/chat.service';
@@ -87,6 +88,10 @@ export class ChatComponent implements OnInit {
   }
 
   selectDialog(item: ActiveMessageLast) {
+    debugger;
+    if(item.checked) {
+      return;
+    }
     this.resetPhoneCliente();
     this.selected = true;
     this.selectedMessagesOnChat = [];
@@ -112,6 +117,7 @@ export class ChatComponent implements OnInit {
     this.changeDetector.detectChanges();
     this.textAreaMessage.nativeElement.focus();
   }
+
   resetPhoneCliente() {
     this.phoneClient.name = '';
     this.phoneClient.phone = '';
@@ -130,7 +136,7 @@ export class ChatComponent implements OnInit {
   }
 
   convertTimeZoneChat(date: Date) {
-    const dateLastMessage = this.dateConfigService.convertTimeZone(date);        
+    const dateLastMessage = this.dateConfigService.convertTimeZone(date);
     return dateLastMessage.hour().toString() + ':' + dateLastMessage.minute().toString();    
   }
 
@@ -146,13 +152,22 @@ export class ChatComponent implements OnInit {
         phoneTo : this.phoneClient.phone,
         dateTime : this.dateConfigService.utcNow(),
         message : this.typedMessage.value,
-        wasVisible: true,
+        wasVisible: false,
         urlPicture : '',        
       }
       this.selectedMessagesOnChat.push(messageTyped);
+      var indexMessage = this.selectedMessagesOnChat.length - 1;
       this.typedMessage.setValue('');
+      this.chatService.postChat(messageTyped).subscribe((response: MessageBase) => {
+        if (response.data.status == StatusEnum.Sucessed) {
+          this.selectedMessagesOnChat.map((value, i) => {
+            if(i == indexMessage)  {
+              value.wasVisible = true;
+            }
+          })
+        }
+      });
     }
     this.focusMessage();
   }
-
 }
