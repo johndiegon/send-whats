@@ -88,9 +88,10 @@ export class ChatComponent implements OnInit {
   }
 
   selectDialog(item: ActiveMessageLast) {
-    if(item.checked) {
+    if (item.checked) {
       return;
     }
+    this.typedMessage.setValue('');
     this.resetPhoneCliente();
     this.selected = true;
     this.selectedMessagesOnChat = [];
@@ -144,8 +145,8 @@ export class ChatComponent implements OnInit {
     return moment.duration(this.utcNow.diff(dateLastMessage));
   }
 
-  sendMessage() {    
-    if (this.typedMessage.value && this.typedMessage.value.length > 0) {//Criar um utils
+  sendMessage() {
+    if (this.typedMessage.value && this.typedMessage.value.trim().length > 0) {//Criar um utils
       const messageTyped : Chat = {
         phoneFrom : this.phoneMain.phone,
         phoneTo : this.phoneClient.phone,
@@ -166,6 +167,8 @@ export class ChatComponent implements OnInit {
           })
         }
       });
+    } else {
+      this.typedMessage.setValue('');
     }
     this.focusMessage();
   }

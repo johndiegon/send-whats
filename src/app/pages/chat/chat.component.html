@@ -42,7 +42,8 @@
 
         <!-- Grid column -->
         <div class="col-md-6 col-xl-8 pl-md-3 px-lg-auto px-0">  
-            <div class="chat-message chat-1 scrollbar-light-blue" #scrollMe [scrollTop]="scrollMe.scrollHeight">
+            <div class="chat-message chat-1 scrollbar-light-blue" #scrollMe
+             [scrollTop]="selectedMessagesOnChat.length == 0 ? 0 : scrollMe.scrollHeight">
                 <ul *ngFor="let item of selectedMessagesOnChat" class="list-unstyled">
                     <!-- Message out -->
                     <li *ngIf="item.phoneFrom == phoneMain.phone" class="justify-content-between mb-4">
@@ -85,7 +86,15 @@
                 <form [formGroup]="messageForm" (ngSubmit)="sendMessage()">
                     <div class="white">
                         <div class="form-group basic-textarea">
-                            <textarea class="form-control pl-2 my-0" role="textbox" #textAreaMessage formControlName="typedMessage" rows="2" placeholder="Escreva sua mensagem aqui..."></textarea>
+                            <!-- <textarea class="form-control pl-2 my-0" role="textbox" 
+                            #textAreaMessage formControlName="typedMessage" rows="2"
+                            placeholder="Escreva sua mensagem aqui..."
+                            (keyup.enter)="sendMessage()">
+                            </textarea> -->
+                            <input class="form-control pl-2 my-0"
+                            #textAreaMessage formControlName="typedMessage"
+                            placeholder="Escreva sua mensagem aqui..."
+                            (keyup.enter)="sendMessage()" />
                         </div>
                     </div>
                     <button type="submit" class="btn btn-success" cdkFocusInitial>Enviar</button>
