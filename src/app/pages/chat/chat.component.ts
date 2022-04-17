@@ -88,7 +88,6 @@ export class ChatComponent implements OnInit {
   }
 
   selectDialog(item: ActiveMessageLast) {
-    debugger;
     if(item.checked) {
       return;
     }
