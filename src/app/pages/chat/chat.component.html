@@ -42,8 +42,8 @@
 
         <!-- Grid column -->
         <div class="col-md-6 col-xl-8 pl-md-3 px-lg-auto px-0">  
-            <div class="chat-message chat-1">  
-                <ul *ngFor="let item of selectedMessagesOnChat" class="list-unstyled scrollbar-light-blue">
+            <div class="chat-message chat-1 scrollbar-light-blue" #scrollMe [scrollTop]="scrollMe.scrollHeight">
+                <ul *ngFor="let item of selectedMessagesOnChat" class="list-unstyled">
                     <!-- Message out -->
                     <li *ngIf="item.phoneFrom == phoneMain.phone" class="justify-content-between mb-4">
                         <div class="chat-body chat-out p-3 ml-6 z-depth-1">
