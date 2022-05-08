@@ -52,7 +52,7 @@ export class ChatComponent implements OnInit {
   ngOnInit() {   
     this.store.select(selectClient).subscribe(data => {
       this.client = data;
-      this.createConnectionSignalR();
+      //this.createConnectionSignalR();
       this.loadLastMessage();
     });
   }
