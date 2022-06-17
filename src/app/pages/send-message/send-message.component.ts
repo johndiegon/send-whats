@@ -146,19 +146,7 @@ export class SendMessageComponent implements OnInit {
   }
 
   openModal() {
-    if (this.msgForm.invalid) {
-      return this.msgForm.markAllAsTouched();
-
-    }
-
-    if (this.whatsSession?.connected) {
-      this.onSubmitForm();
-
-    } else {
-      this.showModal = true;
-      this.initializeWhatsConection();
-
-    }
+    this.showModal = true;
 
   }
 
