@@ -76,10 +76,6 @@ export class SendMessageComponent implements OnInit {
     this.store.select(selectMessages).subscribe(messages => {
       this.listMsg = messages;
     });
-
-
-    // this.tryGetSessionWhatsapp()
-
   }
 
   tryGetSessionWhatsapp() {
@@ -191,6 +187,10 @@ export class SendMessageComponent implements OnInit {
   closeModal() {
     this.showModal = false;
     this.socket.emit('disconnectBrowser');
+  }
+
+  sendMessage(){
+    
   }
 
 }
