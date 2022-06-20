@@ -35,6 +35,7 @@ export class SendMessageComponent implements OnInit {
   listContactList: ContactListType[];
   client: ClientStoreType;
   showModal: boolean;
+  idSelected:string;
   whatsSession: {
     session: string,
     qrCode: string,
@@ -54,11 +55,11 @@ export class SendMessageComponent implements OnInit {
   })
 
   ngOnInit() {
-    this.socket = io(`${environment.SOCKET_IO}`, {
-      transports: ['websocket']
-    });
+    // this.socket = io(`${environment.SOCKET_IO}`, {
+    //   transports: ['websocket']
+    // });
 
-    console.log('socket', this.socket);
+    // console.log('socket', this.socket);
 
     this.contactListService.getContactList()
       .pipe(catchError(error => {
@@ -95,46 +96,6 @@ export class SendMessageComponent implements OnInit {
     });
   }
 
-  initializeWhatsConection() {
-
-    this.socket.emit('initialize');
-
-    this.socket.on('message', function (msg) {
-      console.log('msg', msg);
-    });
-
-    this.socket.on('session', (session: SessionWhastAppType) => {
-      this.whatsSession.connected = true;
-      this.whatsSession.session = JSON.stringify(session);
-      this.toastr.info('Conexão com o WhatsApp realizada!');
-
-      this.sessionWhatsappService.post({ idUser: this.client.idUser, phone: this.msgForm.value?.numberWhatsApp, session: this.whatsSession.session })
-        .pipe(catchError(error => {
-          this.toastr.error(`Erro ao registrar a sessão do WhatsApp, por favor contacte o suporte!`);
-          return throwError(() => new Error(error.message));
-        }))
-        .subscribe(res => {
-          this.onSubmitForm();
-          this.closeModal();
-        });
-    });
-
-    this.socket.on('qr', (src) => {
-      this.whatsSession.qrCode = src;
-    });
-
-    this.socket.on('ready', () => {
-      console.log('WhatsApp ready');
-    });
-
-    this.socket.on('disconnectedServerBrowser', () => {
-      console.log('disconnectedServerBrowser desconectado');
-      this.socket.removeAllListeners();
-      this.whatsSession.qrCode = '';
-    });
-
-  }
-
   selectMsgTemplate() {
     const index = this.msgForm?.value?.msgTemplate;
     const msgTemplate = this.listMsg[index];
@@ -145,8 +106,10 @@ export class SendMessageComponent implements OnInit {
     })
   }
 
-  openModal() {
+  openModal(item) {
     this.showModal = true;
+    this.idSelected = item;
+    console.log(item);
 
   }
 
@@ -174,7 +137,7 @@ export class SendMessageComponent implements OnInit {
 
   closeModal() {
     this.showModal = false;
-    this.socket.emit('disconnectBrowser');
+
   }
 
   sendMessage(){

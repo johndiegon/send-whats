@@ -8,8 +8,8 @@
   <div class="col-12">
     <div class="card bg-gradient-green2 shadow">
       <div class="card-group">
-        <div class="card-header p-0 mx-3 mt-3 position-relative z-index-1" (click)="openModal()" *ngFor="let item of listContactList" style="width: 18rem;" >
-          <div class="card-body bg-gradient-neutral">
+        <div class="card-header p-0 mx-3 mt-3 position-relative z-index-1" (click)="openModal(item.id)" *ngFor="let item of listContactList" style="width: 18rem;" >
+          <div [ngClass]="{'card-body bg-gradient-success': item.id === idSelected, 'card-body bg-gradient-neutral' :  item.id != idSelected }">
             <h5 class="card-title">{{item.name}}</h5>
             <div class="ps-3">
               <span class="text-sm" *ngIf="item.status">{{item.status}}</span>
@@ -39,15 +39,40 @@
 <dsw-modal-base [showModal]="showModal" (closeModal)="closeModal()">
   <div class="container p-5">
     <div>
-      <input-control label="Lista de mensagens" for="listMsg">
-        <select  class="form-control" id="listMsg" >
-          <option value=""></option>
-          <option *ngFor="let item of listMsg" [value]="item.id">{{item.title}}</option>
-        </select>
-      </input-control> 
-      <div>
-        <a class="btn btn-primary" >Enviar mensagem</a>
-      </div>
+      
+<!-- Todo: voltar com modal -->
+<dsw-modal-base [showModal]="showModal" (closeModal)="closeModal()">
+  <div class="container p-5">
+    <div>
+      <form>
+        <div class="form-group">
+          <label for="formControlCountMenssage">Quantidade de mensagens:</label>
+          <input type="number" class="form-control" id="inpuCountMenssaget" placeholder="1000">
+        </div>
+        <div class="form-group">
+          <label>Mensagem a ser enviada:</label>
+          <select  class="form-control" id="listMsg" >
+            <option value=""></option>
+            <option *ngFor="let item of listMsg" [value]="item.id">{{item.title}}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="formControlCountOrders">Quantidade Minima de pedidos:</label>
+          <input type="number" class="form-control" id="inputCountOrders" placeholder="5">
+        </div>
+        <div class="form-group">
+          <label for="formControlCupom">Cupom:</label>
+          <input type="text" class="form-control" id="inputCoupon" placeholder="#cupomdacampanha">
+        </div>
+        <div class="form-group">
+          <label for="formControlNameProduct">Nome do produto:</label>
+          <input type="text" class="form-control" id="inputNameProduct" placeholder="Nome do produto">
+        </div>
+        <div class="form-group">
+          <br>
+          <a class="btn btn-primary" (click)="sendMessage()" >Enviar mensagem</a>
+        </div>
+      </form>
     </div> 
   </div>
 </dsw-modal-base>

@@ -7,6 +7,8 @@ export interface MessageType {
     title: string
     idClient: string
     message: string
+    positiveAnswer: string,
+    negativeAnswer: string,
     picture: string
 }
 

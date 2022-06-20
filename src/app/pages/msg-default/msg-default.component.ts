@@ -38,6 +38,8 @@ export class MsgDefaultComponent implements OnInit {
     idClient: [''],
     title: ['', Validators.required],
     msg: ['', Validators.required],
+    positiveAnswer:[''],
+    negativeAnswer:[''],
     image: ['']
   })
 
@@ -54,6 +56,8 @@ export class MsgDefaultComponent implements OnInit {
       idClient: msg.idClient,
       title: msg.title,
       msg: msg.message,
+      positiveAnswer: msg.positiveAnswer,
+      negativeAnswer: msg.negativeAnswer,
       image: msg.picture
     })
   }
@@ -82,7 +86,7 @@ export class MsgDefaultComponent implements OnInit {
       .subscribe(_ => {
         this.toastr.success('Mensagem criada com sucesso!');
         this.getMessages();
-        this.msgForm.reset({ title: '', msg: '', image: '' });
+        this.msgForm.reset({ title: '', msg: '', image: '', positiveAnswer: '', negativeAnswer:'' });
         this.editMsgFlag = false;
       });
   }
