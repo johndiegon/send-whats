@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, SimpleChanges } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { ToastrService } from 'ngx-toastr';
@@ -9,10 +9,9 @@ import { MessageType } from 'src/app/models/MessageType';
 import { selectClient, selectMessages } from 'src/app/redux/selectors.store';
 import { ContactListService } from 'src/app/services/contact-list.service';
 import { MessageService } from 'src/app/services/message.service';
-import { io, Socket } from "socket.io-client";
-import { SessionWhastAppType } from 'src/app/models/SessionWhastAppType';
 import { SessionWhatsappService } from 'src/app/services/session-whatsapp.service';
-import { environment } from 'src/environments/environment';
+import { Router } from '@angular/router';
+import { Http } from '@angular/http';
 
 @Component({
   selector: 'dsw-send-message',
@@ -21,21 +20,31 @@ import { environment } from 'src/environments/environment';
 })
 export class SendMessageComponent implements OnInit {
 
+  router: Router;
+
   constructor(
     private fb: FormBuilder,
     private toastr: ToastrService,
     private contactListService: ContactListService,
     private messageService: MessageService,
     private sessionWhatsappService: SessionWhatsappService,
-    private store: Store
-  ) { }
+    private store: Store,
+    http: Http, 
+    router: Router
+  ) 
+  {
+    this.router = router;
+  }
 
-  socket: Socket;
   listMsg: MessageType[] = [];
   listContactList: ContactListType[];
   client: ClientStoreType;
   showModal: boolean;
   idSelected:string;
+  showParamData:boolean = false;
+  showParamCupon:boolean = false;
+  showParamProduct:boolean = false;
+  showParamOrder:boolean = false;
   whatsSession: {
     session: string,
     qrCode: string,
@@ -50,16 +59,11 @@ export class SendMessageComponent implements OnInit {
     listSend: ['', Validators.required],
     numberWhatsApp: ['', Validators.required],
     msgTemplate: [''],
-    msg: ['', Validators.required],
+    inputListMsg: ['', Validators.required],
     image: ['']
   })
 
   ngOnInit() {
-    // this.socket = io(`${environment.SOCKET_IO}`, {
-    //   transports: ['websocket']
-    // });
-
-    // console.log('socket', this.socket);
 
     this.contactListService.getContactList()
       .pipe(catchError(error => {
@@ -77,6 +81,7 @@ export class SendMessageComponent implements OnInit {
     this.store.select(selectMessages).subscribe(messages => {
       this.listMsg = messages;
     });
+ 
   }
 
   tryGetSessionWhatsapp() {
@@ -106,12 +111,19 @@ export class SendMessageComponent implements OnInit {
     })
   }
 
-  openModal(item) {
-    this.showModal = true;
-    this.idSelected = item;
-    console.log(item);
-
+  get inputListMsg() {
+    return this.msgForm.get('inputListMsg');
   }
+
+  // openModal(item:ContactListType) {
+
+  //   if(item.orign && item.orign == 'order'){
+  //     this.showParamOrder = true;
+  //   }
+    
+  //   this.showModal = true;
+  //   this.idSelected = item.id;
+  // }
 
   onSubmitForm() {
     const { listSend, numberWhatsApp, msg } = this.msgForm.value;
@@ -135,12 +147,14 @@ export class SendMessageComponent implements OnInit {
       });
   }
 
+
+
   closeModal() {
     this.showModal = false;
 
   }
 
-  sendMessage(){
+  sendMessage(item:ContactListType){
     
   }
 

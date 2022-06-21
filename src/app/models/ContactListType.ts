@@ -16,5 +16,7 @@ export interface ContactListType {
     count: number,
     ticketMedio: number,
     ordersCount:number,
-    dateMessage: string
+    dateMessage: string,
+    orign: string,
+    params: []
 }

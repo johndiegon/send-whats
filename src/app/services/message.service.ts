@@ -7,6 +7,7 @@ import { catchError, map, throwError } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { updateAll } from '../redux/actions/message.action';
 import { Store } from '@ngrx/store';
+import { MessageTemplate } from '../models/MessageTemplate';
 
 @Injectable({ providedIn: 'root' })
 export class MessageService {
@@ -33,10 +34,11 @@ export class MessageService {
         );
     }
 
-    post(message: string, title: string) {
-        return this.httpClient.post<ReponseWrapper>(`${environment.FEATURE_API}/Message?message=${encodeURIComponent(message)}&title=${encodeURIComponent(title)}`, {}, {
+    post(message: MessageTemplate) {
+        return this.httpClient.post<ReponseWrapper>(`${environment.FEATURE_API}/Message`, message, {
             headers: {
                 'Access-Control-Allow-Credentials': 'true'
+                , 'Content-Type': 'application/json'
                 , 'Access-Control-Allow-Origin': '*'
             }
         });
@@ -46,6 +48,7 @@ export class MessageService {
         return this.httpClient.put<ReponseWrapper>(`${environment.FEATURE_API}/Message`, message, {
             headers: {
                 'Access-Control-Allow-Credentials': 'true'
+                , 'Content-Type': 'application/json'
                 , 'Access-Control-Allow-Origin': '*'
             }
         });

@@ -9,6 +9,7 @@ export interface MessageType {
     message: string
     positiveAnswer: string,
     negativeAnswer: string,
+    params:string[];
     picture: string
 }
 
@@ -18,6 +19,8 @@ export interface MessagePutType {
     idClient: string
     message: string
     picture: string
+    positiveAnswer:string
+    negativeAnswer:string
 }
 
 export interface MessageSendType {

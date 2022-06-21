@@ -1,0 +1,49 @@
+<div class="header bg-gradient-green2 pb-8 pt-5 pt-md-8">
+    <div class="container-fluid">
+      <div class="row">
+      </div>
+    </div>
+</div>
+<div class="container-fluid mt--7">
+  <div class="container p-5">
+      <div>
+        <form [formGroup]="msgForm">
+          <div class="form-group" >
+            <label for="formControlCountMenssage">Quantidade de mensagens:</label>
+            <input type="number" class="form-control" id="inpuCountMenssaget" placeholder="1000">
+          </div>
+          <div class="form-group">
+            <label>Mensagem a ser enviada:</label>
+            <select  class="form-control"  (change)="setParams()" id="inputListMsg" >
+              <option value=""></option>
+              <option *ngFor="let item of listMsg" [value]="item.id">{{item.title}}</option>
+            </select>
+          </div> 
+          <div class="form-group" *ngIf="showParamOrder">
+            <label for="formControlCountOrders">Quantidade Minima de pedidos:</label>
+            <input type="number" class="form-control" id="inputCountOrders" placeholder="5">
+          </div>
+          <div class="form-group" *ngIf="showParamCupon">
+            <label for="formControlCupom">Cupom:</label>
+            <input type="text" class="form-control" id="inputParamCupon" placeholder="#cupomdacampanha">
+          </div>
+          <div class="form-group" *ngIf="showParamProduct">
+            <label for="formControlNameProduct" >Nome do produto:</label>
+            <input type="text" class="form-control" id="inputNameProduct" placeholder="Nome do produto">
+          </div>
+          <div class="form-group" *ngIf="showParamData">
+            <label for="formControlNameProduct" >Data:</label>
+            <input type="Data" class="form-control" id="inputData" placeholder="Data">
+          </div>
+          <div class="form-group">
+            <br>
+            <a class="btn btn-primary" (click)="sendMessage()" >Enviar mensagem</a>
+          </div>
+        </form>
+      </div> 
+    </div>
+</div>
+  
+  
+  
+      
