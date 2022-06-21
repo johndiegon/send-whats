@@ -6,7 +6,7 @@ import { catchError, throwError } from 'rxjs';
 import { ClientStoreType } from 'src/app/models/ClientType';
 import { ContactListType } from 'src/app/models/ContactListType';
 import { MessageType } from 'src/app/models/MessageType';
-import { selectClient, selectMessages } from 'src/app/redux/selectors.store';
+import { selectClient } from 'src/app/redux/selectors.store';
 import { ContactListService } from 'src/app/services/contact-list.service';
 import { MessageService } from 'src/app/services/message.service';
 import { SessionWhatsappService } from 'src/app/services/session-whatsapp.service';
@@ -29,22 +29,17 @@ export class SendMessageComponent implements OnInit {
     private messageService: MessageService,
     private sessionWhatsappService: SessionWhatsappService,
     private store: Store,
-    http: Http, 
+    // http: Http, 
     router: Router
   ) 
   {
     this.router = router;
   }
 
-  listMsg: MessageType[] = [];
   listContactList: ContactListType[];
   client: ClientStoreType;
   showModal: boolean;
-  idSelected:string;
-  showParamData:boolean = false;
-  showParamCupon:boolean = false;
-  showParamProduct:boolean = false;
-  showParamOrder:boolean = false;
+  
   whatsSession: {
     session: string,
     qrCode: string,
@@ -55,13 +50,13 @@ export class SendMessageComponent implements OnInit {
       session: undefined
     };
 
-  msgForm = this.fb.group({
-    listSend: ['', Validators.required],
-    numberWhatsApp: ['', Validators.required],
-    msgTemplate: [''],
-    inputListMsg: ['', Validators.required],
-    image: ['']
-  })
+  // msgForm = this.fb.group({
+  //   listSend: ['', Validators.required],
+  //   numberWhatsApp: ['', Validators.required],
+  //   msgTemplate: [''],
+  //   inputListMsg: ['', Validators.required],
+  //   image: ['']
+  // })
 
   ngOnInit() {
 
@@ -78,74 +73,62 @@ export class SendMessageComponent implements OnInit {
       this.client = client;
     });
 
-    this.store.select(selectMessages).subscribe(messages => {
-      this.listMsg = messages;
-    });
- 
   }
 
-  tryGetSessionWhatsapp() {
-    this.msgForm.controls.numberWhatsApp.valueChanges.subscribe(value => {
-      this.sessionWhatsappService.get(value)
-        .pipe(catchError(error => {
-          this.toastr.error(`Problema ao recuperar a sessão do WhatsApp, por favor contacte o suporte!`);
-          return throwError(() => new Error(error.message));
-        }))
-        .subscribe(res => {
-          console.log('GET session', res);
-          if (res.sessionWhtas?.session) {
-            this.whatsSession.connected = true;
-            this.whatsSession.session =  res.sessionWhtas.session;
-          }
-        });
-    });
-  }
-
-  selectMsgTemplate() {
-    const index = this.msgForm?.value?.msgTemplate;
-    const msgTemplate = this.listMsg[index];
-
-    this.msgForm.patchValue({
-      msg: msgTemplate?.message,
-      image: msgTemplate?.picture
-    })
-  }
-
-  get inputListMsg() {
-    return this.msgForm.get('inputListMsg');
-  }
-
-  // openModal(item:ContactListType) {
-
-  //   if(item.orign && item.orign == 'order'){
-  //     this.showParamOrder = true;
-  //   }
-    
-  //   this.showModal = true;
-  //   this.idSelected = item.id;
+  // tryGetSessionWhatsapp() {
+  //   this.msgForm.controls.numberWhatsApp.valueChanges.subscribe(value => {
+  //     this.sessionWhatsappService.get(value)
+  //       .pipe(catchError(error => {
+  //         this.toastr.error(`Problema ao recuperar a sessão do WhatsApp, por favor contacte o suporte!`);
+  //         return throwError(() => new Error(error.message));
+  //       }))
+  //       .subscribe(res => {
+  //         console.log('GET session', res);
+  //         if (res.sessionWhtas?.session) {
+  //           this.whatsSession.connected = true;
+  //           this.whatsSession.session =  res.sessionWhtas.session;
+  //         }
+  //       });
+  //   });
   // }
 
-  onSubmitForm() {
-    const { listSend, numberWhatsApp, msg } = this.msgForm.value;
+ 
 
-    this.messageService.send({ message: msg, phone: numberWhatsApp, idList: listSend, picture: '' })
-      .pipe(catchError(error => {
-        this.toastr.error(`Não foi possivel enviar a mensagem: ${error.error.message}`)
-        return throwError(() => new Error(error.message));
-      }))
-      .subscribe(_ => {
+  // get inputListMsg() {
+  //   return this.msgForm.get('inputListMsg');
+  // }
 
-        this.toastr.success(`Mensagem enviada com sucesso`);
+  // // openModal(item:ContactListType) {
 
-        this.msgForm.reset({
-          listSend: '',
-          numberWhatsApp: '',
-          msgTemplate: '',
-          msg: '',
-          image: ''
-        })
-      });
-  }
+  // //   if(item.orign && item.orign == 'order'){
+  // //     this.showParamOrder = true;
+  // //   }
+    
+  // //   this.showModal = true;
+  // //   this.idSelected = item.id;
+  // // }
+
+  // onSubmitForm() {
+  //   const { listSend, numberWhatsApp, msg } = this.msgForm.value;
+
+  //   this.messageService.send({ message: msg, phone: numberWhatsApp, idList: listSend, picture: '' })
+  //     .pipe(catchError(error => {
+  //       this.toastr.error(`Não foi possivel enviar a mensagem: ${error.error.message}`)
+  //       return throwError(() => new Error(error.message));
+  //     }))
+  //     .subscribe(_ => {
+
+  //       this.toastr.success(`Mensagem enviada com sucesso`);
+
+  //       this.msgForm.reset({
+  //         listSend: '',
+  //         numberWhatsApp: '',
+  //         msgTemplate: '',
+  //         msg: '',
+  //         image: ''
+  //       })
+  //     });
+  // }
 
 
 
@@ -155,7 +138,9 @@ export class SendMessageComponent implements OnInit {
   }
 
   sendMessage(item:ContactListType){
-    
+      this.router.navigateByUrl('/send', {
+      state: { item: item }
+      })
   }
 
 }
