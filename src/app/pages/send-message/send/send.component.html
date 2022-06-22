@@ -24,20 +24,22 @@
           </div> 
           <div class="col-lg-4" *ngIf="showParamOrder">
             <label for="formControlCountOrders">Quantidade Minima de pedidos:</label>
-            <input type="number" class="form-control" id="inputCountOrders" placeholder="5">
+            <input type="number" class="form-control" id="inputCountOrders"  formControlName="inputCountOrders" placeholder="5">
           </div>
           <div class="col-lg-4" *ngIf="showParamCupon">
             <label for="formControlCupom">Cupom:</label>
-            <input type="text" class="form-control" id="inputParamCupon" placeholder="#cupomdacampanha">
+            <input type="text" class="form-control" id="inputParamCupon"  formControlName="inputParamCupon" placeholder="#cupomdacampanha">
           </div>
           <div class="col-lg-4" *ngIf="showParamProduct">
             <label for="formControlNameProduct" >Nome do produto:</label>
-            <input type="text" class="form-control" id="inputNameProduct" placeholder="Nome do produto">
+            <input type="text" class="form-control" id="inputNameProduct" formControlName="inputNameProduct" placeholder="Nome do produto">
           </div>
-          <div class="col-lg-4" *ngIf="showParamData">
-            <label for="formControlNameProduct" >Data:</label>
-            <input type="Data" class="form-control" id="inputData" placeholder="Data">
-          </div>
+          <!-- <div class="col-lg-4" *ngIf="showParamData">
+            <div class="input-group input-group-alternative">
+              <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
+             </div>
+             <input class="form-control datepicker" id="inputData"  formControlName="inputData"  placeholder="Selecione a data" type="text" value="06/20/2020">
+          </div> -->
           <div class="col-lg-4">
             <br>
             <a class="btn btn-primary" (click)="sendMessage()" >Enviar mensagem</a>
@@ -46,3 +48,4 @@
       </div> 
     </div>
 </div>
+<!-- <script src="/assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script> -->

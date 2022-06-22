@@ -26,6 +26,11 @@ export interface MessagePutType {
 export interface MessageSendType {
     idList: string
     message: string
-    picture: string
-    phone: string
+    picture?: string
+    phone?: string
+    countMinOrder?: number
+    countMessages?:number
+    nameOfProduct?:string
+    paramDate?:string
+    cupom?:string
 }
