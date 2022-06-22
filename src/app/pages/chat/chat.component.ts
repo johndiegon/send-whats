@@ -30,6 +30,7 @@ export class ChatComponent implements OnInit {
   listLastMessages: ActiveMessageLast[] = [];
   utcNow = this.dateConfigService.utcNow();
   messageForm: FormGroup;
+  uriWhatsDialog = 'https://wa.me/';
   phoneMain =  {
     phone: '',
     name: ''
@@ -88,7 +89,11 @@ export class ChatComponent implements OnInit {
       if (result && result.data.status == StatusEnum.Sucessed) {
         this.phoneMain.phone = result.listLastMessages.phoneFrom;
         this.phoneMain.name = this.client.name;
-        this.listLastMessages = result.listLastMessages.messageList;
+        if (result.listLastMessages.messageList && result.listLastMessages.messageList.length > 0) {
+          this.listLastMessages = result.listLastMessages.messageList.sort((a,b) =>
+            new Date(b.dateTime).getTime() - new Date(a.dateTime).getTime()
+          );
+        }
       }      
     });
   }
