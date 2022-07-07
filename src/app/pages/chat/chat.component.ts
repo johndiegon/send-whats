@@ -63,7 +63,7 @@ export class ChatComponent implements OnInit {
 
   createConnectionSignalR() {
     let connection = new HubConnectionBuilder()
-    .withUrl('https://localhost:7190' + "/chat", { accessTokenFactory: () => this.client.user.token })
+    .withUrl(environment.CHAT_SERVICE + "/chat", { accessTokenFactory: () => this.client.user.token })
     .build();
     
     connection.on('broadcastNewMessage', data => {
