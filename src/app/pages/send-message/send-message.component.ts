@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { ToastrService } from 'ngx-toastr';
 import { catchError, throwError } from 'rxjs';
 import { ClientStoreType } from 'src/app/models/ClientType';
-import { ContactListType } from 'src/app/models/ContactListType';
+import { ContactListType, FilterWeekDays } from 'src/app/models/ContactListType';
 import { MessageType } from 'src/app/models/MessageType';
 import { selectClient } from 'src/app/redux/selectors.store';
 import { ContactListService } from 'src/app/services/contact-list.service';
@@ -26,10 +26,7 @@ export class SendMessageComponent implements OnInit {
     private fb: FormBuilder,
     private toastr: ToastrService,
     private contactListService: ContactListService,
-    private messageService: MessageService,
-    private sessionWhatsappService: SessionWhatsappService,
     private store: Store,
-    // http: Http, 
     router: Router
   ) 
   {
@@ -37,6 +34,7 @@ export class SendMessageComponent implements OnInit {
   }
 
   listContactList: ContactListType[];
+  fileIsProcessing:boolean;
   client: ClientStoreType;
   showModal: boolean;
   
@@ -66,6 +64,7 @@ export class SendMessageComponent implements OnInit {
         return throwError(() => new Error(error.message));
       }))
       .subscribe(res => {
+        this.fileIsProcessing = res.resume.fileIsProcessing;
         this.listContactList = res.resume.contactLists;
       });
 
@@ -130,7 +129,30 @@ export class SendMessageComponent implements OnInit {
   //     });
   // }
 
+  getCountDays(dateOrder){
+    debugger
+    var today = new Date(Date.now());
+    var order = new Date(dateOrder);
+    var timeDiff = Math.abs(today.getTime() - order.getTime());
+    return Math.ceil(timeDiff / (1000 * 3600 * 24)); 
+  }
 
+  getStringFilterDay(filterDays){
+    switch(filterDays){
+      case FilterWeekDays.JustDay:
+        return "durante o dia.";
+        break;
+      case FilterWeekDays.JustNight:
+        return "durante a noite.";
+        break;
+      case FilterWeekDays.JustWeeKend:
+        return "de sexta a domingo.";
+        break;
+      case FilterWeekDays.JustWeek:
+        return "de segunda a quinta.";
+        break;
+    }
+  }
 
   closeModal() {
     this.showModal = false;

@@ -122,6 +122,7 @@ export class ChatComponent implements OnInit {
     this.listLastMessages.map(x => x.checked = false);
     item.checked = true;
     this.focusMessage();  
+    
     this.phoneClient.phone = item.phoneFrom == this.phoneMain.phone ? item.phoneTo : item.phoneFrom;
     this.phoneClient.name = item.phoneFrom == this.phoneMain.phone ? item.nameTo : item.nameFrom;
     if (this.phoneClient) {

@@ -9,7 +9,7 @@ import { ChatComponent } from 'src/app/pages/chat/chat.component';
 import { SendComponent } from 'src/app/pages/send-message/send/send.component';
 
 export const AdminLayoutRoutes: Routes = [
-    { path: 'dashboard',      component: DashboardComponent },
+     { path: 'dashboard',      component: DashboardComponent },
     { path: 'user-profile',   component: UserProfileComponent },
     { path: 'send-message',         component: SendMessageComponent },
     { path: 'msg-default',          component: MsgDefaultComponent },

@@ -21,6 +21,7 @@ export class MessageService {
         return this.httpClient.get<ReponseWrapper<MessageResponseType>>(`${environment.FEATURE_API}/Message`, {
             headers: {
                 'Access-Control-Allow-Credentials': 'true'
+                , 'Content-Type': 'application/json'
                 , 'Access-Control-Allow-Origin': '*'
             }
         }).pipe(
@@ -37,7 +38,7 @@ export class MessageService {
     post(message: MessageTemplate) {
         return this.httpClient.post<ReponseWrapper>(`${environment.FEATURE_API}/Message`, message, {
             headers: {
-                'Access-Control-Allow-Credentials': 'true'
+                 'Access-Control-Allow-Credentials': 'true'
                 , 'Content-Type': 'application/json'
                 , 'Access-Control-Allow-Origin': '*'
             }
@@ -58,6 +59,7 @@ export class MessageService {
         return this.httpClient.delete<ReponseWrapper>(`${environment.FEATURE_API}/Message?idMessage=${encodeURIComponent(message.id)}`, {
             headers: {
                 'Access-Control-Allow-Credentials': 'true'
+                , 'Content-Type': 'application/json'
                 , 'Access-Control-Allow-Origin': '*'
             }
         });
@@ -67,6 +69,7 @@ export class MessageService {
         return this.httpClient.post<ReponseWrapper>(`${environment.FEATURE_API}/Message/send-message`, message, {
             headers: {
                 'Access-Control-Allow-Credentials': 'true'
+                , 'Content-Type': 'application/json'
                 , 'Access-Control-Allow-Origin': '*'
             }
         });

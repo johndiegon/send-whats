@@ -53,7 +53,8 @@ export class UserProfileComponent implements OnInit {
       country: ['', Validators.required],
       complemento: ['']
     }),
-    phone: [[], [Validators.required, MultiInputValidators.minItemValidator(1)]]
+    phone: [[], [Validators.required, MultiInputValidators.minItemValidator(1)]],
+    answerDefault: ['', Validators.required],
   });
 
   passwordForm = this.fb.group({
@@ -80,7 +81,8 @@ export class UserProfileComponent implements OnInit {
       docType: client.docType,
       email: client.email,
       address: client.address,
-      phone: client.phone
+      phone: client.phone,
+      answerDefault: client.answerDefault
     })
   }
 

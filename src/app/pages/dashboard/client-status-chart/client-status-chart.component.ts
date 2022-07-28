@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { DashboardResType, DashboardType } from 'src/app/models/dashboardType';
+import { DashboardResType } from 'src/app/models/dashboardType';
 import { ReponseWrapper } from 'src/app/models/response-api-default';
 import * as moment from 'moment';
 import {
@@ -57,8 +57,8 @@ export class ClientStatusChartComponent implements OnChanges {
   }
 
   populateClientsStatus(dataDashs: ReponseWrapper<DashboardResType>) {
-    const allDashs = dataDashs.allDashboard || [];
-    const dashs = [dataDashs.dataDashboard, ...allDashs];
+    const allDashs = [];
+    const dashs = [];
 
     dashs.forEach(dash => {
       this.createLabels(dash);
@@ -78,7 +78,7 @@ export class ClientStatusChartComponent implements OnChanges {
 
   }
 
-  private createLabels(dash: DashboardType) {
+  private createLabels(dash) {
     const dateMoment = moment(dash.dateTime);
     const dateFormated = dateMoment.format('DD/MMM');
     this.config.data.labels.push(dateFormated);

@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  FEATURE_API: "http://localhost:5000",
-  // FEATURE_API: "http://15.228.252.111",
+ // FEATURE_API: "http://15.228.252.111",
+ FEATURE_API: "http://localhost:5000",
   // SOCKET_IO: "http://localhost:3000"
   SOCKET_IO: "http://18.231.158.53"
 };

@@ -2,50 +2,102 @@
     <div class="container-fluid">
         <div class="header-body">
             <h3 class="mb-0  text-white">
-                {{item.name}} 
+              Envie uma mensagem
               </h3> 
         </div>
     </div>
 </div>
 <div class="container-fluid mt--7">
-    <div class="card shadow">
-      <div>
-        <form role="form" [formGroup]="msgForm">
-          <div class="col-lg-4" >
-            <label for="formControlCountMenssage">Quantidade de mensagens:</label>
-            <input type="number" class="form-control" id="inpuCountMenssage"  formControlName="inpuCountMenssage" placeholder="1000">
-          </div>
-          <div class="col-lg-4" >
-            <label>Mensagem a ser enviada:</label>
-            <select  class="form-control"  (change)="setParams()"  id="inputListMsg"  formControlName="inputListMsg" >
-              <option value=""></option>
-              <option *ngFor="let item of listMsg" [value]="item.id">{{item.title}}</option>
-            </select>
+  <div class="col-12">
+    <div class="card bg-gradient-green2 shadow">
+        <div class="row p-2 mb-1 mx-1">
+          <div class="card">
+            <div class="card-header bg-transparent">
+              <div class="row align-items-center">
+                <div class="col">
+                  <h6 class="text-uppercase text-muted ls-1 mb-1">Filtre sua lista</h6>
+                  <h2 class="mb-0">{{item.name}}</h2>
+                </div>
+              </div>
+            </div>
+          <div>
+             <form role="form" [formGroup]="msgForm">
+                       <!-- <div class="col-lg-4" >
+                    <label for="formControlCountMenssage">Quantidade de mensagens:</label>
+                    <input type="number" class="form-control" id="inpuCountMenssage"  formControlName="inpuCountMenssage" placeholder="1000">
+                  </div> -->
+                  <div class="col-lg-12" >
+                    <label>Mensagem a ser enviada:</label>
+                    <select  class="form-control"  (change)="setParams()"  id="inputListMsg"  formControlName="inputListMsg" >
+                      <option value=""></option>
+                      <option *ngFor="let item of listMsg" [value]="item.id">{{item.title}}</option>
+                    </select>
+                  </div> 
+                  <div class="col-lg-12" *ngIf="item.countOrders.length > 0">
+                    <label for="formControlCountOrders">Quantidade Minima de pedidos:</label>
+                     <input type="number" class="form-control" id="inputMinCountOrders"  formControlName="inputMinCountOrders" placeholder="5"> 
+                  </div> 
+                  <div class="col-lg-12" *ngIf="item.countOrders.length > 0">
+                    <label for="formControlCountOrders">Quantidade Máxima de pedidos:</label>
+                    <input type="number" class="form-control" id="inputMaxCountOrders"  formControlName="inputMaxCountOrders" placeholder="5"> 
+                  </div> 
+                  <div class="col-lg-12" *ngIf="item.dateOrders.length > 0">
+                    <label>Clientes que compram:</label>
+                    <select  class="form-control"  id="inputFilterDays"  formControlName="inputFilterDays" >
+                      <option value=""></option>
+                      <option value="JustNight">durante a noite</option>
+                      <option value="JustDay">durante o dia</option>
+                      <option value="JustWeeKend">de sexta a domingo</option>
+                      <option value="JustWeek">de segunda a quinta</option>
+                    </select>
+                  </div> 
+                  <div class="col-lg-12" *ngIf="item.orderInWeeks.length > 0 ">
+                    <label for="formControlCountOrders">Clientes Ativos/Inativos:</label>
+                    <select  class="form-control"  id="inputDays"  formControlName="inputDays" >
+                      <option value=""></option>
+                      <option value="1">Compraram ontem</option>
+                      <option value="7">Compraram na ultima semana</option>
+                      <option value="30">Não compram faz 1 mês</option>
+                      <option value="60">Não compram faz 2 meses</option>
+                      <option value="90">Não compram a mais de 3 meses</option>
+                    </select>
+                  </div>
+                  <div class="col-lg-12" *ngIf="showParamCupon">
+                    <label for="formControlCupom">Cupom:</label>
+                    <input type="text" class="form-control" id="inputParamCupon"  formControlName="inputParamCupon" placeholder="#cupomdacampanha">
+                  </div>
+                  <div class="col-lg-12" *ngIf="showParamProduct">
+                    <label for="formControlNameProduct" >Nome do produto:</label>
+                    <input type="text" class="form-control" id="inputNameProduct" formControlName="inputNameProduct" placeholder="Nome do produto">
+                  </div>
+                  <div class="col-lg-12">
+                    <br>
+                    <a class="btn btn-primary" (click)="sendMessage()" >Enviar mensagem</a>
+                  </div>
+             </form>
           </div> 
-          <div class="col-lg-4" *ngIf="showParamOrder">
-            <label for="formControlCountOrders">Quantidade Minima de pedidos:</label>
-            <input type="number" class="form-control" id="inputCountOrders"  formControlName="inputCountOrders" placeholder="5">
+        </div>
+        <!-- <div>
+          <div class="row p-2 mb-1 mx-1">
+            <div class = "card ">
+              <div class="card-header bg-transparent">
+                <div class="row align-items-center">
+                  <div class="col">
+                    <h6 class="text-uppercase text-muted ls-1 mb-1">Pedidos</h6>
+                    <h2 class="mb-0">Dias da semana</h2>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+        
+            <div class="chart chart-2">
+              <canvas id="chart-day-night" class="chart-canvas"></canvas>
+            </div>
+              </div>
+            </div>
           </div>
-          <div class="col-lg-4" *ngIf="showParamCupon">
-            <label for="formControlCupom">Cupom:</label>
-            <input type="text" class="form-control" id="inputParamCupon"  formControlName="inputParamCupon" placeholder="#cupomdacampanha">
-          </div>
-          <div class="col-lg-4" *ngIf="showParamProduct">
-            <label for="formControlNameProduct" >Nome do produto:</label>
-            <input type="text" class="form-control" id="inputNameProduct" formControlName="inputNameProduct" placeholder="Nome do produto">
-          </div>
-          <!-- <div class="col-lg-4" *ngIf="showParamData">
-            <div class="input-group input-group-alternative">
-              <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
-             </div>
-             <input class="form-control datepicker" id="inputData"  formControlName="inputData"  placeholder="Selecione a data" type="text" value="06/20/2020">
-          </div> -->
-          <div class="col-lg-4">
-            <br>
-            <a class="btn btn-primary" (click)="sendMessage()" >Enviar mensagem</a>
-          </div>
-        </form>
-      </div> 
+        </div> -->
+      
+      </div>
     </div>
 </div>
-<!-- <script src="/assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script> -->

@@ -1,19 +1,19 @@
 <div class="header bg-gradient-green2 pb-8 pt-5 pt-md-8">
   <div class="container-fluid">
     <div class="row">
+      <div class="ps-1">
+        <span *ngIf="fileIsProcessing">Arquivo novo está sendo processado!</span>
+      </div>
     </div>
   </div>
 </div>
-<div class="container-fluid mt--7">
+<div class="container-fluid mt--7 ">
   <div class="col-12">
     <div class="card bg-gradient-green2 shadow">
-      <div class="card-group">
-        <div class="card-header p-0 mx-3 mt-3 position-relative z-index-1" (click)="sendMessage(item)" *ngFor="let item of listContactList" style="width: 18rem;" >
+      <div class="card-group bg-gradient-n bg-gradient-green2">
+        <div class="card-header p-2 mx-2 mt-4 position-relative z-index-2 bg-gradient-neutral" (click)="sendMessage(item)" *ngFor="let item of listContactList" style="width: 18rem;" >
           <div [ngClass]="{'card-body bg-gradient-success': item.id === idSelected, 'card-body bg-gradient-neutral' :  item.id != idSelected }">
             <h5 class="card-title">{{item.name}}</h5>
-            <div class="ps-3">
-              <span class="text-sm" *ngIf="item.status">{{item.status}}</span>
-            </div>
             <div class="ps-3">
               <span class="text-sm" *ngIf="item.creationDate">Data de criação : {{item.creationDate | date: 'd, MMM y' : '+0300'}}</span>
             </div>
@@ -21,10 +21,7 @@
               <span class="text-sm" *ngIf="item.count">{{item.count}} contatos.</span>
             </div>
             <div class="ps-3">
-              <span class="text-sm" *ngIf="item.ticketMedio">Ticket Médio {{item.ticketMedio}}</span>
-            </div>
-            <div class="ps-3">
-              <span class="text-sm" *ngIf="item.ordersCount">Média de pedidos {{item.ordersCount}}</span>
+              <span class="text-sm" *ngIf="item.unity">Unidade: {{item.unity}}</span>
             </div>
           </div>
         </div>

@@ -36,7 +36,7 @@
                     <form [formGroup]="msgForm" (submit)="onSubmitForm($event)">
                         <div class="row">
                             <div class="col-12">
-                                <dsw-input-control label="Nome do modelo" for="title">
+                                <dsw-input-control label="Nome do template - Deve ser idêntico ao do facebook." for="title">
                                     <input dwsInputSlot class="form-control" id="title" formControlName="title"
                                         placeholder="" type="text" />
                                 </dsw-input-control>
@@ -51,18 +51,18 @@
                         </div>
                         <div class="row">
                             <div class="col-12">
-                                <dsw-input-control label="Reposta Automática - Positiva" for="positiveAnswer">
+                                <dsw-input-control label="Reposta Automática" for="positiveAnswer">
                                     <dsw-text-edit dwsInputSlot formControlName="positiveAnswer"></dsw-text-edit>
                                 </dsw-input-control>
                             </div>
                         </div>
-                        <div class="row">
+                        <!-- <div class="row">
                             <div class="col-12">
                                 <dsw-input-control label="Reposta Automática - Negativa" for="positiveAnswer">
                                     <dsw-text-edit dwsInputSlot formControlName="negativeAnswer"></dsw-text-edit>
                                 </dsw-input-control>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="row">
                             <div class="col-12">
                                 <button type="submit" class="btn btn-success">Salvar</button>

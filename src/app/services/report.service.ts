@@ -2,18 +2,19 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { ReponseWrapper } from '../models/response-api-default';
-import { DashboardResType } from '../models/dashboardType';
 
-@Injectable({providedIn: 'root'})
-export class DashboardService {
+@Injectable({ providedIn: 'root' })
+export class ReportService {
     constructor(private httpClient: HttpClient) { }
-    
-    get(){
-        return this.httpClient.get<ReponseWrapper<DashboardResType>>(`${environment.FEATURE_API}/DashBoard`,{
+
+    get() {
+        return this.httpClient.get<ReponseWrapper>(`${environment.FEATURE_API}/reportMessage`, {
             headers: {
                 'Access-Control-Allow-Credentials': 'true'
+                , 'Content-Type': 'application/json'
                 , 'Access-Control-Allow-Origin': '*'
             }
-        });
+        })
     }
+
 }

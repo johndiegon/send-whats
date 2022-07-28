@@ -40,7 +40,7 @@ export class MsgDefaultComponent implements OnInit {
     title: ['', Validators.required],
     msg: ['', Validators.required],
     positiveAnswer:[''],
-    negativeAnswer:[''],
+    // negativeAnswer:[''],
     image: ['']
   })
 
@@ -58,7 +58,7 @@ export class MsgDefaultComponent implements OnInit {
       title: msg.title,
       msg: msg.message,
       positiveAnswer: msg.positiveAnswer,
-      negativeAnswer: msg.negativeAnswer,
+      // negativeAnswer: msg.negativeAnswer,
       image: msg.picture
     })
   }
@@ -82,7 +82,7 @@ export class MsgDefaultComponent implements OnInit {
 
     const message: MessageTemplate = 
     { message: this.msgForm.value.msg, 
-      negativeAnswer: this.msgForm.value.negativeAnswer,
+       negativeAnswer: "",
       positiveAnswer: this.msgForm.value.positiveAnswer, 
       title: this.msgForm.value.title
      };
@@ -109,7 +109,7 @@ export class MsgDefaultComponent implements OnInit {
       message: msg, 
       title, 
       picture: image,
-      negativeAnswer: this.msgForm.value.negativeAnswer,
+      negativeAnswer: "",
       positiveAnswer: this.msgForm.value.positiveAnswer
     };
 
