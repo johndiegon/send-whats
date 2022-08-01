@@ -10,94 +10,128 @@
 <div class="container-fluid mt--7">
   <div class="col-12">
     <div class="card bg-gradient-green2 shadow">
-        <div class="row p-2 mb-1 mx-1">
-          <div class="card">
-            <div class="card-header bg-transparent">
-              <div class="row align-items-center">
-                <div class="col">
-                  <h6 class="text-uppercase text-muted ls-1 mb-1">Filtre sua lista</h6>
-                  <h2 class="mb-0">{{item.name}}</h2>
-                </div>
-              </div>
-            </div>
-          <div>
-             <form role="form" [formGroup]="msgForm">
-                       <!-- <div class="col-lg-4" >
-                    <label for="formControlCountMenssage">Quantidade de mensagens:</label>
-                    <input type="number" class="form-control" id="inpuCountMenssage"  formControlName="inpuCountMenssage" placeholder="1000">
-                  </div> -->
-                  <div class="col-lg-12" >
-                    <label>Mensagem a ser enviada:</label>
-                    <select  class="form-control"  (change)="setParams()"  id="inputListMsg"  formControlName="inputListMsg" >
-                      <option value=""></option>
-                      <option *ngFor="let item of listMsg" [value]="item.id">{{item.title}}</option>
-                    </select>
-                  </div> 
-                  <div class="col-lg-12" *ngIf="item.countOrders.length > 0">
-                    <label for="formControlCountOrders">Quantidade Minima de pedidos:</label>
-                     <input type="number" class="form-control" id="inputMinCountOrders"  formControlName="inputMinCountOrders" placeholder="5"> 
-                  </div> 
-                  <div class="col-lg-12" *ngIf="item.countOrders.length > 0">
-                    <label for="formControlCountOrders">Quantidade Máxima de pedidos:</label>
-                    <input type="number" class="form-control" id="inputMaxCountOrders"  formControlName="inputMaxCountOrders" placeholder="5"> 
-                  </div> 
-                  <div class="col-lg-12" *ngIf="item.dateOrders.length > 0">
-                    <label>Clientes que compram:</label>
-                    <select  class="form-control"  id="inputFilterDays"  formControlName="inputFilterDays" >
-                      <option value=""></option>
-                      <option value="JustNight">durante a noite</option>
-                      <option value="JustDay">durante o dia</option>
-                      <option value="JustWeeKend">de sexta a domingo</option>
-                      <option value="JustWeek">de segunda a quinta</option>
-                    </select>
-                  </div> 
-                  <div class="col-lg-12" *ngIf="item.orderInWeeks.length > 0 ">
-                    <label for="formControlCountOrders">Clientes Ativos/Inativos:</label>
-                    <select  class="form-control"  id="inputDays"  formControlName="inputDays" >
-                      <option value=""></option>
-                      <option value="1">Compraram ontem</option>
-                      <option value="7">Compraram na ultima semana</option>
-                      <option value="30">Não compram faz 1 mês</option>
-                      <option value="60">Não compram faz 2 meses</option>
-                      <option value="90">Não compram a mais de 3 meses</option>
-                    </select>
-                  </div>
-                  <div class="col-lg-12" *ngIf="showParamCupon">
-                    <label for="formControlCupom">Cupom:</label>
-                    <input type="text" class="form-control" id="inputParamCupon"  formControlName="inputParamCupon" placeholder="#cupomdacampanha">
-                  </div>
-                  <div class="col-lg-12" *ngIf="showParamProduct">
-                    <label for="formControlNameProduct" >Nome do produto:</label>
-                    <input type="text" class="form-control" id="inputNameProduct" formControlName="inputNameProduct" placeholder="Nome do produto">
-                  </div>
-                  <div class="col-lg-12">
-                    <br>
-                    <a class="btn btn-primary" (click)="sendMessage()" >Enviar mensagem</a>
-                  </div>
-             </form>
-          </div> 
-        </div>
-        <!-- <div>
-          <div class="row p-2 mb-1 mx-1">
-            <div class = "card ">
-              <div class="card-header bg-transparent">
-                <div class="row align-items-center">
-                  <div class="col">
-                    <h6 class="text-uppercase text-muted ls-1 mb-1">Pedidos</h6>
-                    <h2 class="mb-0">Dias da semana</h2>
-                  </div>
-                </div>
-              </div>
-              <div class="card-body">
-        
-            <div class="chart chart-2">
-              <canvas id="chart-day-night" class="chart-canvas"></canvas>
-            </div>
-              </div>
+      <div class="row p-2 mx-1">
+        <div class="card">
+          <div class="row align-items-center">
+            <div class="col">
+              <h6 class="text-uppercase text-muted ls-1 mb-1">Filtre sua lista</h6>
+              <h2 class="mb-0">{{item.name}}</h2>
             </div>
           </div>
-        </div> -->
+          <form role="form" [formGroup]="msgForm">
+            <div class="col-lg-12" >
+              <label>Mensagem a ser enviada:</label>
+              <select  class="form-control"  (change)="setParams()"  id="inputListMsg"  formControlName="inputListMsg" >
+                <option value=""></option>
+                <option *ngFor="let item of listMsg" [value]="item.id">{{item.title}}</option>
+              </select>
+            </div> 
+            <div class="col-lg-12" *ngIf="item.countOrders.length > 0">
+              <label for="formControlCountOrders">Quantidade Minima de pedidos:</label>
+               <input type="number" class="form-control" id="inputMinCountOrders"  formControlName="inputMinCountOrders" placeholder="5"> 
+            </div> 
+            <div class="col-lg-12" *ngIf="item.countOrders.length > 0">
+              <label for="formControlCountOrders">Quantidade Máxima de pedidos:</label>
+              <input type="number" class="form-control" id="inputMaxCountOrders"  formControlName="inputMaxCountOrders" placeholder="5"> 
+            </div> 
+            <div class="col-lg-12" *ngIf="item.dateOrders.length > 0">
+              <label>Clientes que compram:</label>
+              <select  class="form-control"  id="inputFilterDays"  formControlName="inputFilterDays" >
+                <option value=""></option>
+                <option value="JustNight">durante a noite</option>
+                <option value="JustDay">durante o dia</option>
+                <option value="JustWeeKend">de sexta a domingo</option>
+                <option value="JustWeek">de segunda a quinta</option>
+              </select>
+            </div> 
+            <div class="col-lg-12" *ngIf="item.orderInWeeks.length > 0 ">
+              <label for="formControlCountOrders">Clientes Ativos/Inativos:</label>
+              <select  class="form-control"  id="inputDays"  formControlName="inputDays" >
+                <option value=""></option>
+                <option value="1">Compraram ontem</option>
+                <option value="7">Compraram na ultima semana</option>
+                <option value="30">Não compram faz 1 mês</option>
+                <option value="60">Não compram faz 2 meses</option>
+                <option value="90">Não compram a mais de 3 meses</option>
+              </select>
+            </div>
+            <div class="col-lg-12" *ngIf="showParamCupon">
+              <label for="formControlCupom">Cupom:</label>
+              <input type="text" class="form-control" id="inputParamCupon"  formControlName="inputParamCupon" placeholder="#cupomdacampanha">
+            </div>
+            <div class="col-lg-12" *ngIf="showParamProduct">
+              <label for="formControlNameProduct" >Nome do produto:</label>
+              <input type="text" class="form-control" id="inputNameProduct" formControlName="inputNameProduct" placeholder="Nome do produto">
+            </div>
+            <div class="col-lg-12">
+              <br>
+              <a class="btn btn-primary" (click)="sendMessage()" >Enviar mensagem</a>
+            </div>
+          </form>
+        </div>
+        <br>
+        <div class="card" >
+            <div class="col-xl-12 mb-5 mb-xl-0">
+              <div class="card shadow">
+                <div class="card-header border-0">
+                  <div class="row align-items-center">
+                    <div class="col">
+                      <span *ngIf="item.count">{{item.count}} contatos.</span>
+                      <br>
+                      <span *ngIf="item.unity">Unidade: {{item.unity}}</span>
+                    </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="table-responsive" *ngIf="item.dateOrders.length > 0">
+                  <h3 class="mb-0">Clientes por quantidade de dias Inativos</h3>
+                  <!-- Projects table -->
+                  <table class="table align-items-center table-flush">
+                    <thead class="thead-light">
+                      <tr>
+                          <th scope="col">Dias de Inatividade</th>
+                          <th scope="col">Quantidade</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let row of item.dateOrders">
+                        <th >
+                          {{getCountDasy(row.orderDate)}}
+                        </th>
+                        <td>
+                          {{row.count}}
+                         </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
       
+                <br>
+      
+                <div class="table-responsive" *ngIf="item.countOrders.length > 0">
+                  <h3 class="mb-0">Clientes por quantidade de pedidos</h3>
+                  <!-- Projects table -->
+                  <table class="table align-items-center table-flush">
+                    <thead class="thead-light">
+                      <tr>
+                        <th scope="col">Quantidade de pedidos</th>
+                        <th scope="col">Quantidade de clientes</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let row of item.countOrders">
+                        <td scope="row">
+                          {{row.count}}
+                        </td>
+                        <th>
+                          {{row.orderCount}}
+                         </th> 
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+        </div>
       </div>
     </div>
 </div>

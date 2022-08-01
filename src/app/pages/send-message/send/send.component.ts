@@ -139,7 +139,6 @@ export class SendComponent implements OnInit {
   }
 
   sendMessage(){
-    debugger
     if(this.msgForm.valid)
     {
       var msgToSend : MessageSendType = {
@@ -237,6 +236,13 @@ export class SendComponent implements OnInit {
     } else{
       this.toastr.error('Preencha os campos obrigatórios.');
     }
+  }
+
+  getCountDasy(date){
+    var dateFrom = new Date(date)
+    var dateNow = new Date(Date.now())
+    var timeDiff = Math.abs(dateFrom.getTime() - dateNow.getTime());
+    return Math.ceil(timeDiff / (1000 * 3600 * 24)); 
   }
   
 getStringFilterDay(filterDays){
