@@ -11,6 +11,7 @@ export interface DataDashboard{
 }
 
 export interface ReportTemplate{
+    template:string
     countSendMessage:number,
     countReceiverAnswer:number,
     countSendMessageThisMonth:number,

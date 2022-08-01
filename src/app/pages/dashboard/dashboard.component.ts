@@ -3,12 +3,11 @@ import { ToastrService } from 'ngx-toastr';
 import { catchError, throwError } from 'rxjs';
 import { ClientStoreType } from 'src/app/models/ClientType';
 import { ContactListType } from 'src/app/models/ContactListType';
-import { Answers, DashboardResType, ReportSendEntity, ReportTemplate, Senders } from 'src/app/models/dashboardType';
+import { ReportSendEntity, ReportTemplate } from 'src/app/models/dashboardType';
 import { ReponseWrapper } from 'src/app/models/response-api-default';
 import { ContactListService } from 'src/app/services/contact-list.service';
 import { DashboardService } from 'src/app/services/dashboard.service';
 import { Store } from '@ngrx/store';
-import { ReportService } from 'src/app/services/report.service';
 import { ReportMessages } from 'src/app/models/ReportMessages';
 
 @Component({
@@ -22,7 +21,6 @@ export class DashboardComponent implements OnInit {
     private contactListService: ContactListService,
     private toastr: ToastrService,
     private dashboardService: DashboardService,
-    private reportService: ReportService,
     private store: Store
     
   ) { }
@@ -46,7 +44,8 @@ export class DashboardComponent implements OnInit {
         return throwError(() => new Error(error.message));
       }))
       .subscribe(res => {
-        this.historySenders = res.dataDashboard.historySenders;
+        this.historySenders = res.dataDashboard.historySenders;  
+        debugger
         this.reportTemplates = res.dataDashboard.reportTemplates;   
         this.countSendMessage = res.dataDashboard.countSendMessage;
         this.countReceiverAnswer = res.dataDashboard.countReceiverAnswer;
@@ -65,15 +64,6 @@ export class DashboardComponent implements OnInit {
         this.fileIsProcessing = res.resume.fileIsProcessing;
         this.listContactList = res.resume.contactLists;
       });
-
-      this.reportService.get()
-          .pipe(catchError(error => {
-            return throwError(() => new Error(error.message));
-          }))
-          .subscribe(res => {
-            console.log(res);
-          });
-
 
     // this.store.select(selectClient).subscribe(client => {
     //   this.client = client;

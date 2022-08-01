@@ -67,47 +67,104 @@
     </div>
   </div>
 </div>
+
 <div class="container-fluid mt--7 mb-5">
-  <div class="row">
+  <div class="row" *ngFor="let report of reportTemplates">
     <div class="col-xl-8 mb-5 mb-xl-0">
       <div class="card shadow mt-5">
         <div class="card-header border-0">
           <div class="row align-items-center">
             <div class="col">
-              <h3 class="mb-0">Histórico de Mensagens Enviadas</h3>
+              <h3 class="mb-0">Histórico: {{report.template}}</h3>
+              <br>
+              <span>Quantidade de Envios : {{report.countSendMessage}}</span>
+              <br>
+              <span>Quantidade de respostas : {{report.countReceiverAnswer}}</span>
+              <br>
+              <span>Quantidade de mensagens enviadas nesse mês : {{report.countSendMessageThisMonth}}</span>
+              <br>
+              <span>Quantidade de mensagens recebidas nesse mês : {{report.countReceiverAnswerThisMonth}}</span>
             </div>
           </div>
         </div>
-        <div class="table-responsive">
-          <!-- Projects table -->
-          <table class="table align-items-center table-flush">
-            <thead class="thead-light">
-              <tr>
-                <th scope="col">Template</th>
-                <th scope="col">Data de Envio</th>
-                <th scope="col">Total</th>
-                <th scope="col">Com sucesso</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let item of historySenders">
-                <th scope="row">
-                 {{item.template}}
-                </th>
-                <td>
-                 {{item.dateTime  | date: 'dd/MM/yyyy hh:MM:ss' : '+0300'}}
-                </td>
-                <td>
-                  {{item.count | number :'4.0-0':'pt-BR'}}
-                </td>
-                <td>
-                  {{item.countOk | number :'4.0-0':'pt-BR'}}
-                </td>
-              </tr>
-            </tbody>
-          </table>
+        <div *ngIf="report.totalAnswer.length > 0">
+          <div class="table-responsive" >
+            <!-- Projects table -->
+            <table class="table align-items-center table-flush">
+              <thead class="thead-light">
+                <tr>
+                 <th scope="col">Resposta</th>
+                  <th scope="col">Quantidade</th>
+                  <th scope="col">Mês/Ano</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr scope="row" *ngFor="let answer of report.totalAnswer">
+                  <th >
+                   {{answer.answer}}
+                  </th>
+                  <td>  {{answer.count | number}} 
+                  </td>
+                  <td>
+                   {{answer.month}}/{{answer.year}} 
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<br>
+
+<div>
+  
+  <div class="container-fluid mt--7 mb-5">
+    <div class="row">
+      <div class="col-xl-8 mb-5 mb-xl-0">
+        <div class="card shadow mt-5">
+          <div class="card-header border-0">
+            <div class="row align-items-center">
+              <div class="col">
+                <h3 class="mb-0">Histórico de Mensagens Enviadas</h3>
+              </div>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <!-- Projects table -->
+            <table class="table align-items-center table-flush">
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col">Template</th>
+                  <th scope="col">Data de Envio</th>
+                  <th scope="col">Total</th>
+                  <th scope="col">Com sucesso</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of historySenders">
+                  <th scope="row">
+                   {{item.template}}
+                  </th>
+                  <td>
+                   {{item.dateTime  | date: 'dd/MM/yyyy hh:MM:ss' : '+0300'}}
+                  </td>
+                  <td>
+                    {{item.count | number :'4.0-0':'pt-BR'}}
+                  </td>
+                  <td>
+                    {{item.countOk | number :'4.0-0':'pt-BR'}}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+  
