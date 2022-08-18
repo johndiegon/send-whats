@@ -67,11 +67,11 @@ export class ChatComponent implements OnInit {
     .build();
     
     connection.on('broadcastNewMessage', data => {
-       console.log(data);
+       this.showMessageOnChat(data);
     });
 
-    connection.start()
-    .then(() => console.log('Startado') );
+    connection.start();
+    //.then(() => console.log('Startado') );
 
   }
   createForm() {
@@ -195,5 +195,11 @@ export class ChatComponent implements OnInit {
       this.typedMessage.setValue('');
     }
     this.focusMessage();
+  }
+
+  showMessageOnChat(chat: Chat) {
+    if (this.phoneClient.phone == chat.phoneFrom) {
+      this.selectedMessagesOnChat.push(chat);
+    }
   }
 }
