@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { ChartConfiguration } from 'chart.js';
-import { ReportTemplate } from 'src/app/models/dashboardType';
+import { DashboardResType } from 'src/app/models/dashboardType';
 import { ReponseWrapper } from 'src/app/models/response-api-default';
 import { ChartTemplate } from 'src/app/shared/helpers/chart-template';
 import { colorsChart } from 'src/app/variables/charts';
@@ -11,7 +11,7 @@ import { colorsChart } from 'src/app/variables/charts';
   styleUrls: ['./orders-day-night-chart.component.scss']
 })
 export class OrdersDayNightChartComponent implements OnChanges {
-  @Input() reportTemplate: ReportTemplate;
+  @Input() dataDashboard: ReponseWrapper<DashboardResType>;
   config: ChartConfiguration = {
     type: 'pie',
     options: {
@@ -42,18 +42,20 @@ export class OrdersDayNightChartComponent implements OnChanges {
   constructor() { }
 
   ngOnChanges(): void {
-    if (this.reportTemplate) {
-      this.populateConfig(this.reportTemplate);
+    if (this.dataDashboard) {
+      this.populateConfig(this.dataDashboard);
       this.configChart();
     }
   }
 
-  populateConfig(dataDashs: ReportTemplate) {
+  populateConfig(dataDashs: ReponseWrapper<DashboardResType>) {
     this._typeDatas.forEach(data => {
       this.config.data.labels.push(data.label);
-      this.config.data.datasets[0].data.push(dataDashs[data.type]);
+      this.config.data.datasets[0].data.push(dataDashs.dataDashboard[data.type]);
       (this.config.data.datasets[0].backgroundColor as any[]).push(data.color);
     });
+
+    console.log('config', this.config);
   }
 
   configChart() {

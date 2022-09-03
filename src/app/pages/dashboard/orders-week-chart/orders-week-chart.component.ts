@@ -59,7 +59,7 @@ export class OrdersWeekChartComponent implements OnChanges {
   populateConfig(dataDashs: ReponseWrapper<DashboardResType>) {
     this._typeDatas.forEach(data => {
       this.config.data.labels.push(data.label);
-      this.config.data.datasets[0].data.push(dataDashs[data.type]);
+      this.config.data.datasets[0].data.push(dataDashs.dataDashboard[data.type]);
       (this.config.data.datasets[0].backgroundColor as any[]).push(data.color);
     });
 

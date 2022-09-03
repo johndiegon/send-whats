@@ -7,12 +7,10 @@ export declare interface RouteInfo {
 
 export const ROUTES_MENU: RouteInfo[] = [
     { path: '/dashboard', title: 'Dashboard',  icon: 'ni-tv-2', class: '' },
-    { path: '/import-orders', title: 'Importar arquivos',  icon:'ni-cloud-upload-96', class: '' },
+    { path: '/import-orders', title: 'Importar Pedidos',  icon:'ni-cloud-upload-96', class: '' },
     { path: '/msg-default', title: 'Mensagem Padrão',  icon:'ni-single-copy-04', class: '' },
     { path: '/send-message', title: 'Enviar Mensagem',  icon:'ni-send', class: '' },
-    { path: '/chat', title: 'Chat',  icon:'ni-chat-round', class: '' },
- 
-    
+    { path: '/chat', title: 'Chat',  icon:'ni-chat-round', class: '' }
 ];
 
 export const ROUTES_MENU_SECUNDARY: RouteInfo[] = [

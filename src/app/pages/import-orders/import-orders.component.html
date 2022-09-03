@@ -32,49 +32,4 @@
 
     </div>
   </div>
-  
-<br>
-
-  <div class="card shadow">
-    <div class="row">
-       <div class="card-body">
-        <div class="card-header border-2">
-          <div class="row align-items-center">
-            <div class="col">
-              <h3 class="mb-0">Histórico de Mensagens Enviadas</h3>
-            </div>
-          </div>
-        </div>
-        <div class="table-responsive">
-          <!-- Projects table -->
-          <table class="table align-items-center table-flush">
-            <thead class="thead-light">
-              <tr>
-                <th scope="col">Nome do Arquivo</th>
-                <th scope="col">Quantidade de Linhas</th>
-                <th scope="col">Data da Importação</th>
-                <th scope="col">Mensagem de Error</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let item of historyInputFile">
-                <th scope="row">
-                 {{item.fileName}}
-                </th>
-                <td>
-                  {{item.lines | number :'4.0-0':'pt-BR'}}
-                </td>
-                <td>
-                  {{item.dateTime  | date: 'dd/MM/yyyy hh:MM:ss' : '+0300'}}
-                 </td>
-                <td>
-                  {{item.messageError}}
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-       </div>
-    </div>
 </div>
