@@ -17,7 +17,7 @@
     <!-- PasswordForm -->
     <div class="col-xl-4 order-xl-2 mb-5 mb-xl-0">
       <div class="card card-profile shadow">
-        <div class="card-header bg-light shadow">
+        <div class="card-header bg-secondary shadow">
           <div class="row align-items-center">
             <div class="col-8">
               <h3 class="mb-0">Minha Senha</h3>
@@ -58,7 +58,7 @@
 
     <!-- RegisterForm -->
     <div class="col-xl-8 order-xl-1">
-      <div class="card bg-gradient-lighter shadow">
+      <div class="card bg-secondary shadow">
         <div class="card-header bg-white border-0">
           <div class="row align-items-center">
             <div class="col-8">
@@ -183,14 +183,6 @@
               *ngIf="!!registerForm.controls?.phone?.errors?.minlength && !!registerForm.controls?.phone?.touched">Minimo
               obrigatório de "{{registerForm.controls?.phone?.errors?.minlength?.requiredLength}}" telefone(s)</span>
             <hr class="my-4" />
-
-            <div class="row">
-              <div class="col-12">
-                  <dsw-input-control label="Reposta Automática" for="answerDefault">
-                      <dsw-text-edit dwsInputSlot formControlName="answerDefault"></dsw-text-edit>
-                  </dsw-input-control>
-              </div>
-          </div>
 
             <div class="text-center">
               <button type="submit" [disabled]="!openFormRegister" class="btn btn-primary mt-4">

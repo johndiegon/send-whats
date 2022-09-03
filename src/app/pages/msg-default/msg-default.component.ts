@@ -3,7 +3,6 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { ToastrService } from 'ngx-toastr';
 import { catchError, throwError } from 'rxjs';
-import { MessageTemplate } from 'src/app/models/MessageTemplate';
 import { MessagePutType, MessageType } from 'src/app/models/MessageType';
 import { selectMessages } from 'src/app/redux/selectors.store';
 import { MessageService } from 'src/app/services/message.service';
@@ -39,8 +38,6 @@ export class MsgDefaultComponent implements OnInit {
     idClient: [''],
     title: ['', Validators.required],
     msg: ['', Validators.required],
-    positiveAnswer:[''],
-    // negativeAnswer:[''],
     image: ['']
   })
 
@@ -57,8 +54,6 @@ export class MsgDefaultComponent implements OnInit {
       idClient: msg.idClient,
       title: msg.title,
       msg: msg.message,
-      positiveAnswer: msg.positiveAnswer,
-      // negativeAnswer: msg.negativeAnswer,
       image: msg.picture
     })
   }
@@ -79,16 +74,7 @@ export class MsgDefaultComponent implements OnInit {
   }
 
   private postNewMessage() {
-
-    const message: MessageTemplate = 
-    { message: this.msgForm.value.msg, 
-       negativeAnswer: "",
-      positiveAnswer: this.msgForm.value.positiveAnswer, 
-      title: this.msgForm.value.title
-     };
-    
-
-    this.messageService.post(message)
+    this.messageService.post(this.msgForm.value.msg, this.msgForm.value.title)
       .pipe(catchError(error => {
         this.toastr.error('Erro ao cadastrar nova mensagem, por favor contacte o suporte!');
         return throwError(() => new Error(error.message));
@@ -96,23 +82,14 @@ export class MsgDefaultComponent implements OnInit {
       .subscribe(_ => {
         this.toastr.success('Mensagem criada com sucesso!');
         this.getMessages();
-        this.msgForm.reset({ title: '', msg: '', image: '', positiveAnswer: '', negativeAnswer:'' });
+        this.msgForm.reset({ title: '', msg: '', image: '' });
         this.editMsgFlag = false;
       });
   }
 
   private updateMessage() {
     const { id, idClient, title, msg, image } = this.msgForm.value;
-    const message: MessagePutType = 
-    { idMessage: id, 
-      idClient, 
-      message: msg, 
-      title, 
-      picture: image,
-      negativeAnswer: "",
-      positiveAnswer: this.msgForm.value.positiveAnswer
-    };
-
+    const message: MessagePutType = { idMessage: id, idClient, message: msg, title, picture: image };
     this.messageService.put(message)
       .pipe(catchError(error => {
         this.toastr.error('Erro ao editar mensagem, por favor contacte o suporte!');

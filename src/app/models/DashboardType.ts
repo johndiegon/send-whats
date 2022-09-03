@@ -1,44 +1,67 @@
 export interface DashboardResType {
-    dataDashboard:DataDashboard
+    dataDashboard: DashboardType,
+    allDashboard: DashboardType[]
 }
-export interface DataDashboard{
-    countSendMessage:number,
-    countReceiverAnswer:number,
-    countSendMessageThisMonth:number,
-    countReceiverAnswerThisMonth:number,
-    reportTemplates:ReportTemplate[]
-}
-
-export interface ReportTemplate{
-    template:string
-    countSendMessage:number,
-    countReceiverAnswer:number,
-    countSendMessageThisMonth:number,
-    countReceiverAnswerThisMonth:number,
-    totalAnswer: Answers[],
-    totalSenders: Senders[],
-    historySenders: ReportSendEntity[]
-}
-
-export interface Answers {
-    template:string,
-    answer:string,
-    count:number, 
-    month:string, 
-    year:string
-}
-
-export interface Senders {
-    template:string,
-    count:number, 
-    countOk:number, 
-    month:string, 
-    year:string
-}
-
-export interface ReportSendEntity{
-    template:string,
-    count:number, 
-    countOk:number, 
-    dateTime:Date, 
+export interface DashboardType {
+    id: string,
+    dateTime: string,
+    idClient: string,
+    activeCustomers: number,
+    inactiveCustomers90Days: number,
+    inactiveCustomers60Days: number,
+    inactiveCustomers30Days: number,
+    orderQuantity: number,
+    averageTicket: number,
+    ordersDuringTheNigth: number,
+    ordersDuringTheDay: number,
+    ordersOnSunday: number,
+    ordersOnTuesday: number,
+    ordersOnWednesday: number,
+    ordersOnThursday: number,
+    ordersOnFriday: number,
+    ordersOnSaturday: number,
+    ordersOnMonday: number,
+    revenues: number,
+    filter30Days: {
+        orderQuantity: number,
+        averageTicket: number,
+        revenues: number,
+        ordersDuringTheNigth: number,
+        ordersDuringTheDay: number,
+        ordersOnSunday: number,
+        ordersOnTuesday: number,
+        ordersOnWednesday: number,
+        ordersOnThursday: number,
+        ordersOnFriday: number,
+        ordersOnSaturday: number,
+        ordersOnMonday: number
+    },
+    filter60Days: {
+        orderQuantity: number,
+        averageTicket: number,
+        revenues: number,
+        ordersDuringTheNigth: number,
+        ordersDuringTheDay: number,
+        ordersOnSunday: number,
+        ordersOnTuesday: number,
+        ordersOnWednesday: number,
+        ordersOnThursday: number,
+        ordersOnFriday: number,
+        ordersOnSaturday: number,
+        ordersOnMonday: number
+    },
+    filter90Days: {
+        orderQuantity: number,
+        averageTicket: number,
+        revenues: number,
+        ordersDuringTheNigth: number,
+        ordersDuringTheDay: number,
+        ordersOnSunday: number,
+        ordersOnTuesday: number,
+        ordersOnWednesday: number,
+        ordersOnThursday: number,
+        ordersOnFriday: number,
+        ordersOnSaturday: number,
+        ordersOnMonday: number
+    }
 }

@@ -23,13 +23,13 @@ import { environment } from 'src/environments/environment';
 export class ChatComponent implements OnInit {
 
   selected = false;
-  
-   @ViewChild("textAreaMessage", {static: false}) textAreaMessage: ElementRef;
+  @ViewChild("textAreaMessage", {static: false}) textAreaMessage: ElementRef;
   client: ClientStoreType;
   selectedMessagesOnChat: Chat[] = [];
   listLastMessages: ActiveMessageLast[] = [];
   utcNow = this.dateConfigService.utcNow();
   messageForm: FormGroup;
+  loadInit = false;
   uriWhatsDialog = 'https://wa.me/';
   phoneMain =  {
     phone: '',
@@ -50,18 +50,20 @@ export class ChatComponent implements OnInit {
     this.createForm();
   }
 
-  ngOnInit() {   
+  ngOnInit() {
     this.store.select(selectClient).subscribe(data => {
       this.client = data;
-      //this.createConnectionSignalR();
-      this.loadLastMessage();
+      if (this.client && !this.loadInit) {
+        this.loadInit = true;
+        this.createConnectionSignalR();
+        this.loadLastMessage();
+      }
     });
   }
 
   createConnectionSignalR() {
-    var token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6WyIzYmNhZDM5Yi1iMjkwLTQ4MTEtYjg0Mi1mMmE4NTQ1ZjZkM2QiLCIzYmNhZDM5Yi1iMjkwLTQ4MTEtYjg0Mi1mMmE4NTQ1ZjZkM2QiXSwianRpIjoiNTVkOWZjNzFlOWYxNDYxMGIzODNmYzU4OTE1NjU2MDUiLCJDdWx0dXJlIjoicHQtQlIiLCJDbGFpbXMiOiJbe1wiSXNzdWVyXCI6XCJMT0NBTCBBVVRIT1JJVFlcIixcIk9yaWdpbmFsSXNzdWVyXCI6XCJMT0NBTCBBVVRIT1JJVFlcIixcIlByb3BlcnRpZXNcIjp7fSxcIlN1YmplY3RcIjpudWxsLFwiVHlwZVwiOlwiVXNlck5hbWVcIixcIlZhbHVlXCI6XCJUZWNoIExlYWRcIixcIlZhbHVlVHlwZVwiOlwiaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEjc3RyaW5nXCJ9LHtcIklzc3VlclwiOlwiTE9DQUwgQVVUSE9SSVRZXCIsXCJPcmlnaW5hbElzc3VlclwiOlwiTE9DQUwgQVVUSE9SSVRZXCIsXCJQcm9wZXJ0aWVzXCI6e30sXCJTdWJqZWN0XCI6bnVsbCxcIlR5cGVcIjpcIlJlZ2lzdHJhdGlvbk51bWJlcnNcIixcIlZhbHVlXCI6XCJbXFxcIjY3MzgwMTcwMDAwMTEwXFxcIixcXFwiNjczODAxNzAwMDA3MDVcXFwiLFxcXCI2NzM4MDE3MDAwMDIwOVxcXCIsXFxcIjY3MzgwMTcwMDAwNDYyXFxcIixcXFwiNjczODAxNzAwMDA1NDNcXFwiXVwiLFwiVmFsdWVUeXBlXCI6XCJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYSNzdHJpbmdcIn0se1wiSXNzdWVyXCI6XCJMT0NBTCBBVVRIT1JJVFlcIixcIk9yaWdpbmFsSXNzdWVyXCI6XCJMT0NBTCBBVVRIT1JJVFlcIixcIlByb3BlcnRpZXNcIjp7fSxcIlN1YmplY3RcIjpudWxsLFwiVHlwZVwiOlwiQ29tcGFuaWVzR3VpZFwiLFwiVmFsdWVcIjpcIltcXFwiMjUyNmY2YzctYzRkMC00NjcxLTk5OWEtMzc4MjI3OGQ5MzkyXFxcIixcXFwiY2RjOTg4ZWUtYWI3Yi00NWQwLWFmMjEtZWQ1NTI3ZmUyNzY1XFxcIixcXFwiMjhhOGFjNWItM2UyZS00Yjk3LTgwY2EtYmNjNGJkYzEwZTRiXFxcIixcXFwiMTc3Y2U2YjYtMWQwZi00OWU1LTliMzgtMTgzZWYwMTNkZTEwXFxcIixcXFwiM2MzMzIwNWEtOTMyMS00Y2U3LWFkY2QtOGM2OWM2Y2RhNzM4XFxcIl1cIixcIlZhbHVlVHlwZVwiOlwiaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEjc3RyaW5nXCJ9LHtcIklzc3VlclwiOlwiTE9DQUwgQVVUSE9SSVRZXCIsXCJPcmlnaW5hbElzc3VlclwiOlwiTE9DQUwgQVVUSE9SSVRZXCIsXCJQcm9wZXJ0aWVzXCI6e30sXCJTdWJqZWN0XCI6bnVsbCxcIlR5cGVcIjpcIkZpcnN0QWNjZXNzXCIsXCJWYWx1ZVwiOlwiMVwiLFwiVmFsdWVUeXBlXCI6XCJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYSNzdHJpbmdcIn1dIiwibmJmIjoxNjUxMDk5MTYwLCJleHAiOjE2NTExMjA3NjAsImlhdCI6MTY1MTA5OTE2MCwiaXNzIjoiTU1hcnJhSXNzdWVyIiwiYXVkIjoiTU1hcnJhQXVkaWVuY2UifQ.Iv0bcY42n18HRMAk_ldFXIfdV1IoEKChuqxDKdrO7p8';
     let connection = new HubConnectionBuilder()
-    .withUrl(environment.FEATURE_API + "/chat", { accessTokenFactory: () => this.client.user.token })
+    .withUrl(environment.CHAT_SERVICE + "/chat", { accessTokenFactory: () => this.client.user.token })
     .build();
     
     connection.on('broadcastNewMessage', data => {
@@ -120,7 +122,6 @@ export class ChatComponent implements OnInit {
     this.listLastMessages.map(x => x.checked = false);
     item.checked = true;
     this.focusMessage();  
-    
     this.phoneClient.phone = item.phoneFrom == this.phoneMain.phone ? item.phoneTo : item.phoneFrom;
     this.phoneClient.name = item.phoneFrom == this.phoneMain.phone ? item.nameTo : item.nameFrom;
     if (this.phoneClient) {
