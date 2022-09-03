@@ -1,95 +1,63 @@
 <div class="header bg-gradient-green2 pb-8 pt-7">
   <div class="container-fluid">
     <div class="header-body">
-      <div class="row">
-        <div class="col col-auto text-white mb-3">Data de criação do relatório: {{dataDash?.dataDashboard?.dateTime | date: 'd, MMM y' : '+0300'}}</div>
-      </div>
       <!-- Card stats -->
-      <div class="row">
-        <div class="col col-auto">
-          <div class="card card-stats mb-4">
-            <div class="card-body">
-              <div class="row">
-                <div class="col">
-                  <h5 class="card-title text-uppercase text-muted mb-0">Total de Pedidos</h5>
-                  <span class="h2 font-weight-bold mb-0">{{dataDash?.dataDashboard?.orderQuantity}}</span>
+      <div class="card-group">
+        <div class="card card-stats p-2 mx-2 mt-4 position-relative" *ngIf="countSendMessage" >
+          <div class="card-body">
+            <div class="row">
+              <div class="col">
+                <h6 class="card-title text-uppercase text-muted mb-1">Mensagens Enviadas</h6>
+                <span class="h3 font-weight-bold mb-0">{{countSendMessage}}</span>
+              </div>
+              <div class="col-auto">
+                <div class="icon icon-shape bg-danger text-white rounded-circle shadow">
+                  <i class="fas fa-chart-bar"></i>
                 </div>
-                <div class="col-auto">
-                  <div class="icon icon-shape bg-danger text-white rounded-circle shadow">
-                    <i class="fas fa-chart-bar"></i>
-                  </div>
+              </div> 
+            </div>
+          </div>
+        </div>
+        <div class="card card-stats p-2 mx-2 mt-4 position-relative" *ngIf="countSendMessageThisMonth">
+          <div class="card-body">
+            <div class="row">
+              <div class="col">
+                <h6 class="card-title text-uppercase text-muted mb-1">Mensagens Enviadas / {{getMonth()}}</h6>
+                <span class="h3 font-weight-bold mb-0">{{countSendMessageThisMonth}}</span>
+              </div>
+              <div class="col-auto">
+                <div class="icon icon-shape bg-danger text-white rounded-circle shadow">
+                  <i class="fas fa-chart-bar"></i>
+                </div>
+              </div> 
+            </div>
+          </div>
+        </div>
+        <div class="card card-stats p-2 mx-2 mt-4 position-relative" *ngIf="countReceiverAnswer">
+          <div class="card-body">
+            <div class="row">
+              <div class="col">
+                <h6 class="card-title text-uppercase text-muted mb-1">Mensagens Recebidas</h6>
+                <span class="h3 font-weight-bold mb-0">{{countReceiverAnswer | number :'4.0-0':'pt-BR'}}</span>
+              </div>
+              <div class="col-auto">
+                <div class="icon icon-shape bg-info text-white rounded-circle shadow">
+                  <i class="fas fa-users"></i>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="col col-auto">
-          <div class="card card-stats mb-4">
-            <div class="card-body">
-              <div class="row">
-                <div class="col">
-                  <h5 class="card-title text-uppercase text-muted mb-0">Faturamento</h5>
-                  <span class="h2 font-weight-bold mb-0">{{dataDash?.dataDashboard?.revenues | currency:'BRL':true}}</span>
-                </div>
-                <div class="col-auto">
-                  <div class="icon icon-shape bg-green text-white rounded-circle shadow">
-                    <i class="fa fa-dollar-sign"></i>
-                  </div>
-                </div>
+        <div class="card card-stats p-2 mx-2 mt-4 position-relative" *ngIf="countReceiverAnswerThisMonth">
+          <div class="card-body">
+            <div class="row">
+              <div class="col">
+                <h6 class="card-title text-uppercase text-muted mb-1">Mensagens Recebidas / {{getMonth()}}</h6>
+                <span class="h3 font-weight-bold mb-1">{{countReceiverAnswerThisMonth | number :'4.0-0':'pt-BR'}}</span>
               </div>
-              <!-- <p class="mt-3 mb-0 text-muted text-sm">
-                <span class="text-success mr-2"><i class="fa fa-arrow-up"></i>  </span>
-                <span class="text-nowrap">Desde a ultima importação</span>
-              </p> -->
-            </div>
-          </div>
-        </div>
-        <div class="col col-auto">
-          <div class="card card-stats mb-4">
-            <div class="card-body">
-              <div class="row">
-                <div class="col">
-                  <h5 class="card-title text-uppercase text-muted mb-0">Faturamento Médio</h5>
-                  <span class="h2 font-weight-bold mb-0">{{dataDash?.dataDashboard?.averageTicket | currency:'BRL':true }}</span>
-                </div>
-                <div class="col-auto">
-                  <div class="icon icon-shape bg-green text-white rounded-circle shadow">
-                    <i class="fa fa-dollar-sign"></i>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col col-auto">
-          <div class="card card-stats mb-4">
-            <div class="card-body">
-              <div class="row">
-                <div class="col">
-                  <h5 class="card-title text-uppercase text-muted mb-0">Clientes Ativos</h5>
-                  <span class="h2 font-weight-bold mb-0">{{dataDash?.dataDashboard?.activeClients | number :'4.0-0':'pt-BR'}}</span>
-                </div>
-                <div class="col-auto">
-                  <div class="icon icon-shape bg-info text-white rounded-circle shadow">
-                    <i class="fas fa-users"></i>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col col-auto">
-          <div class="card card-stats mb-4">
-            <div class="card-body">
-              <div class="row">
-                <div class="col">
-                  <h5 class="card-title text-uppercase text-muted mb-0">Clientes Inativos</h5>
-                  <span class="h2 font-weight-bold mb-0">{{totalInatives | number :'4.0-0':'pt-BR'}}</span>
-                </div>
-                <div class="col-auto">
-                  <div class="icon icon-shape bg-info text-white rounded-circle shadow">
-                    <i class="fas fa-users"></i>
-                  </div>
+              <div class="col-auto">
+                <div class="icon icon-shape bg-info text-white rounded-circle shadow">
+                  <i class="fas fa-users"></i>
                 </div>
               </div>
             </div>
@@ -99,56 +67,97 @@
     </div>
   </div>
 </div>
-<div class="container-fluid mt--7 mb-5">
-  <div class="row">
-    <div class="col-xl-8 mb-5 mb-xl-0">
-      <div class="card bg-gradient-dark shadow">
-        <dsw-client-status-chart [dataDashboard]="dataDash"></dsw-client-status-chart>
-      </div>
 
+<div class="container-fluid mt--7">
+  <div class="row" *ngFor="let report of reportTemplates">
+    <div class="col-xl-8 mb-5 mb-xl-0">
       <div class="card shadow mt-5">
         <div class="card-header border-0">
           <div class="row align-items-center">
             <div class="col">
-              <h3 class="mb-0">Mensagens Enviadas</h3>
+              <h3 class="mb-0">Histórico: {{report.template}}</h3>
+              <br>
+              <span>Quantidade de Envios : {{report.countSendMessage}}</span>
+              <br>
+              <span>Quantidade de respostas : {{report.countReceiverAnswer}}</span>
+              <br>
+              <span>Quantidade de mensagens enviadas nesse mês : {{report.countSendMessageThisMonth}}</span>
+              <br>
+              <span>Quantidade de mensagens recebidas nesse mês : {{report.countReceiverAnswerThisMonth}}</span>
             </div>
           </div>
         </div>
-        <div class="table-responsive">
-          <!-- Projects table -->
-          <table class="table align-items-center table-flush">
-            <thead class="thead-light">
-              <tr>
-                <th scope="col">Lista</th>
-                <th scope="col">Qtd clientes</th>
-                <th scope="col">Data</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let item of dataDash?.dataDashboard?.Listmessage">
-                <th scope="row">
-                 {{item.nameList}}
-                </th>
-                <td>
-                  {{item.qtdClients | number :'4.0-0':'pt-BR'}}
-                </td>
-                <td>
-                 {{item.dateTime  | date: 'dd/MM/yyyy' : '+0300'}}
-                </td>
-              </tr>
-            </tbody>
-          </table>
+        <div *ngIf="report.totalAnswer.length > 0">
+          <div class="card-header border-0">
+            <div class="row align-items-center">
+              <div class="col">
+                <h3 class="mb-0">Mensagens Recebidas</h3>
+              </div>
+            </div>
+          </div>
+          <div class="table-responsive" >
+            <!-- Projects table -->
+            <table class="table align-items-center table-flush">
+              <thead class="thead-light">
+                <tr>
+                 <th scope="col">Resposta</th>
+                  <th scope="col">Quantidade</th>
+                  <th scope="col">Mês/Ano</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr scope="row" *ngFor="let answer of report.totalAnswer">
+                  <th >
+                   {{answer.answer}}
+                  </th>
+                  <td>  
+                    {{answer.count | number}} 
+                  </td>
+                  <td>
+                   {{answer.month}}/{{answer.year}} 
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
-      </div>
-    </div>
-    <div class="col-xl-4">
-      <div class="card shadow">
-        <dsw-orders-day-night-chart [dataDashboard]="dataDash"></dsw-orders-day-night-chart>   
-      </div>
-
-      <div class="card shadow mt-5 ">
-        <dsw-orders-week-chart  [dataDashboard]="dataDash"></dsw-orders-week-chart>
+        <div *ngIf="report.historySenders.length > 0">
+          <div class="card-header border-0">
+            <div class="row align-items-center">
+              <div class="col">
+                <h3 class="mb-0">Mensagens Enviadas</h3>
+              </div>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <!-- Projects table -->
+            <table class="table align-items-center table-flush">
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col">Template</th>
+                  <th scope="col">Data de Envio</th>
+                  <th scope="col">Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of report.historySenders">
+                  <th scope="row">
+                   {{item.template}}
+                  </th>
+                  <td>
+                   {{item.dateTime  | date: 'dd/MM/yyyy'}}
+                  </td>
+                  <td>
+                    {{item.count}}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>   
+        <div>
       </div>
     </div>
   </div>
 </div>
+
+  
