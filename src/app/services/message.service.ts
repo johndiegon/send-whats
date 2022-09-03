@@ -8,6 +8,7 @@ import { ToastrService } from 'ngx-toastr';
 import { updateAll } from '../redux/actions/message.action';
 import { Store } from '@ngrx/store';
 import { MessageTemplate } from '../models/MessageTemplate';
+import { ContactsCountResponse } from '../models/ContactsCountResponse';
 
 @Injectable({ providedIn: 'root' })
 export class MessageService {
@@ -73,6 +74,21 @@ export class MessageService {
                 , 'Access-Control-Allow-Origin': '*'
             }
         });
+    }
+
+    getCount(message: MessageSendType) {
+        return this.httpClient.post<ReponseWrapper<ContactsCountResponse>>(`${environment.FEATURE_API}/Message/count-contacts`, message, {
+            headers: {
+                'Access-Control-Allow-Credentials': 'true'
+                , 'Content-Type': 'application/json'
+                , 'Access-Control-Allow-Origin': '*'
+            }
+        }).pipe(
+            catchError(error => {
+                this.toastr.error('Erro ao procurar a lista de mensagens, por favor contacte o suporte!');
+                return throwError(() => new Error(error.message));
+            })
+        );
     }
 }
 

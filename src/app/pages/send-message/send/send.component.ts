@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { FailedToNegotiateWithServerError } from '@microsoft/signalr/dist/esm/Errors';
 import { Store } from '@ngrx/store';
 import { ChartConfiguration } from 'chart.js';
+import { debug } from 'console';
 import { ToastrService } from 'ngx-toastr';
 import { catchError, throwError } from 'rxjs';
 import { ContactListType, FilterWeekDays } from 'src/app/models/ContactListType';
@@ -41,6 +43,12 @@ export class SendComponent implements OnInit {
   item:ContactListType;
   nameTemplate:string;
   message:string
+  countContacts:number;
+  showModal:boolean =false;
+  showButton:boolean =false;
+  showLoad:boolean =true;
+  showProcess:boolean = false;
+  params:string[] = [];
  
   config: ChartConfiguration = {
     type: 'bar',
@@ -94,148 +102,147 @@ export class SendComponent implements OnInit {
     inputFilterDays :[''],
     inputMaxCountOrders: [''],
     inputMinCountOrders: [''],
-    inputParamCupon: [''],
+    inputParam: [''],
     inputNameProduct: [''],
     inputData: [''],
-    inputDays:['']
+    inputMaxDays:[''],
+    inputMinDays:['']
   })
 
   setParams(){
-     var params:string[];
      this.listMsg.forEach( msg => {
        if(msg.id == this.msgForm.controls.inputListMsg.value){
-         params = msg.params;
+         this.params = msg.params;
          this.nameTemplate = msg.title;
          this.message = msg.message
        }
      })
-   
-     this.showParamData = false;
-     this.showParamCupon = false;
-     this.showParamProduct = false;
-     this.showParamOrder = false;
+  }
 
-     if(params){
-       this.setShowParams(params)
-     }
   
-  }
-
-  setShowParams(params:string[]){
-     params.forEach(param => {
-       if(param == "data")
-       {
-         this.showParamData = true;
-       }
-       if(param == "product")
-       {
-         this.showParamProduct = true;
-       }
-       if(param == "cupom")
-       {
-         this.showParamCupon = true;
-       }
-     });
-  }
-
   sendMessage(){
     if(this.msgForm.valid)
     {
-      var msgToSend : MessageSendType = {
-        template:this.nameTemplate,
-
-        params:[]
-      };
-
-
-       msgToSend.params.push({
-          name : 'listName',
-          value : this.item.name
-        });
-
-      if(this.item.unity){
-        msgToSend.params.push({
-          name : 'unity',
-          value : this.item.unity
-        });
-      }
-      
-      debugger
-      if(this.item.type){
-        msgToSend.params.push({
-          name : 'typeList',
-          value : this.item.type.toString()
-        });
-      }
-
-      if(this.msgForm.controls.inpuCountMenssage.value){
-        msgToSend.params.push({
-          name : 'countMessages',
-          value : this.msgForm.controls.inpuCountMenssage.value.toString()
-        });
-      }
-
-       if(this.msgForm.controls.inputFilterDays.value){
-        msgToSend.params.push({
-          name : 'inputFilterDays',
-          value : this.msgForm.controls.inputFilterDays.value.toString()
-        });
-       }
-
-       if(this.msgForm.controls.inputMaxCountOrders.value){
-        msgToSend.params.push({
-          name : 'inputMaxCountOrders',
-          value : this.msgForm.controls.inputMaxCountOrders.value.toString()
-        });
-       }
-
-       if(this.msgForm.controls.inputMinCountOrders.value){
-        msgToSend.params.push({
-          name : 'inputMinCountOrders',
-          value : this.msgForm.controls.inputMinCountOrders.value.toString()
-        });
-       }
-
-       if(this.msgForm.controls.inputParamCupon.value){
-        msgToSend.params.push({
-          name : 'inputParamCupon',
-          value : this.msgForm.controls.inputParamCupon.value.toString()
-        });
-       }
-
-       if(this.msgForm.controls.inputNameProduct.value){
-        msgToSend.params.push({
-          name : 'inputNameProduct',
-          value : this.msgForm.controls.inputNameProduct.value.toString()
-        });
-       }
-
-       if(this.msgForm.controls.inputData.value){
-        msgToSend.params.push({
-          name : 'inputData',
-          value : this.msgForm.controls.inputData.value.toString()
-        });
-       }
-
-       if(this.msgForm.controls.inputDays.value){
-        msgToSend.params.push({
-          name : 'inputDays',
-          value : this.msgForm.controls.inputDays.value.toString()
-        });
-       }
-      
-
-      this.messageService.send(msgToSend)
+      this.showModalProcess()
+      var msgTosend = this.getParam();
+      this.messageService.send(msgTosend)
       .pipe(catchError(error => {
         this.toastr.error('Erro ao enviar mensagem para a lista!');
         return throwError(() => new Error(error.message));
       }))
-      .subscribe(_ => {
+      .subscribe( res=> {
+        this.closeModal()
         this.toastr.success('Mensagem enviada com sucesso!');
       });
     } else{
       this.toastr.error('Preencha os campos obrigatórios.');
     }
+  }
+
+ showCountToSendMessage(){
+    if(this.msgForm.valid)
+    {
+      this.openModal()
+      var msgTosend = this.getParam();
+      this.messageService.getCount(msgTosend)
+      .pipe(catchError(error => {
+        this.toastr.error('Erro ao enviar mensagem para a lista!');
+        return throwError(() => new Error(error.message));
+      }))
+      .subscribe( res => {
+        this.showButton = true;
+        this.showLoad = false;
+        this.countContacts= res.total;
+        });
+    } else{
+      this.toastr.error('Preencha os campos obrigatórios.');
+    }
+  }
+
+  getParam(): MessageSendType{
+    var msgToSend : MessageSendType = {
+      template:this.nameTemplate,
+      params:[]
+    };
+     msgToSend.params.push({
+        name : 'listName',
+        value : this.item.name
+      });
+
+    if(this.item.unity){
+      msgToSend.params.push({
+        name : 'unity',
+        value : this.item.unity
+      });
+    }
+    
+    if(this.item.type){
+      msgToSend.params.push({
+        name : 'typeList',
+        value : this.item.type.toString()
+      });
+    }
+
+    if(this.msgForm.controls.inpuCountMenssage.value){
+      msgToSend.params.push({
+        name : 'countMessages',
+        value : this.msgForm.controls.inpuCountMenssage.value.toString()
+      });
+    }
+
+     if(this.msgForm.controls.inputFilterDays.value){
+      msgToSend.params.push({
+        name : 'inputFilterDays',
+        value : this.msgForm.controls.inputFilterDays.value.toString()
+      });
+     }
+
+     if(this.msgForm.controls.inputMaxCountOrders.value){
+      msgToSend.params.push({
+        name : 'inputMaxCountOrders',
+        value : this.msgForm.controls.inputMaxCountOrders.value.toString()
+      });
+     }
+
+     if(this.msgForm.controls.inputMinCountOrders.value){
+      msgToSend.params.push({
+        name : 'inputMinCountOrders',
+        value : this.msgForm.controls.inputMinCountOrders.value.toString()
+      });
+     }
+
+     if(this.msgForm.controls.inputParam.value){
+      debugger
+     }
+
+     if(this.msgForm.controls.inputNameProduct.value){
+      msgToSend.params.push({
+        name : 'inputNameProduct',
+        value : this.msgForm.controls.inputNameProduct.value.toString()
+      });
+     }
+
+     if(this.msgForm.controls.inputData.value){
+      msgToSend.params.push({
+        name : 'inputData',
+        value : this.msgForm.controls.inputData.value.toString()
+      });
+     }
+
+     if(this.msgForm.controls.inputMinDays.value){
+      msgToSend.params.push({
+        name : 'inputMinDays',
+        value : this.msgForm.controls.inputMinDays.value.toString()
+      });
+     }
+
+     if(this.msgForm.controls.inputMaxDays.value){
+      msgToSend.params.push({
+        name : 'inputMaxDays',
+        value : this.msgForm.controls.inputMaxDays.value.toString()
+      });
+     }
+     return msgToSend;
   }
 
   getCountDasy(date){
@@ -245,21 +252,41 @@ export class SendComponent implements OnInit {
     return Math.ceil(timeDiff / (1000 * 3600 * 24)); 
   }
   
-getStringFilterDay(filterDays){
-  switch(filterDays){
-    case FilterWeekDays.JustDay:
-      return "durante o dia.";
-      break;
-    case FilterWeekDays.JustNight:
-      return "durante a noite.";
-      break;
-    case FilterWeekDays.JustWeeKend:
-      return "de sexta a domingo.";
-      break;
-    case FilterWeekDays.JustWeek:
-      return "de segunda a quinta.";
-      break;
+  getStringFilterDay(filterDays){
+    switch(filterDays){
+      case FilterWeekDays.JustDay:
+        return "durante o dia.";
+        break;
+      case FilterWeekDays.JustNight:
+        return "durante a noite.";
+        break;
+      case FilterWeekDays.JustWeeKend:
+        return "de sexta a domingo.";
+        break;
+      case FilterWeekDays.JustWeek:
+        return "de segunda a quinta.";
+        break;
+    }
   }
-}
+
+  openModal() {
+    this.countContacts = null;
+    this.showButton =false;
+    this.showLoad =true;
+    this.showProcess = false;
+    this.showModal = true;
+  }  
+
+  closeModal() {
+    this.showButton = true;
+    this.showLoad = false;
+    this.showProcess = false;
+    this.showModal = false;
+  }
+  showModalProcess(){
+    this.showButton = false;
+    this.showLoad = false;
+    this.showProcess = true;
+  }
 }
 

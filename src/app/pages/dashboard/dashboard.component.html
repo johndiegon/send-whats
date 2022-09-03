@@ -22,7 +22,7 @@
           <div class="card-body">
             <div class="row">
               <div class="col">
-                <h6 class="card-title text-uppercase text-muted mb-1">Mensagens Enviadas / Jul</h6>
+                <h6 class="card-title text-uppercase text-muted mb-1">Mensagens Enviadas / {{getMonth()}}</h6>
                 <span class="h3 font-weight-bold mb-0">{{countSendMessageThisMonth}}</span>
               </div>
               <div class="col-auto">
@@ -52,7 +52,7 @@
           <div class="card-body">
             <div class="row">
               <div class="col">
-                <h6 class="card-title text-uppercase text-muted mb-1">Mensagens Recebidas / Jul</h6>
+                <h6 class="card-title text-uppercase text-muted mb-1">Mensagens Recebidas / {{getMonth()}}</h6>
                 <span class="h3 font-weight-bold mb-1">{{countReceiverAnswerThisMonth | number :'4.0-0':'pt-BR'}}</span>
               </div>
               <div class="col-auto">
@@ -68,7 +68,7 @@
   </div>
 </div>
 
-<div class="container-fluid mt--7 mb-5">
+<div class="container-fluid mt--7">
   <div class="row" *ngFor="let report of reportTemplates">
     <div class="col-xl-8 mb-5 mb-xl-0">
       <div class="card shadow mt-5">
@@ -88,6 +88,13 @@
           </div>
         </div>
         <div *ngIf="report.totalAnswer.length > 0">
+          <div class="card-header border-0">
+            <div class="row align-items-center">
+              <div class="col">
+                <h3 class="mb-0">Mensagens Recebidas</h3>
+              </div>
+            </div>
+          </div>
           <div class="table-responsive" >
             <!-- Projects table -->
             <table class="table align-items-center table-flush">
@@ -103,7 +110,8 @@
                   <th >
                    {{answer.answer}}
                   </th>
-                  <td>  {{answer.count | number}} 
+                  <td>  
+                    {{answer.count | number}} 
                   </td>
                   <td>
                    {{answer.month}}/{{answer.year}} 
@@ -113,23 +121,11 @@
             </table>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<br>
-
-<div>
-  
-  <div class="container-fluid mt--7 mb-5">
-    <div class="row">
-      <div class="col-xl-8 mb-5 mb-xl-0">
-        <div class="card shadow mt-5">
+        <div *ngIf="report.historySenders.length > 0">
           <div class="card-header border-0">
             <div class="row align-items-center">
               <div class="col">
-                <h3 class="mb-0">Histórico de Mensagens Enviadas</h3>
+                <h3 class="mb-0">Mensagens Enviadas</h3>
               </div>
             </div>
           </div>
@@ -141,30 +137,27 @@
                   <th scope="col">Template</th>
                   <th scope="col">Data de Envio</th>
                   <th scope="col">Total</th>
-                  <th scope="col">Com sucesso</th>
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let item of historySenders">
+                <tr *ngFor="let item of report.historySenders">
                   <th scope="row">
                    {{item.template}}
                   </th>
                   <td>
-                   {{item.dateTime  | date: 'dd/MM/yyyy hh:MM:ss' : '+0300'}}
+                   {{item.dateTime  | date: 'dd/MM/yyyy'}}
                   </td>
                   <td>
-                    {{item.count | number :'4.0-0':'pt-BR'}}
-                  </td>
-                  <td>
-                    {{item.countOk | number :'4.0-0':'pt-BR'}}
+                    {{item.count}}
                   </td>
                 </tr>
               </tbody>
             </table>
-          </div>
-        </div>
+          </div>   
+        <div>
       </div>
     </div>
   </div>
-  </div>
+</div>
+
   

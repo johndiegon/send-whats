@@ -8,16 +8,16 @@
     </div>
 </div>
 <div class="container-fluid mt--7">
-  <div class="col-12">
-    <div class="card bg-gradient-green2 shadow">
-      <div class="row p-2 mx-1">
-        <div class="card">
-          <div class="row align-items-center">
-            <div class="col">
-              <h6 class="text-uppercase text-muted ls-1 mb-1">Filtre sua lista</h6>
-              <h2 class="mb-0">{{item.name}}</h2>
-            </div>
+  <div class="row">
+    <div class="col-xl-4 col-lg-12 mb-5">
+      <div class="card shadow">
+        <div class="card-header">
+          <h3 class="mb-0">{{item.name}}</h3>
+          <div class="col">
+            <h6 class="text-uppercase text-muted ls-1 mb-1">Filtre sua lista</h6>
           </div>
+        </div>
+        <div class="card-body">
           <form role="form" [formGroup]="msgForm">
             <div class="col-lg-12" >
               <label>Mensagem a ser enviada:</label>
@@ -34,7 +34,15 @@
               <label for="formControlCountOrders">Quantidade Máxima de pedidos:</label>
               <input type="number" class="form-control" id="inputMaxCountOrders"  formControlName="inputMaxCountOrders" placeholder="5"> 
             </div> 
-            <div class="col-lg-12" *ngIf="item.dateOrders.length > 0">
+            <div class="col-lg-12" *ngIf="item.countOrders.length > 0">
+              <label for="formControlCountOrders">Quantidade Minima de dias do ultimo pedido:</label>
+               <input type="number" class="form-control" id="inputMinDays"  formControlName="inputMinDays" placeholder="5"> 
+            </div> 
+            <div class="col-lg-12" *ngIf="item.countOrders.length > 0">
+              <label for="formControlCountOrders">Quantidade Máxima de dias do ultimo pedido:</label>
+              <input type="number" class="form-control" id="inputMaxDays"  formControlName="inputMaxDays" placeholder="5"> 
+            </div> 
+            <div class="col-lg-12" *ngIf="item.countOrders.length > 0">
               <label>Clientes que compram:</label>
               <select  class="form-control"  id="inputFilterDays"  formControlName="inputFilterDays" >
                 <option value=""></option>
@@ -44,94 +52,100 @@
                 <option value="JustWeek">de segunda a quinta</option>
               </select>
             </div> 
-            <div class="col-lg-12" *ngIf="item.orderInWeeks.length > 0 ">
-              <label for="formControlCountOrders">Clientes Ativos/Inativos:</label>
-              <select  class="form-control"  id="inputDays"  formControlName="inputDays" >
-                <option value=""></option>
-                <option value="1">Compraram ontem</option>
-                <option value="7">Compraram na ultima semana</option>
-                <option value="30">Não compram faz 1 mês</option>
-                <option value="60">Não compram faz 2 meses</option>
-                <option value="90">Não compram a mais de 3 meses</option>
-              </select>
+            <div  *ngFor="let param of params" class="col-lg-12">
+              <label for="param">{{param}}</label>
+              <input type="text" class="form-control" id="{param}"  formControlName="inputParam">
             </div>
-            <div class="col-lg-12" *ngIf="showParamCupon">
-              <label for="formControlCupom">Cupom:</label>
-              <input type="text" class="form-control" id="inputParamCupon"  formControlName="inputParamCupon" placeholder="#cupomdacampanha">
-            </div>
-            <div class="col-lg-12" *ngIf="showParamProduct">
-              <label for="formControlNameProduct" >Nome do produto:</label>
-              <input type="text" class="form-control" id="inputNameProduct" formControlName="inputNameProduct" placeholder="Nome do produto">
-            </div>
-            <div class="col-lg-12">
+              <div class="col-lg-12">
               <br>
-              <a class="btn btn-primary" (click)="sendMessage()" >Enviar mensagem</a>
+              <a class="btn btn-primary" (click)="showCountToSendMessage()" >Enviar mensagem</a>
             </div>
           </form>
         </div>
-        <br>
-        <div class="card" >
-            <div class="col-xl-12 mb-5 mb-xl-0">
-              <div class="card shadow">
-                <div class="card-header border-0">
-                  <div class="row align-items-center">
-                    <div class="col">
-                      <span *ngIf="item.count">{{item.count}} contatos.</span>
-                      <br>
-                      <span *ngIf="item.unity">Unidade: {{item.unity}}</span>
-                    </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="table-responsive" *ngIf="item.dateOrders.length > 0">
-                  <h3 class="mb-0">Clientes por quantidade de dias Inativos</h3>
-                  <!-- Projects table -->
-                  <table class="table align-items-center table-flush">
-                    <thead class="thead-light">
-                      <tr>
-                          <th scope="col">Dias de Inatividade</th>
-                          <th scope="col">Quantidade</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr *ngFor="let row of item.dateOrders">
-                        <th >
-                          {{getCountDasy(row.orderDate)}}
-                        </th>
-                        <td>
-                          {{row.count}}
-                         </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-      
-                <br>
-      
-                <div class="table-responsive" *ngIf="item.countOrders.length > 0">
-                  <h3 class="mb-0">Clientes por quantidade de pedidos</h3>
-                  <!-- Projects table -->
-                  <table class="table align-items-center table-flush">
-                    <thead class="thead-light">
-                      <tr>
-                        <th scope="col">Quantidade de pedidos</th>
-                        <th scope="col">Quantidade de clientes</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr *ngFor="let row of item.countOrders">
-                        <td scope="row">
-                          {{row.count}}
-                        </td>
-                        <th>
-                          {{row.orderCount}}
-                         </th> 
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
+      </div>
+    </div>
+
+    <div class="col-xl-8 col-lg-12">
+      <div class="card shadow">
+        <div class="card-header">
+          <h3 class="mb-0">Dados da Lista</h3>
+          <div class="col">
+            <h6 class="text-uppercase text-muted ls-1 mb-1">{{item.count}} contatos.</h6>
+            <h6 class="text-uppercase text-muted ls-1 mb-1">Unidade: {{item.unity}}</h6>
+          </div>
+        </div>
+        <div class="card-body">
+         
+          <div class="table-responsive" *ngIf="item.dateOrders.length > 0">
+            <h3 class="mb-0">Clientes por quantidade de dias Inativos</h3>
+            <!-- Projects table -->
+            <table class="table align-items-center table-flush">
+              <thead class="thead-light">
+                <tr>
+                    <th scope="col">Dias de Inatividade</th>
+                    <th scope="col">Quantidade</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let row of item.dateOrders">
+                  <th >
+                    {{getCountDasy(row.orderDate)}}
+                  </th>
+                  <td>
+                    {{row.count}}
+                   </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <br>
+
+          <div class="table-responsive" *ngIf="item.countOrders.length > 0">
+            <h3 class="mb-0">Clientes por quantidade de pedidos</h3>
+            <!-- Projects table -->
+            <table class="table align-items-center table-flush">
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col">Quantidade de pedidos</th>
+                  <th scope="col">Quantidade de clientes</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let row of item.countOrders">
+                  <td scope="row">
+                    {{row.orderCount}}
+                  </td>
+                  <th>
+                    {{row.count}}
+                   </th> 
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
+  </div>
 </div>
+
+<dsw-modal-base [showModal]="showModal" (closeModal)="closeModal()">
+  <div class="container p-5">
+    <p *ngIf="showButton">Você confirma o envio da mensagem {{this.nameTemplate}} para {{countContacts}} contatos?</p>
+    <p class="" *ngIf="showButton">
+      <button *ngIf="showButton" class="btn btn-success" (click)="sendMessage()">Sim</button>
+      <button *ngIf="showButton" class="btn btn-warning" (click)="closeModal()">Não</button>
+    </p>
+    
+    <div class="d-flex align-items-center" *ngIf="showLoad">
+      <strong>Buscando os contatos...</strong>
+      <div class="spinner-border ml-auto" role="status" aria-hidden="true"></div>
+    </div>
+    
+    <div class="d-flex align-items-center" *ngIf="showProcess">
+      <strong>Enviando as mensagens...</strong>
+      <div class="spinner-border ml-auto" role="status" aria-hidden="true"></div>
+    </div>
+    
+  </div>
+</dsw-modal-base>

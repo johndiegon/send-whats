@@ -3,7 +3,7 @@ import { ToastrService } from 'ngx-toastr';
 import { catchError, throwError } from 'rxjs';
 import { ClientStoreType } from 'src/app/models/ClientType';
 import { ContactListType } from 'src/app/models/ContactListType';
-import { ReportSendEntity, ReportTemplate } from 'src/app/models/dashboardType';
+import { ReportTemplate } from 'src/app/models/dashboardType';
 import { ReponseWrapper } from 'src/app/models/response-api-default';
 import { ContactListService } from 'src/app/services/contact-list.service';
 import { DashboardService } from 'src/app/services/dashboard.service';
@@ -28,14 +28,13 @@ export class DashboardComponent implements OnInit {
   fileIsProcessing:boolean;
   client: ClientStoreType;
   reportTemplates:ReportTemplate[];
-  historySenders: ReportSendEntity[]
   reportData: ReponseWrapper<ReportMessages>;
   listContactList: ContactListType[];
   countSendMessage:number;
   countReceiverAnswer:number;
   countSendMessageThisMonth:number;
   countReceiverAnswerThisMonth:number;
-
+  
   ngOnInit() {
 
     
@@ -44,16 +43,12 @@ export class DashboardComponent implements OnInit {
         return throwError(() => new Error(error.message));
       }))
       .subscribe(res => {
-        this.historySenders = res.dataDashboard.historySenders;  
-        debugger
         this.reportTemplates = res.dataDashboard.reportTemplates;   
         this.countSendMessage = res.dataDashboard.countSendMessage;
         this.countReceiverAnswer = res.dataDashboard.countReceiverAnswer;
         this.countSendMessageThisMonth = res.dataDashboard.countSendMessageThisMonth;
         this.countReceiverAnswerThisMonth = res.dataDashboard.countReceiverAnswerThisMonth;
-      });
-      
-       
+      });       
 
       this.contactListService.getContactList()
       .pipe(catchError(error => {
@@ -64,9 +59,11 @@ export class DashboardComponent implements OnInit {
         this.fileIsProcessing = res.resume.fileIsProcessing;
         this.listContactList = res.resume.contactLists;
       });
+     }
 
-    // this.store.select(selectClient).subscribe(client => {
-    //   this.client = client;
-    // });
-  }
+     getMonth(){
+      var dt = new Date()
+      var str = ""
+      return str.concat(dt.getMonth().toString() + "-" + dt.getFullYear().toString())
+     }
 }

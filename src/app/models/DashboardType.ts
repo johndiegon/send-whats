@@ -6,8 +6,7 @@ export interface DataDashboard{
     countReceiverAnswer:number,
     countSendMessageThisMonth:number,
     countReceiverAnswerThisMonth:number,
-    reportTemplates:ReportTemplate[],
-    historySenders: ReportSendEntity[]
+    reportTemplates:ReportTemplate[]
 }
 
 export interface ReportTemplate{
@@ -18,6 +17,7 @@ export interface ReportTemplate{
     countReceiverAnswerThisMonth:number,
     totalAnswer: Answers[],
     totalSenders: Senders[],
+    historySenders: ReportSendEntity[]
 }
 
 export interface Answers {
