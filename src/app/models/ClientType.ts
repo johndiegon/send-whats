@@ -12,6 +12,7 @@ export interface ClientApiType {
   idUser?: string
   user?: UserApiType
   status?: number
+  answerDefault?:string
 }
 
 export interface ClientStoreType extends ClientApiType {

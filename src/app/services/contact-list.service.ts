@@ -4,6 +4,7 @@ import { ReponseWrapper } from '../models/response-api-default';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 import { ContactListType } from '../models/ContactListType';
+import { HistoryInputFile } from '../models/HistoryInputFile';
 
 @Injectable({ providedIn: 'root' })
 export class ContactListService {
@@ -25,5 +26,14 @@ export class ContactListService {
                 , 'Access-Control-Allow-Origin': '*'
             }
         })
+    }
+
+    getHistory() {
+        return this.httpClient.get<ReponseWrapper<HistoryInputFile>>(`${environment.FEATURE_API}/FileInput`, {
+            headers: {
+                'Access-Control-Allow-Credentials': 'true'
+                , 'Access-Control-Allow-Origin': '*'
+            }
+        });
     }
 }
