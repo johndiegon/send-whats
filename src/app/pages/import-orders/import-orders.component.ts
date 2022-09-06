@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild, ViewRef } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { catchError, map, ObservableInput } from 'rxjs';
+import { catchError, map,  throwError } from 'rxjs';
+import {  ReportFile } from 'src/app/models/HistoryInputFile';
 import { ReponseWrapper } from 'src/app/models/response-api-default';
 import { ContactListService } from 'src/app/services/contact-list.service';
 declare const google: any;
@@ -17,6 +18,7 @@ export class ImportOrdersComponent implements OnInit, AfterViewInit {
   files: File[] = [];
   fileAccept = 'text/csv';
   fileReader = new FileReader();
+  historyInputFile: ReportFile[];
 
   constructor(private toastr: ToastrService, private contactListService: ContactListService) { }
 
@@ -31,6 +33,17 @@ export class ImportOrdersComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+
+    
+    this.contactListService.getHistory()
+    .pipe(catchError(error => {
+      this.toastr.error('Não foi possivel encontrar a lista de contatos')
+      return throwError(() => new Error(error.message));
+    }))
+    .subscribe(res => {
+      debugger
+      this.historyInputFile = res.reportFile;
+    });
 
   }
 

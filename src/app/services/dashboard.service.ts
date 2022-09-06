@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { ReponseWrapper } from '../models/response-api-default';
-import { DashboardResType, DashboardType } from '../models/dashboardType';
+import { DashboardResType } from '../models/dashboardType';
 
 @Injectable({providedIn: 'root'})
 export class DashboardService {

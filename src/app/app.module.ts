@@ -31,6 +31,8 @@ import {registerLocaleData} from '@angular/common';
 import { SessionWhatsappService } from './services/session-whatsapp.service';
 import { ChatComponent } from './pages/chat/chat.component';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
+import { SendComponent } from './pages/send-message/send/send.component';
+import { OrderModule } from 'ngx-order-pipe';
 
 registerLocaleData(localePt)
 
@@ -48,13 +50,15 @@ export const metaReducers: MetaReducer<any>[] = [hydrationMetaReducer];
     AppRoutingModule,
     ToastrModule.forRoot(),
     StoreModule.forRoot({ client: clientReducer, messages: messageReducer }, { metaReducers }),
-    MDBBootstrapModule.forRoot()
+    MDBBootstrapModule.forRoot(),
+    OrderModule
   ],
   declarations: [
     AppComponent,
     AdminLayoutComponent,
     AuthLayoutComponent,
-    ChatComponent
+    ChatComponent,
+    SendComponent
   ],
   providers: [
     AuthService,

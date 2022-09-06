@@ -7,6 +7,9 @@ export interface MessageType {
     title: string
     idClient: string
     message: string
+    positiveAnswer: string,
+    negativeAnswer: string,
+    params:string[];
     picture: string
 }
 
@@ -16,11 +19,18 @@ export interface MessagePutType {
     idClient: string
     message: string
     picture: string
+    positiveAnswer:string
+    negativeAnswer:string
 }
 
 export interface MessageSendType {
-    idList: string
-    message: string
-    picture: string
-    phone: string
+   
+    template:string
+    params:Param[]
+   
+}
+
+export interface Param {
+    name:string, 
+    value:string
 }
