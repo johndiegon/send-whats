@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FailedToNegotiateWithServerError } from '@microsoft/signalr/dist/esm/Errors';
 import { Store } from '@ngrx/store';
@@ -102,7 +102,7 @@ export class SendComponent implements OnInit {
     inputFilterDays :[''],
     inputMaxCountOrders: [''],
     inputMinCountOrders: [''],
-    inputParam: [''],
+    // inputParam: new FormArray([]),
     inputNameProduct: [''],
     inputData: [''],
     inputMaxDays:[''],
@@ -112,13 +112,24 @@ export class SendComponent implements OnInit {
   setParams(){
      this.listMsg.forEach( msg => {
        if(msg.id == this.msgForm.controls.inputListMsg.value){
-         this.params = msg.params;
-         this.nameTemplate = msg.title;
-         this.message = msg.message
+        // msg.params.forEach( param => this.inputParam.push( new FormControl(null, [Validators.required] ))) 
+        this.params = msg.params;
+        this.nameTemplate = msg.title;
+        this.message = msg.message
        }
      })
   }
 
+  get inputParam(): FormArray {
+    return this.msgForm.get('inputParam') as FormArray;
+  }
+
+  validator(control) {
+    const validator = this.msgForm.get(control).validator({} as AbstractControl);
+    if (validator && validator.required) {
+      return true;
+    }
+  }
   
   sendMessage(){
     if(this.msgForm.valid)
@@ -140,6 +151,7 @@ export class SendComponent implements OnInit {
   }
 
  showCountToSendMessage(){
+  debugger
     if(this.msgForm.valid)
     {
       this.openModal()
@@ -211,7 +223,8 @@ export class SendComponent implements OnInit {
       });
      }
 
-     if(this.msgForm.controls.inputParam.value){
+     if(this.msgForm.controls.inputParam){
+      const control = <FormArray>this.msgForm.get('inputParam');
       debugger
      }
 
@@ -288,5 +301,6 @@ export class SendComponent implements OnInit {
     this.showLoad = false;
     this.showProcess = true;
   }
+
 }
 

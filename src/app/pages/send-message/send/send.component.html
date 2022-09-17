@@ -26,9 +26,16 @@
                 <option *ngFor="let item of listMsg" [value]="item.id">{{item.title}}</option>
               </select>
             </div> 
+            <!-- <div formArrayName="inputParam" >
+              <div *ngFor="let param of params; index as i"  class="col-lg-12">
+                <label for="param">{{param}}</label>
+                <span *ngIf="validator(i)">*</span> 
+                <input type="text" class="form-control" [formControlName]="i"  >
+              </div>
+            </div>   -->
             <div class="col-lg-12" *ngIf="item.countOrders.length > 0">
               <label for="formControlCountOrders">Quantidade Minima de pedidos:</label>
-               <input type="number" class="form-control" id="inputMinCountOrders"  formControlName="inputMinCountOrders" placeholder="5"> 
+              <input type="number" class="form-control" id="inputMinCountOrders"  formControlName="inputMinCountOrders" placeholder="5"> 
             </div> 
             <div class="col-lg-12" *ngIf="item.countOrders.length > 0">
               <label for="formControlCountOrders">Quantidade Máxima de pedidos:</label>
@@ -52,11 +59,7 @@
                 <option value="JustWeek">de segunda a quinta</option>
               </select>
             </div> 
-            <div  *ngFor="let param of params" class="col-lg-12">
-              <label for="param">{{param}}</label>
-              <input type="text" class="form-control" id="{param}"  formControlName="inputParam">
-            </div>
-              <div class="col-lg-12">
+            <div class="col-lg-12">
               <br>
               <a class="btn btn-primary" (click)="showCountToSendMessage()" >Enviar mensagem</a>
             </div>
