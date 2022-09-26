@@ -1,17 +1,13 @@
-import { Component, OnInit, SimpleChanges } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { Component, OnInit} from '@angular/core';
+import { FormBuilder } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { ToastrService } from 'ngx-toastr';
 import { catchError, throwError } from 'rxjs';
 import { ClientStoreType } from 'src/app/models/ClientType';
 import { ContactListType, FilterWeekDays } from 'src/app/models/ContactListType';
-import { MessageType } from 'src/app/models/MessageType';
 import { selectClient } from 'src/app/redux/selectors.store';
 import { ContactListService } from 'src/app/services/contact-list.service';
-import { MessageService } from 'src/app/services/message.service';
-import { SessionWhatsappService } from 'src/app/services/session-whatsapp.service';
 import { Router } from '@angular/router';
-import { Http } from '@angular/http';
 
 @Component({
   selector: 'dsw-send-message',

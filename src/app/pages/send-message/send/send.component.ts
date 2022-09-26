@@ -1,15 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormArray, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder,  FormControl,  Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { FailedToNegotiateWithServerError } from '@microsoft/signalr/dist/esm/Errors';
 import { Store } from '@ngrx/store';
 import { ChartConfiguration } from 'chart.js';
-import { debug } from 'console';
 import { ToastrService } from 'ngx-toastr';
 import { catchError, throwError } from 'rxjs';
 import { ContactListType, FilterWeekDays } from 'src/app/models/ContactListType';
 import { MessageSendType, MessageType } from 'src/app/models/MessageType';
-import { selectClient, selectMessages } from 'src/app/redux/selectors.store';
+import { selectMessages } from 'src/app/redux/selectors.store';
 import { MessageService } from 'src/app/services/message.service';
 import { ChartTemplate } from 'src/app/shared/helpers/chart-template';
 import { colorsChart } from 'src/app/variables/charts';
@@ -49,6 +47,7 @@ export class SendComponent implements OnInit {
   showLoad:boolean =true;
   showProcess:boolean = false;
   params:string[] = [];
+  paramName:boolean = false;
  
   config: ChartConfiguration = {
     type: 'bar',
@@ -102,7 +101,7 @@ export class SendComponent implements OnInit {
     inputFilterDays :[''],
     inputMaxCountOrders: [''],
     inputMinCountOrders: [''],
-    // inputParam: new FormArray([]),
+    inputParam: new FormArray([]),
     inputNameProduct: [''],
     inputData: [''],
     inputMaxDays:[''],
@@ -112,12 +111,25 @@ export class SendComponent implements OnInit {
   setParams(){
      this.listMsg.forEach( msg => {
        if(msg.id == this.msgForm.controls.inputListMsg.value){
-        // msg.params.forEach( param => this.inputParam.push( new FormControl(null, [Validators.required] ))) 
-        this.params = msg.params;
+        this.inputParam.clear()
+        this.params = []
+        msg.params.forEach( param => this.pushParam(param)) 
         this.nameTemplate = msg.title;
-        this.message = msg.message
+        this.message = msg.message;
        }
      })
+  }
+
+  pushParam(param)
+  {
+    if(param != "name")
+    {
+      this.inputParam.push( new FormControl(null, [Validators.required] ))
+      this.params.push(param)
+    }else
+    {
+      this.paramName = true;
+    }
   }
 
   get inputParam(): FormArray {
@@ -151,7 +163,6 @@ export class SendComponent implements OnInit {
   }
 
  showCountToSendMessage(){
-  debugger
     if(this.msgForm.valid)
     {
       this.openModal()
@@ -225,7 +236,6 @@ export class SendComponent implements OnInit {
 
      if(this.msgForm.controls.inputParam){
       const control = <FormArray>this.msgForm.get('inputParam');
-      debugger
      }
 
      if(this.msgForm.controls.inputNameProduct.value){

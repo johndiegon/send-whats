@@ -19,7 +19,7 @@ export interface ContactListType {
     type:number,
     creationDate: string,
     dateOrders:DateOrder[],
-    countOrders:CountOrder[],
+    countOrders:number,
     orderInWeeks:OrderInWeek[],
 
 }

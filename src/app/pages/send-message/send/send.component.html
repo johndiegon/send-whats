@@ -26,30 +26,30 @@
                 <option *ngFor="let item of listMsg" [value]="item.id">{{item.title}}</option>
               </select>
             </div> 
-            <!-- <div formArrayName="inputParam" >
+            <div formArrayName="inputParam" >
               <div *ngFor="let param of params; index as i"  class="col-lg-12">
                 <label for="param">{{param}}</label>
                 <span *ngIf="validator(i)">*</span> 
                 <input type="text" class="form-control" [formControlName]="i"  >
               </div>
-            </div>   -->
-            <div class="col-lg-12" *ngIf="item.countOrders.length > 0">
+            </div>
+            <div class="col-lg-12" *ngIf="item.countOrders > 0">
               <label for="formControlCountOrders">Quantidade Minima de pedidos:</label>
               <input type="number" class="form-control" id="inputMinCountOrders"  formControlName="inputMinCountOrders" placeholder="5"> 
             </div> 
-            <div class="col-lg-12" *ngIf="item.countOrders.length > 0">
+            <div class="col-lg-12" *ngIf="item.countOrders > 0">
               <label for="formControlCountOrders">Quantidade Máxima de pedidos:</label>
               <input type="number" class="form-control" id="inputMaxCountOrders"  formControlName="inputMaxCountOrders" placeholder="5"> 
             </div> 
-            <div class="col-lg-12" *ngIf="item.countOrders.length > 0">
+            <div class="col-lg-12" *ngIf="item.countOrders > 0">
               <label for="formControlCountOrders">Quantidade Minima de dias do ultimo pedido:</label>
                <input type="number" class="form-control" id="inputMinDays"  formControlName="inputMinDays" placeholder="5"> 
             </div> 
-            <div class="col-lg-12" *ngIf="item.countOrders.length > 0">
+            <div class="col-lg-12" *ngIf="item.countOrders > 0">
               <label for="formControlCountOrders">Quantidade Máxima de dias do ultimo pedido:</label>
               <input type="number" class="form-control" id="inputMaxDays"  formControlName="inputMaxDays" placeholder="5"> 
             </div> 
-            <div class="col-lg-12" *ngIf="item.countOrders.length > 0">
+            <!-- <div class="col-lg-12" *ngIf="item.countOrders > 0">
               <label>Clientes que compram:</label>
               <select  class="form-control"  id="inputFilterDays"  formControlName="inputFilterDays" >
                 <option value=""></option>
@@ -58,7 +58,7 @@
                 <option value="JustWeeKend">de sexta a domingo</option>
                 <option value="JustWeek">de segunda a quinta</option>
               </select>
-            </div> 
+            </div>  -->
             <div class="col-lg-12">
               <br>
               <a class="btn btn-primary" (click)="showCountToSendMessage()" >Enviar mensagem</a>
@@ -68,7 +68,7 @@
       </div>
     </div>
 
-    <div class="col-xl-8 col-lg-12">
+    <!-- <div class="col-xl-8 col-lg-12">
       <div class="card shadow">
         <div class="card-header">
           <h3 class="mb-0">Dados da Lista</h3>
@@ -81,7 +81,6 @@
          
           <div class="table-responsive" *ngIf="item.dateOrders.length > 0">
             <h3 class="mb-0">Clientes por quantidade de dias Inativos</h3>
-            <!-- Projects table -->
             <table class="table align-items-center table-flush">
               <thead class="thead-light">
                 <tr>
@@ -106,7 +105,6 @@
 
           <div class="table-responsive" *ngIf="item.countOrders.length > 0">
             <h3 class="mb-0">Clientes por quantidade de pedidos</h3>
-            <!-- Projects table -->
             <table class="table align-items-center table-flush">
               <thead class="thead-light">
                 <tr>
@@ -128,7 +126,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </div>
 
