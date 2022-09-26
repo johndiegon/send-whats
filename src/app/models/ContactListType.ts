@@ -5,6 +5,8 @@ export interface ContactListType {
 export interface ContactListResumeResType {
     id: string,
     idClient: string,
+    fileIsProcessing:boolean,
+    InputFile : Date,
     contactLists: ContactListType[]
 }
 
@@ -12,39 +14,39 @@ export interface ContactListType {
     id: string,
     idClient: string,
     name: string,
-    creationDate: string,
-    typeList: {
-        id: string,
-        name: string,
-        description: string
-    },
+    unity:string,
     count: number,
-    dateMessage: string,
-    listContact: ContactType[],
-    listSendMessage: [
-        null
-    ]
+    type:number,
+    creationDate: string,
+    dateOrders:DateOrder[],
+    countOrders:number,
+    orderInWeeks:OrderInWeek[],
+
 }
 
-export interface ContactType {
-    id: string,
-    name: string,
-    phone: string,
-    email: string,
-    idClient: string,
-    status: number,
-    orders: [
-        {
-            dateOrder: string,
-            price: number
-        }
-    ],
-    daysLastSale: number,
-    minDayToSendMessage: number,
-    dateLastSale: string,
-    ordersInLastMonth: number,
-    ordersInLastYear: number,
-    ordersInLast6Month: number,
-    ordersTotal: number,
-    averagePrice: number
+export enum TypeList{
+    Order,
+    Tag
+}
+
+export interface DateOrder{
+    orderDate:Date,
+    count:number
+}
+
+export interface CountOrder{
+    orderCount:number
+    count:number
+}
+
+export interface OrderInWeek{
+    filterDays:FilterWeekDays,
+    count:number
+}
+
+export enum FilterWeekDays{
+    JustNight,
+    JustDay,
+    JustWeeKend,
+    JustWeek,
 }

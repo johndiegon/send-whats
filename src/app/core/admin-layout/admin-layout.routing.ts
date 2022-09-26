@@ -5,11 +5,15 @@ import { ImportOrdersComponent } from '../../pages/import-orders/import-orders.c
 import { UserProfileComponent } from '../../pages/user-profile/user-profile.component';
 import { SendMessageComponent } from 'src/app/pages/send-message/send-message.component';
 import { MsgDefaultComponent } from 'src/app/pages/msg-default/msg-default.component';
+import { ChatComponent } from 'src/app/pages/chat/chat.component';
+import { SendComponent } from 'src/app/pages/send-message/send/send.component';
 
 export const AdminLayoutRoutes: Routes = [
-    { path: 'dashboard',      component: DashboardComponent },
+     { path: 'dashboard',      component: DashboardComponent },
     { path: 'user-profile',   component: UserProfileComponent },
     { path: 'send-message',         component: SendMessageComponent },
     { path: 'msg-default',          component: MsgDefaultComponent },
-    { path: 'import-orders',  component: ImportOrdersComponent }
+    { path: 'import-orders',  component: ImportOrdersComponent },
+    { path: 'chat',  component: ChatComponent },
+    { path: 'send', component: SendComponent}
 ];
