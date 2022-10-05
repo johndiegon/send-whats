@@ -16,6 +16,7 @@ import { samePasswordValidator } from 'src/app/shared/validators/same-password.d
 })
 export class RegisterComponent implements OnInit {
 
+  step = 1;
   constructor(
     private fb: FormBuilder,
     private addressService: AddressService,

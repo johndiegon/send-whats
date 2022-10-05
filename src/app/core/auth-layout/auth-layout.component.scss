@@ -1,0 +1,9 @@
+.footer-custom {
+    background-color: var(--color-secondary-purple);
+}
+
+@media screen and (max-width: 600px) {
+    .main-content {
+        width: 100vw !important;
+    }
+ }

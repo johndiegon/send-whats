@@ -1,0 +1,26 @@
+.card-header-custom {
+    background-color: var(--color-primary-purple);
+    color: var(--color-secondary-green) !important;
+    min-height: 95px;
+    border-radius: 30px;
+    padding: 5px;
+    padding-right: 30px;
+
+    img {
+        max-width: 120px;
+    }
+    h2 {
+        margin-top: 20px;
+        font-weight: 500;
+        color: var(--color-secondary-green) !important;
+
+    }
+}
+
+.margin-content {
+    margin-left: 60px;
+}
+
+.line-btn {
+    width: 100%;
+}

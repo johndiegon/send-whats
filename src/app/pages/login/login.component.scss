@@ -1,3 +1,72 @@
 .passwordshow__Button{
     outline: none;
 }
+
+.card {
+    .header-custom {
+        margin-left: -48px;
+        width: 138%;
+        margin-top: -48px;
+        border-radius: 40px;
+        min-height: 250px;
+        text-align: center;
+        img {
+            max-width: 180px;
+        }
+        @media screen and (max-width: 600px) {
+            width: 102vw;
+            margin-left: -37px;
+            margin-top: -53px;
+            height: 280px;
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+        }
+    }
+    .footer-custom {
+        margin-left: -48px;
+        width: 138%;
+        margin-bottom: -48px;
+        border-radius: 25px;
+        height: 70px;
+
+        @media screen and (max-width: 600px) {
+            width: 100vw;
+            border-radius: 15px;
+            margin-left: -35px;
+            // margin-top: -53px;
+            // height: 280px;
+            // border-top-left-radius: 0;
+            // border-top-right-radius: 0;
+        }
+
+        .link {
+            padding-right: 40px;
+            padding-top: 22px;
+            a {
+                color: var(--color-primary-purple);
+                font-size: 16px;
+                font-weight: 600 !important;
+                // --font-family-monospace
+            }
+        }
+    }
+    
+    // height: 500px;
+    max-width: 350px;
+    .link-2 {
+        color: var(--color-primary-green);
+        &:hover {
+            color: var(--color-primary-green-2);
+        }
+    }
+}
+
+.btn-primary {
+    width: 100%;
+    
+}
+.logo-lines {
+    width: 70px;
+    margin-left: 20px;
+    margin-top: 20px;
+}

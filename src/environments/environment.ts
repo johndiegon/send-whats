@@ -4,9 +4,9 @@
 
 export const environment = {
   production: false,
-   FEATURE_API: "http://localhost:5000",
+  //  FEATURE_API: "http://localhost:5000",
   // CHAT_SERVICE: "https://localhost:7190"
-  // FEATURE_API: "http://15.228.252.111",
+  FEATURE_API: "http://15.228.252.111",
   CHAT_SERVICE: "http://15.228.252.111:7190",
 };
 

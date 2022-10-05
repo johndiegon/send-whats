@@ -1,0 +1,111 @@
+html,body {
+    // font-family: var(--font-family-sans-serif);
+    font-family: 'Poppins', sans-serif;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+// ###### BACKGROUND
+.bg-primary-green {
+    background-color: var(--color-primary-green);
+}
+
+.bg-secondary-green {
+    background-color: var(--color-secondary-green);
+}
+
+.bg-primary-purple {
+    background-color: var(--color-primary-purple);
+}
+
+
+
+// ######## INPUT
+.input-custom {
+    border: 1px solid var(--color-primary-green);
+}
+
+.input-group  {
+    border: 1px solid var(--color-primary-green);
+    border-radius: 50px;
+    height: 55px;
+    input, select {
+        height: 53px;
+        border-radius: 50px;
+    }
+    
+    .passwordshow__Button {
+        border-bottom-right-radius: 50px;
+        border-top-right-radius: 50px;
+        background-color: #ffffff99;
+        i {
+            color: var(--color-primary-green);
+        }
+    }
+}
+
+
+
+// ####### BUTONS
+.btn {
+    border: none; 
+    padding: 15px;
+    padding-left: 25px;
+    padding-right: 25px;
+    border-radius: 50px;
+}
+.btn-primary {
+   background-color: var(--color-primary-green);
+   
+
+   &:hover, &:active {
+    background-color: var(--color-primary-green-2);
+   }
+}
+
+.btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active, .show > .btn-primary.dropdown-toggle {
+    color: #fff;
+    background-color: var(--color-primary-green-2) !important;
+    border-color: none;
+}
+.btn-primary:focus, .btn-primary.focus {
+    color: #fff;
+    background-color: var(--color-primary-green-2) !important;
+    border-color: none;
+    box-shadow: 0 0 0 0.2rem rgb(38 143 255 / 50%);
+}
+
+.btn-secondary {
+    background-color: var(--color-secondary-green);
+}
+
+// ####################
+
+
+
+
+
+.card {
+    border-radius: 40px;
+}
+
+
+
+// ####### stepper
+// stepper-vertical
+.stepper {
+    li.completed a .circle {
+        background-color: var(--color-secondary-green) !important;
+    }
+}
+                    
+.primary-color, ul.stepper li.active a .circle, ul.stepper li.completed a .circle {
+    background-color: var(--color-secondary-green) !important;
+}
+.primary-color, ul.stepper li.active a .circle, ul.stepper li.active a .circle {
+    background-color: var(--color-secondary-green) !important;
+}
+
+ul.stepper li.active a .label, ul.stepper li.completed a .label {
+    color: var(--color-primary-purple);
+}
