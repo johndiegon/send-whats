@@ -1,22 +1,5 @@
 <div class="header bg-primary-green py-7 py-lg-9">
-  <!-- <div class="container">
-    <div class="header-body text-center">
-      <div class="row justify-content-center">
-        <div class="col-lg-5 col-md-6">
-          <h1 class="text-white">Crie seu usuario!</h1>
-          <p class="text-lead text-white">
-            Preencha os dados do formulário e depois confirme seu email para
-            criar seu usuário.
-          </p>
-        </div>
-      </div>
-    </div>
-  </div> -->
-  <!-- <div class="separator separator-bottom separator-skew zindex-100">
-    <svg x="0" y="0" viewBox="0 0 2560 100" preserveAspectRatio="none" version="1.1" xmlns="http://www.w3.org/2000/svg">
-      <polygon class="fill-default" points="2560 0 2560 100 0 100"></polygon>
-    </svg>
-  </div> -->
+
 </div>
 <!-- Page content -->
 <div class="container mt--9 pb-5">
@@ -25,7 +8,7 @@
     <div class="col-lg-8 col-md-8">
       <div class="card  shadow border-0">
         <div class="card-header-custom d-flex justify-content-between">
-          <img src="assets/img/brand/logo-horizontal-verde.png">
+          <img class="logo" src="assets/img/brand/logo-horizontal-verde.png" routerLink="/login">
           <h2>
             Criar seu usuário
           </h2>
@@ -44,7 +27,7 @@
                   <ul class="stepper stepper-vertical">
 
                     <!-- First Step -->
-                    <li [ngClass]="{completed: step > 1, active: step === 1 }">
+                    <li [ngClass]="{completed: steps[0].complet, active: step === 1 }">
                       <a href="javaScript:void(0)" (click)="step = 1">
                         <span class="circle">1</span>
                         <span class="label">Dados Pessoais</span>
@@ -89,14 +72,14 @@
                         </div>
                         <div class="row  mt-1 line-btn" >
                           <div class="col-md-12 text-right">
-                            <button class="btn btn-primary " (click)="step = 2">Próximo</button>
+                            <button class="btn btn-primary " (click)="nextStep()">Próximo</button>
                           </div>
                         </div>
                       </ng-container>
                     </li>
 
                     <!-- Second Step -->
-                    <li [ngClass]="{completed: step > 2, active: step === 2 }">
+                    <li [ngClass]="{completed: steps[1].complet, active: step === 2 }">
                       <!--Section Title -->
                       <a href="javaScript:void(0)" (click)="step = 2">
                         <span class="circle">2</span>
@@ -107,7 +90,7 @@
                         <!-- Address -->
             
                         <div class="row margin-content" formGroupName="address">
-                          <div class="col-lg-4">
+                          <div class="col-lg-6">
                             <dsw-input-control label="CEP" for="zipCode" [showAppend]="true">
             
                               <input dwsInputSlot class="form-control" id="zipCode" (change)="dispatchSearchZipCode()" formControlName="zipCode"
@@ -163,40 +146,44 @@
                         <div class="row  mt-1 line-btn" >
                           <div class="col-md-12 text-right">
                             <button class="btn btn-flat btn-sm" (click)="step = 1">Voltar</button>
-                            <button class="btn btn-primary btn-sm" (click)="step = 3">Próximo</button>
+                            <button class="btn btn-primary btn-sm" (click)="nextStep()">Próximo</button>
                           </div>
                         </div>
                       </ng-container>
                     </li>
 
                     <!-- Third Step -->
-                    <li [ngClass]="{completed: step > 3, active: step === 3 }">
+                    <li [ngClass]="{completed: steps[2].complet, active: step === 3 }">
                       <a href="javaScript:void(0)" (click)="step = 3">
-                        <span class="circle"><i class="fas fa-exclamation"></i></span>
+                        <span class="circle">3</span>
                         <span class="label">WhatsApp</span>
                       </a>
 
                       <ng-container *ngIf="step === 3">
                         <!-- WhatsApp -->
                         <div class="row margin-content"> 
-                          <div class="col-12">
-                            <dsw-multi-input-list classInput="form-control" formControlName="phone" [touched]="registerForm.controls?.phone?.touched" placeholder="numero" type="text"></dsw-multi-input-list>
+                          <div class="col-lg-12">
+                            <dsw-input-control label="Número" for="phone">
+                              <input dwsInputSlot class="form-control" id="phone" formControlName="phone"
+                                placeholder="Ex.: (00) 00000-0000" type="text" [dwsMask]="'(00) 00000-0000'" />
+                            </dsw-input-control>
+                            <!-- <dsw-multi-input-list classInput="form-control" formControlName="phone" [touched]="registerForm.controls?.phone?.touched" placeholder="numero" type="text"></dsw-multi-input-list>
                 
-                            <span class="text-danger text-xs" *ngIf="!!registerForm.controls?.phone?.errors?.minlength && !!registerForm.controls?.phone?.touched">Minimo obrigatório de "{{registerForm.controls?.phone?.errors?.minlength?.requiredLength}}" telefone(s)</span>
+                            <span class="text-danger text-xs" *ngIf="!!registerForm.controls?.phone?.errors?.minlength && !!registerForm.controls?.phone?.touched">Minimo obrigatório de "{{registerForm.controls?.phone?.errors?.minlength?.requiredLength}}" telefone(s)</span> -->
                           </div>
                 
                         </div>
                         <div class="row  mt-1 line-btn" >
                           <div class="col-md-12 text-right">
                             <button class="btn btn-flat btn-sm" (click)="step = 2">Voltar</button>
-                            <button class="btn btn-primary btn-sm" (click)="step = 4">Próximo</button>
+                            <button class="btn btn-primary btn-sm" (click)="nextStep()">Próximo</button>
                           </div>
                         </div>
                       </ng-container>
                     </li>
 
                     <!-- Fourth Step -->
-                    <li [ngClass]="{completed: step > 4, active: step === 4 }">
+                    <li [ngClass]="{completed: steps[3].complet, active: step === 4 }">
                       <a href="javaScript:void(0)" (click)="step = 4">
                         <span class="circle">4</span>
                         <span class="label">Senha</span>
@@ -238,15 +225,8 @@
               
               <!-- /.Vertical Steppers -->
 
-
-
-
-
-
-
-            
           </form>
-          <div class="row">
+          <div class="box-btns">
             <button class="btn btn-secondary" routerLink="/login"> <i class="fa-solid fa-right-to-bracket mr-2"></i>Voltar para o Login</button>
           </div>
 

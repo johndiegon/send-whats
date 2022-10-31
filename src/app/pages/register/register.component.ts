@@ -17,6 +17,12 @@ import { samePasswordValidator } from 'src/app/shared/validators/same-password.d
 export class RegisterComponent implements OnInit {
 
   step = 1;
+  steps = [
+    {step: 1, complet: false},
+    {step: 2, complet: false},
+    {step: 3, complet: false},
+    {step: 4, complet: false},
+  ];
   constructor(
     private fb: FormBuilder,
     private addressService: AddressService,
@@ -29,7 +35,7 @@ export class RegisterComponent implements OnInit {
     name: ['', Validators.required],
     lastName: ['', Validators.required],
     docNumber: ['', Validators.required],
-    docType: ['', Validators.required],
+    docType: [1, Validators.required],
     email: ['', [Validators.required, Validators.email]],
     address: this.fb.group({
       address: ['', Validators.required],
@@ -41,7 +47,7 @@ export class RegisterComponent implements OnInit {
       country: [''],
       complemento: ['']
     }),
-    phone: [[], [Validators.required, MultiInputValidators.minItemValidator(1)]],
+    phone: ['', [Validators.required, MultiInputValidators.minItemValidator(1)]],
     user: this.fb.group({
       password: ['', Validators.required],
       passwordAgain: ['', [Validators.required]]
@@ -57,6 +63,7 @@ export class RegisterComponent implements OnInit {
 
 
     if (this.registerForm.valid) {
+      this.registerForm.get('phone').setValue([this.registerForm.get('phone').value]);
       this.clienService
         .create(this.registerForm.value)
         .pipe(catchError(error => {
@@ -68,7 +75,7 @@ export class RegisterComponent implements OnInit {
         .subscribe(_ => {
 
           this.router.navigate(['step2'], { relativeTo: this.activatedRoute });
-        })
+        });
     } else {
       this.toastr.error('Por favor, corrija os erros no formulário!');
     }
@@ -76,7 +83,6 @@ export class RegisterComponent implements OnInit {
 
   dispatchSearchZipCode() {
     const zipCode = this.registerForm.value.address?.zipCode;
-    
     if (zipCode.length >= 8) {
       this.addressService.getAddressByZipCode(zipCode)
         .subscribe((res: { address: AddressType }) => {
@@ -91,9 +97,61 @@ export class RegisterComponent implements OnInit {
                 city: address.city,
                 country: address.country
               }
-            })
-        })
+            });
+        });
     }
 
+  }
+  nextStep() {
+    switch (this.step) {
+      case 1:
+        if (this.registerForm.get('name').valid &&
+          this.registerForm.get('lastName').valid &&
+          this.registerForm.get('email').valid &&
+          this.registerForm.get('docType').valid &&
+          this.registerForm.get('docNumber').valid) {
+            this.steps[0].complet = true;
+            this.step = 2;
+        } else {
+          this.registerForm.get('name').markAllAsTouched();
+          this.registerForm.get('lastName').markAllAsTouched();
+          this.registerForm.get('email').markAllAsTouched();
+          this.registerForm.get('docType').markAllAsTouched();
+          this.registerForm.get('docNumber').markAllAsTouched();
+          this.toastr.warning('Por favor, corrija os erros no formulário!');
+        }
+        break;
+      case 2:
+        if (this.registerForm.get('address').get('zipCode').valid &&
+          this.registerForm.get('address').get('address').valid &&
+          this.registerForm.get('address').get('number').valid &&
+          this.registerForm.get('address').get('complemento').valid &&
+          this.registerForm.get('address').get('district').valid &&
+          this.registerForm.get('address').get('city').valid &&
+          this.registerForm.get('address').get('uf').valid
+         ) {
+          this.steps[1].complet = true;
+          this.step = 3;
+        } else {
+          this.registerForm.get('address').get('zipCode').markAllAsTouched();
+          this.registerForm.get('address').get('address').markAllAsTouched();
+          this.registerForm.get('address').get('number').markAllAsTouched();
+          this.registerForm.get('address').get('complemento').markAllAsTouched();
+          this.registerForm.get('address').get('district').markAllAsTouched();
+          this.registerForm.get('address').get('city').markAllAsTouched();
+          this.registerForm.get('address').get('uf').markAllAsTouched();
+          this.toastr.warning('Por favor, corrija os erros no formulário!');
+        }
+        break;
+      case 3:
+        if (this.registerForm.get('phone').valid) {
+          this.steps[2].complet = true;
+          this.step = 4;
+        } else {
+          this.registerForm.get('phone').markAllAsTouched();
+          this.toastr.warning('Por favor, corrija os erros no formulário!');
+        }
+        break;
+    }
   }
 }
