@@ -5,14 +5,24 @@
 
     // Navbar
     .navbar-top {
-        position: absolute;
-        left: 0;
+        // position: absolute;
+        // left: 0;
+        // top: 0;
+        // width: 100%;
+        // z-index: 1;
+        // background-color: transparent;
+        // padding-left: 0 !important;
+        // padding-right: 0 !important;
+        position: fixed;
+        left: 20;
         top: 0;
-        width: 100%;
+        width: 87%;
         z-index: 1;
         background-color: transparent;
         padding-left: 0 !important;
         padding-right: 0 !important;
+        background-color: var(--color-primary-green);
+        height: 80px;
     }
 
     // Container

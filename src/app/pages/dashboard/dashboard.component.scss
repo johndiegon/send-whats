@@ -1,0 +1,94 @@
+.cards-initial {
+    margin-top: 90px;
+}
+.box-hist {
+    margin-top: 40px;
+    padding-left: 40px;
+    padding-right: 40px;
+
+    .card-hist {
+        margin-bottom: 15px;
+        border-radius: 40px;
+        .card-hist-header {
+            font-weight: 500;
+            height: 50px;
+            background-color: var(--color-primary-purple);
+            border-radius: 55px;
+            text-align: center;
+            padding-top: 14px;
+            h2 {
+                color: var(--color-secondary-green);
+                font-size: 20px;
+                font-weight: 600;
+            }
+            .image {
+                img {
+                    width: 100px;
+                }
+            }
+        }
+
+        .card-hist-body {
+            padding: 20px;
+
+            .line {
+                background: var(--color-secondary-purple-2);
+                margin-bottom: 5px;
+                padding: 10px;
+                padding-left: 20px;
+                padding-right: 20px;
+                border-radius: 25px;
+
+                &:hover {
+                    background: var(--color-secondary-purple);
+                }
+
+                .number {
+                    font-weight: 700;
+                    color: var(--color-primary-purple);
+                }
+            }
+
+            .card-hist-footer {
+                padding-right: 15px;
+                padding-top: 10px;
+                .detail-button {
+                    color: var(--color-primary-purple);
+                    &:hover {
+                        color: var(--color-secondary-green);
+                    }
+                    cursor: pointer;
+                    i {
+                        margin-left: 10px;
+                        margin-top: 4px;
+                    }
+                }
+            }
+        }
+    }
+
+    .odd {
+        background-color: var(--color-secondary-green) !important;
+        h2 {
+            color: var(--color-primary-purple) !important;
+        }
+    }
+}
+
+.card-header {
+    background-color: var(--color-primary-purple);
+    h3 {
+        color: #fff;
+        font-weight: 600;
+    }
+}
+
+.card-stats {
+    background: var(--color-secondary-purple-2);
+    border: none;
+    border-radius: 10px !important;
+
+    .h3 {
+        color: var(--color-primary-purple) !important;
+    }
+}

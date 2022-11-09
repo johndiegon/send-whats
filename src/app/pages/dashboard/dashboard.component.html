@@ -1,163 +1,194 @@
-<div class="header bg-gradient-green2 pb-8 pt-7">
-  <div class="container-fluid">
-    <div class="header-body">
-      <!-- Card stats -->
-      <div class="card-group">
-        <div class="card card-stats p-2 mx-2 mt-4 position-relative" *ngIf="countSendMessage" >
-          <div class="card-body">
-            <div class="row">
-              <div class="col">
-                <h6 class="card-title text-uppercase text-muted mb-1">Mensagens Enviadas</h6>
-                <span class="h3 font-weight-bold mb-0">{{countSendMessage}}</span>
-              </div>
-              <div class="col-auto">
-                <div class="icon icon-shape bg-danger text-white rounded-circle shadow">
-                  <i class="fas fa-chart-bar"></i>
-                </div>
-              </div> 
-            </div>
-          </div>
-        </div>
-        <div class="card card-stats p-2 mx-2 mt-4 position-relative" *ngIf="countSendMessageThisMonth">
-          <div class="card-body">
-            <div class="row">
-              <div class="col">
-                <h6 class="card-title text-uppercase text-muted mb-1">Mensagens Enviadas / {{getMonth()}}</h6>
-                <span class="h3 font-weight-bold mb-0">{{countSendMessageThisMonth}}</span>
-              </div>
-              <div class="col-auto">
-                <div class="icon icon-shape bg-danger text-white rounded-circle shadow">
-                  <i class="fas fa-chart-bar"></i>
-                </div>
-              </div> 
-            </div>
-          </div>
-        </div>
-        <div class="card card-stats p-2 mx-2 mt-4 position-relative" *ngIf="countReceiverAnswer">
-          <div class="card-body">
-            <div class="row">
-              <div class="col">
-                <h6 class="card-title text-uppercase text-muted mb-1">Mensagens Recebidas</h6>
-                <span class="h3 font-weight-bold mb-0">{{countReceiverAnswer | number :'4.0-0':'pt-BR'}}</span>
-              </div>
-              <div class="col-auto">
-                <div class="icon icon-shape bg-info text-white rounded-circle shadow">
-                  <i class="fas fa-users"></i>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="card card-stats p-2 mx-2 mt-4 position-relative" *ngIf="countReceiverAnswerThisMonth">
-          <div class="card-body">
-            <div class="row">
-              <div class="col">
-                <h6 class="card-title text-uppercase text-muted mb-1">Mensagens Recebidas / {{getMonth()}}</h6>
-                <span class="h3 font-weight-bold mb-1">{{countReceiverAnswerThisMonth | number :'4.0-0':'pt-BR'}}</span>
-              </div>
-              <div class="col-auto">
-                <div class="icon icon-shape bg-info text-white rounded-circle shadow">
-                  <i class="fas fa-users"></i>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="container-fluid mt--7">
-  <div class="row" *ngFor="let report of reportTemplates">
-    <div class="col-xl-8 mb-5 mb-xl-0">
-      <div class="card shadow mt-5">
-        <div class="card-header border-0">
-          <div class="row align-items-center">
+<div class="container-fluid cards-initial">
+  <div class="header-body">
+    <div class="card-group">
+      <div class="card shadow card-stats p-2 mx-2 mt-4 position-relative" *ngIf="countSendMessage" >
+        <div class="card-body">
+          <div class="row">
             <div class="col">
-              <h3 class="mb-0">Histórico: {{report.template}}</h3>
-              <br>
-              <span>Quantidade de Envios : {{report.countSendMessage}}</span>
-              <br>
-              <span>Quantidade de respostas : {{report.countReceiverAnswer}}</span>
-              <br>
-              <span>Quantidade de mensagens enviadas nesse mês : {{report.countSendMessageThisMonth}}</span>
-              <br>
-              <span>Quantidade de mensagens recebidas nesse mês : {{report.countReceiverAnswerThisMonth}}</span>
+              <h6 class="card-title text-uppercase text-muted mb-1">Mensagens Enviadas</h6>
+              <span class="h3 font-weight-bold mb-0">{{countSendMessage | number}}</span>
             </div>
+            <div class="col-auto">
+              <div class="icon icon-shape bg-purple-primary text-white rounded-circle shadow">
+                <i class="fas fa-chart-bar"></i>
+              </div>
+            </div> 
           </div>
         </div>
-        <div *ngIf="report.totalAnswer.length > 0">
-          <div class="card-header border-0">
-            <div class="row align-items-center">
-              <div class="col">
-                <h3 class="mb-0">Mensagens Recebidas</h3>
+      </div>
+      <div class="card shadow card-stats p-2 mx-2 mt-4 position-relative" *ngIf="countSendMessageThisMonth">
+        <div class="card-body">
+          <div class="row">
+            <div class="col">
+              <h6 class="card-title text-uppercase text-muted mb-1">Mensagens Enviadas / {{getMonth()}}</h6>
+              <span class="h3 font-weight-bold mb-0">{{countSendMessageThisMonth | number}}</span>
+            </div>
+            <div class="col-auto">
+              <div class="icon icon-shape bg-purple-primary text-white rounded-circle shadow">
+                <i class="fas fa-chart-bar"></i>
+              </div>
+            </div> 
+          </div>
+        </div>
+      </div>
+      <div class="card shadow card-stats p-2 mx-2 mt-4 position-relative" *ngIf="countReceiverAnswer">
+        <div class="card-body">
+          <div class="row">
+            <div class="col">
+              <h6 class="card-title text-uppercase text-muted mb-1">Mensagens Recebidas</h6>
+              <span class="h3 font-weight-bold mb-0">{{countReceiverAnswer | number :'4.0-0':'pt-BR'}}</span>
+            </div>
+            <div class="col-auto">
+              <div class="icon icon-shape bg-green-secondary text-white rounded-circle shadow">
+                <i class="fas fa-users"></i>
               </div>
             </div>
           </div>
-          <div class="table-responsive" >
-            <!-- Projects table -->
-            <table class="table align-items-center table-flush">
-              <thead class="thead-light">
-                <tr>
-                 <th scope="col">Resposta</th>
-                  <th scope="col">Quantidade</th>
-                  <th scope="col">Mês/Ano</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr scope="row" *ngFor="let answer of report.totalAnswer">
-                  <th >
-                   {{answer.answer}}
-                  </th>
-                  <td>  
-                    {{answer.count | number}} 
-                  </td>
-                  <td>
-                   {{answer.month}}/{{answer.year}} 
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
         </div>
-        <div *ngIf="report.historySenders.length > 0">
-          <div class="card-header border-0">
-            <div class="row align-items-center">
-              <div class="col">
-                <h3 class="mb-0">Mensagens Enviadas</h3>
+      </div>
+      <div class="card shadow card-stats p-2 mx-2 mt-4 position-relative" *ngIf="countReceiverAnswerThisMonth">
+        <div class="card-body">
+          <div class="row">
+            <div class="col">
+              <h6 class="card-title text-uppercase text-muted mb-1">Mensagens Recebidas / {{getMonth()}}</h6>
+              <span class="h3 font-weight-bold mb-1">{{countReceiverAnswerThisMonth | number :'4.0-0':'pt-BR'}}</span>
+            </div>
+            <div class="col-auto">
+              <div class="icon icon-shape bg-green-secondary text-white rounded-circle shadow">
+                <i class="fas fa-users"></i>
               </div>
             </div>
           </div>
-          <div class="table-responsive">
-            <!-- Projects table -->
-            <table class="table align-items-center table-flush">
-              <thead class="thead-light">
-                <tr>
-                  <th scope="col">Template</th>
-                  <th scope="col">Data de Envio</th>
-                  <th scope="col">Total</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let item of report.historySenders">
-                  <th scope="row">
-                   {{item.template}}
-                  </th>
-                  <td>
-                   {{item.dateTime  | date: 'dd/MM/yyyy'}}
-                  </td>
-                  <td>
-                    {{item.count}}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>   
-        <div>
+        </div>
       </div>
     </div>
   </div>
 </div>
 
-  
+<div class="row box-hist">
+  <div class="col-md-4" *ngFor="let report of reportTemplates; let i = index;">
+    <div class="card-hist shadow">
+      <div class="card-hist-header" [ngClass]="{'odd': isOdd(i)}">
+        <!-- <div class="image">
+          <img src="assets/img/brand/logo-line-green.png">
+        </div> -->
+        <h2>
+          {{report.template}}
+        </h2>
+      </div>
+      <div class="card-hist-body">
+        <div class="row align-items-center">
+          <div class="col">
+            <div class="line d-flex justify-content-between">
+              <span>Envios</span>
+              <span class="number">{{report.countSendMessage | number}}</span>
+            </div>
+            <div class="line d-flex justify-content-between">
+              <span>Respostas</span> 
+              <span class="number">
+                {{report.countReceiverAnswer | number}}
+              </span>
+            </div>
+            <div class="line d-flex justify-content-between">
+              <span>Mensagens enviadas nesse mês</span>
+              <span class="number"> {{report.countSendMessageThisMonth | number}}</span>
+            </div>
+            <div class="line d-flex justify-content-between">
+              <span>Mensagens recebidas nesse mês</span>
+              <span class="number">{{report.countReceiverAnswerThisMonth | number}}</span>
+            </div>
+          </div>
+        </div>
+        <div class="card-hist-footer d-flex justify-content-end">
+          <span class="detail-button d-flex" (click)="open(content, report)">
+            exibir detalhes 
+            <i class="fas fa-thin fa-arrow-right"></i>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- MODAL detail-button -->
+<ng-template #content let-modal>
+	<div class="modal-header">
+		<h4 class="modal-title" id="modal-basic-title">{{reportSelect.template}}</h4>
+		<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"> <i class="fas  fa-close"></i></button>
+	</div>
+	<div class="modal-body">
+    <div *ngIf="reportSelect.totalAnswer.length > 0">
+      <div class="card-header border-0">
+        <div class="row align-items-center">
+          <div class="col">
+            <h3 class="mb-0">Respostas</h3>
+          </div>
+        </div>
+      </div>
+      <div class="table-responsive" >
+        <table class="table align-items-center table-flush">
+          <thead class="thead-purple">
+            <tr>
+             <th scope="col">Resposta</th>
+              <th scope="col">Quantidade</th>
+              <th scope="col">Mês/Ano</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr scope="row" *ngFor="let answer of reportSelect.totalAnswer">
+              <th >
+               {{answer.answer}}
+              </th>
+              <td>  
+                {{answer.count | number}} 
+              </td>
+              <td>
+               {{answer.month}}/{{answer.year}} 
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div *ngIf="reportSelect.historySenders.length > 0" class="mt-2">
+      <div class="card-header border-0">
+        <div class="row align-items-center">
+          <div class="col">
+            <h3 class="mb-0">Mensagens Enviadas</h3>
+          </div>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <!-- Projects table -->
+        <table class="table align-items-center table-flush">
+          <thead class="thead-purple">
+            <tr>
+              <th scope="col">Template</th>
+              <th scope="col">Data de Envio</th>
+              <th scope="col">Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of reportSelect.historySenders">
+              <th scope="row">
+               {{item.template}}
+              </th>
+              <td>
+               {{item.dateTime  | date: 'dd/MM/yyyy'}}
+              </td>
+              <td>
+                {{item.count | number}}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>   
+    </div>
+	</div>
+	<!-- <div class="modal-footer">
+		<button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+	</div> -->
+</ng-template>

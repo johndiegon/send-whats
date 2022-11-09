@@ -9,6 +9,7 @@ import { ContactListService } from 'src/app/services/contact-list.service';
 import { DashboardService } from 'src/app/services/dashboard.service';
 import { Store } from '@ngrx/store';
 import { ReportMessages } from 'src/app/models/ReportMessages';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'dsw-dashboard',
@@ -16,28 +17,28 @@ import { ReportMessages } from 'src/app/models/ReportMessages';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
+  reportSelect: any;
+  fileIsProcessing: boolean;
+  client: ClientStoreType;
+  reportTemplates: ReportTemplate[];
+  reportData:  ReponseWrapper<ReportMessages>;
+  listContactList:  ContactListType[];
+  countSendMessage: number;
+  countReceiverAnswer: number;
+  countSendMessageThisMonth: number;
+  countReceiverAnswerThisMonth: number;
 
   constructor(
     private contactListService: ContactListService,
     private toastr: ToastrService,
     private dashboardService: DashboardService,
-    private store: Store
-    
+    private store: Store,
+    private modalService: NgbModal
   ) { }
 
-  fileIsProcessing:boolean;
-  client: ClientStoreType;
-  reportTemplates:ReportTemplate[];
-  reportData: ReponseWrapper<ReportMessages>;
-  listContactList: ContactListType[];
-  countSendMessage:number;
-  countReceiverAnswer:number;
-  countSendMessageThisMonth:number;
-  countReceiverAnswerThisMonth:number;
-  
   ngOnInit() {
 
-    
+
     this.dashboardService.get()
       .pipe(catchError(error => {
         return throwError(() => new Error(error.message));
@@ -59,11 +60,31 @@ export class DashboardComponent implements OnInit {
         this.fileIsProcessing = res.resume.fileIsProcessing;
         this.listContactList = res.resume.contactLists;
       });
-     }
+  }
 
-     getMonth(){
-      var dt = new Date()
-      var str = ""
-      return str.concat(dt.getMonth().toString() + "-" + dt.getFullYear().toString())
-     }
+  getMonth(){
+    var dt = new Date()
+    var str = ""
+    return str.concat(dt.getMonth().toString() + "-" + dt.getFullYear().toString())
+  }
+  isOdd(num: number): Boolean {
+    let i = 0;
+    let odd = false;
+
+    while (i !== num) {
+      odd = !odd;
+      i = i + 1;
+    }
+    return odd;
+  }
+
+  // openDetail(detail: any) {
+  //   console.log(detail);
+  // }
+
+  open(content: any, detail: any) {
+    this.reportSelect = detail;
+    this.modalService.open(content, { windowClass : 'modal-md', ariaLabelledBy: 'modal-basic-title' });
+  }
+
 }

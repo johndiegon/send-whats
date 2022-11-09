@@ -126,7 +126,7 @@ export class SendMessageComponent implements OnInit {
   // }
 
   getCountDays(dateOrder){
-    debugger
+    // debugger
     var today = new Date(Date.now());
     var order = new Date(dateOrder);
     var timeDiff = Math.abs(today.getTime() - order.getTime());

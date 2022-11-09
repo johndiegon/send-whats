@@ -61,6 +61,13 @@
             color: $table-head-color;
         }
     }
+
+    .thead-purple {
+        th {
+            color: var(--color-secondary-green) !important;
+            background-color: var(--color-primary-purple) !important;
+        }
+    }
 }
 
 

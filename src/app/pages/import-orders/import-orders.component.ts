@@ -41,7 +41,7 @@ export class ImportOrdersComponent implements OnInit, AfterViewInit {
       return throwError(() => new Error(error.message));
     }))
     .subscribe(res => {
-      debugger
+      // debugger
       this.historyInputFile = res.reportFile;
     });
 

@@ -1,2 +1,61 @@
 /* You can add global styles to this file, and also import other style files */
 
+.btn-close {
+    background: var(--color-secondary-green);
+    border: none;
+    color: #fff;
+    border-radius: 23px;
+    padding: 10px;
+    height: 40px;
+    width: 40px;
+    /* font-size: 21px; */
+}
+
+.modal-title {
+    font-weight: 600;
+    color: var(--color-primary-purple);
+}
+
+.card-header {
+    background-color: var(--color-primary-purple) !important;
+    border-top-left-radius: 15px !important;
+    border-top-right-radius: 15px !important;
+    h1, h2, h3, h4 {
+        color: #fff;
+        font-weight: 600;
+    }
+}
+
+
+
+//############## MODAL
+
+.modal-sm {
+    .modal-dialog {
+        max-width: 200px;
+    }
+}
+
+.modal-md {
+    .modal-dialog {
+        max-width: 565px;
+    }
+}
+
+.modal-md {
+    .modal-dialog {
+        max-width: 865px;
+    }
+}
+
+
+
+
+// ################### BACKGROUND
+.bg-purple-primary {
+    background-color: var(--color-primary-purple);
+}
+
+.bg-green-secondary {
+    background-color: var(--color-secondary-green);
+}
