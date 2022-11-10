@@ -1,61 +1,63 @@
-<div class="container-fluid cards-initial">
-  <div class="header-body">
-    <div class="card-group">
-      <div class="card shadow card-stats p-2 mx-2 mt-4 position-relative" *ngIf="countSendMessage" >
-        <div class="card-body">
-          <div class="row">
-            <div class="col">
-              <h6 class="card-title text-uppercase text-muted mb-1">Mensagens Enviadas</h6>
-              <span class="h3 font-weight-bold mb-0">{{countSendMessage | number}}</span>
-            </div>
-            <div class="col-auto">
-              <div class="icon icon-shape bg-purple-primary text-white rounded-circle shadow">
-                <i class="fas fa-chart-bar"></i>
+<div class="page-content">
+  <div class="container-fluid cards-initial">
+    <div class="header-body">
+      <div class="card-group">
+        <div class="card shadow card-stats p-2 mx-2 mt-4 position-relative" *ngIf="countSendMessage" >
+          <div class="card-body">
+            <div class="row">
+              <div class="col">
+                <h6 class="card-title text-uppercase text-muted mb-1">Mensagens Enviadas</h6>
+                <span class="h3 font-weight-bold mb-0">{{countSendMessage | number}}</span>
               </div>
-            </div> 
-          </div>
-        </div>
-      </div>
-      <div class="card shadow card-stats p-2 mx-2 mt-4 position-relative" *ngIf="countSendMessageThisMonth">
-        <div class="card-body">
-          <div class="row">
-            <div class="col">
-              <h6 class="card-title text-uppercase text-muted mb-1">Mensagens Enviadas / {{getMonth()}}</h6>
-              <span class="h3 font-weight-bold mb-0">{{countSendMessageThisMonth | number}}</span>
-            </div>
-            <div class="col-auto">
-              <div class="icon icon-shape bg-purple-primary text-white rounded-circle shadow">
-                <i class="fas fa-chart-bar"></i>
-              </div>
-            </div> 
-          </div>
-        </div>
-      </div>
-      <div class="card shadow card-stats p-2 mx-2 mt-4 position-relative" *ngIf="countReceiverAnswer">
-        <div class="card-body">
-          <div class="row">
-            <div class="col">
-              <h6 class="card-title text-uppercase text-muted mb-1">Mensagens Recebidas</h6>
-              <span class="h3 font-weight-bold mb-0">{{countReceiverAnswer | number :'4.0-0':'pt-BR'}}</span>
-            </div>
-            <div class="col-auto">
-              <div class="icon icon-shape bg-green-secondary text-white rounded-circle shadow">
-                <i class="fas fa-users"></i>
-              </div>
+              <div class="col-auto">
+                <div class="icon icon-shape bg-purple-primary text-white rounded-circle shadow">
+                  <i class="fas fa-chart-bar"></i>
+                </div>
+              </div> 
             </div>
           </div>
         </div>
-      </div>
-      <div class="card shadow card-stats p-2 mx-2 mt-4 position-relative" *ngIf="countReceiverAnswerThisMonth">
-        <div class="card-body">
-          <div class="row">
-            <div class="col">
-              <h6 class="card-title text-uppercase text-muted mb-1">Mensagens Recebidas / {{getMonth()}}</h6>
-              <span class="h3 font-weight-bold mb-1">{{countReceiverAnswerThisMonth | number :'4.0-0':'pt-BR'}}</span>
+        <div class="card shadow card-stats p-2 mx-2 mt-4 position-relative" *ngIf="countSendMessageThisMonth">
+          <div class="card-body">
+            <div class="row">
+              <div class="col">
+                <h6 class="card-title text-uppercase text-muted mb-1">Mensagens Enviadas / {{getMonth()}}</h6>
+                <span class="h3 font-weight-bold mb-0">{{countSendMessageThisMonth | number}}</span>
+              </div>
+              <div class="col-auto">
+                <div class="icon icon-shape bg-purple-primary text-white rounded-circle shadow">
+                  <i class="fas fa-chart-bar"></i>
+                </div>
+              </div> 
             </div>
-            <div class="col-auto">
-              <div class="icon icon-shape bg-green-secondary text-white rounded-circle shadow">
-                <i class="fas fa-users"></i>
+          </div>
+        </div>
+        <div class="card shadow card-stats p-2 mx-2 mt-4 position-relative" *ngIf="countReceiverAnswer">
+          <div class="card-body">
+            <div class="row">
+              <div class="col">
+                <h6 class="card-title text-uppercase text-muted mb-1">Mensagens Recebidas</h6>
+                <span class="h3 font-weight-bold mb-0">{{countReceiverAnswer | number :'4.0-0':'pt-BR'}}</span>
+              </div>
+              <div class="col-auto">
+                <div class="icon icon-shape bg-green-secondary text-white rounded-circle shadow">
+                  <i class="fas fa-users"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card shadow card-stats p-2 mx-2 mt-4 position-relative" *ngIf="countReceiverAnswerThisMonth">
+          <div class="card-body">
+            <div class="row">
+              <div class="col">
+                <h6 class="card-title text-uppercase text-muted mb-1">Mensagens Recebidas / {{getMonth()}}</h6>
+                <span class="h3 font-weight-bold mb-1">{{countReceiverAnswerThisMonth | number :'4.0-0':'pt-BR'}}</span>
+              </div>
+              <div class="col-auto">
+                <div class="icon icon-shape bg-green-secondary text-white rounded-circle shadow">
+                  <i class="fas fa-users"></i>
+                </div>
               </div>
             </div>
           </div>
@@ -63,47 +65,47 @@
       </div>
     </div>
   </div>
-</div>
-
-<div class="row box-hist">
-  <div class="col-md-4" *ngFor="let report of reportTemplates; let i = index;">
-    <div class="card-hist shadow">
-      <div class="card-hist-header" [ngClass]="{'odd': isOdd(i)}">
-        <!-- <div class="image">
-          <img src="assets/img/brand/logo-line-green.png">
-        </div> -->
-        <h2>
-          {{report.template}}
-        </h2>
-      </div>
-      <div class="card-hist-body">
-        <div class="row align-items-center">
-          <div class="col">
-            <div class="line d-flex justify-content-between">
-              <span>Envios</span>
-              <span class="number">{{report.countSendMessage | number}}</span>
-            </div>
-            <div class="line d-flex justify-content-between">
-              <span>Respostas</span> 
-              <span class="number">
-                {{report.countReceiverAnswer | number}}
-              </span>
-            </div>
-            <div class="line d-flex justify-content-between">
-              <span>Mensagens enviadas nesse mês</span>
-              <span class="number"> {{report.countSendMessageThisMonth | number}}</span>
-            </div>
-            <div class="line d-flex justify-content-between">
-              <span>Mensagens recebidas nesse mês</span>
-              <span class="number">{{report.countReceiverAnswerThisMonth | number}}</span>
+  
+  <div class="row box-hist">
+    <div class="col-md-4" *ngFor="let report of reportTemplates; let i = index;">
+      <div class="card-hist shadow">
+        <div class="card-hist-header" [ngClass]="{'odd': isOdd(i)}">
+          <!-- <div class="image">
+            <img src="assets/img/brand/logo-line-green.png">
+          </div> -->
+          <h2>
+            {{report.template}}
+          </h2>
+        </div>
+        <div class="card-hist-body">
+          <div class="row align-items-center">
+            <div class="col">
+              <div class="line d-flex justify-content-between">
+                <span>Envios</span>
+                <span class="number">{{report.countSendMessage | number}}</span>
+              </div>
+              <div class="line d-flex justify-content-between">
+                <span>Respostas</span> 
+                <span class="number">
+                  {{report.countReceiverAnswer | number}}
+                </span>
+              </div>
+              <div class="line d-flex justify-content-between">
+                <span>Mensagens enviadas nesse mês</span>
+                <span class="number"> {{report.countSendMessageThisMonth | number}}</span>
+              </div>
+              <div class="line d-flex justify-content-between">
+                <span>Mensagens recebidas nesse mês</span>
+                <span class="number">{{report.countReceiverAnswerThisMonth | number}}</span>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="card-hist-footer d-flex justify-content-end">
-          <span class="detail-button d-flex" (click)="open(content, report)">
-            exibir detalhes 
-            <i class="fas fa-thin fa-arrow-right"></i>
-          </span>
+          <div class="card-hist-footer d-flex justify-content-end">
+            <span class="detail-button d-flex" (click)="open(content, report)">
+              exibir detalhes 
+              <i class="fas fa-thin fa-arrow-right"></i>
+            </span>
+          </div>
         </div>
       </div>
     </div>

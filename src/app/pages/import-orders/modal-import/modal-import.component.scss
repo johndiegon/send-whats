@@ -1,0 +1,39 @@
+.import-box{
+    border: 2px dashed #ccc;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 15vh 5vw;
+    border-radius: 35px;
+    .upload-icon{
+        font-size: 46px;
+        color: var(--color-secondary-purple) !important;
+    }
+
+    &.drag-over{
+        background-color: var(--lighter);
+    }
+}
+
+
+.line {
+    background: var(--color-secondary-purple-2);
+    margin-top: 5px;
+    padding: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-radius: 25px;
+
+    &:hover {
+        background: var(--color-secondary-purple);
+    }
+
+    .number {
+        font-weight: 700;
+        color: var(--color-primary-purple);
+    }
+    i {
+        color: var(--color-primary-purple);
+        margin-top: 3px;
+    }
+}

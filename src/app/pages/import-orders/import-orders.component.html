@@ -1,80 +1,66 @@
-<div class="header bg-gradient-green2 pb-8 pt-5 pt-md-8">
-  <div class="container-fluid">
-    <div class="header-body">
 
-    </div>
-  </div>
-</div>
-<!-- Page content -->
-<div class="container-fluid mt--7">
-  <div class="card shadow">
-    <div class="card-body">
+<div class="page-content container-fluid mt-3" >
+  <div class="card-header border-2">
+    <div class="row align-items-center">
+      <div class="col d-flex justify-content-between">
+        <h3 class="mb-0 mt-2">Arquivos Importados</h3>
+        <!-- <button type="submit" class="btn btn-secondary">Importar Arquivo</button> -->
+        <div class="d-flex">
 
-      <!-- Import Box -->
-      <div class="import-box" #importBox>
-        <i class="ni ni-cloud-upload-96 text-info upload-icon"></i>
-        <p>Arraste o arquivo e solte aqui, ou clique no botão abaixo:</p>
-        <input id="file-input" #fileUpload type="file" name="name" style="display: none;" [accept]="fileAccept" />
-        <button type="button" (click)="openFileUpload()" class="btn btn-info mt-5">Selecionar arquivo</button>
-      </div>
-
-      <!-- File Detail -->
-      <div class="row">
-        <div class="col">
-          <ul>
-            <li *ngFor="let item of files">
-              {{item.name}}
-            </li>
-          </ul>
-          <button class="btn btn-success" [disabled]="!files?.length" (click)="sendFile()">Enviar Arquivo</button>
-        </div>
-      </div>
-
-    </div>
-  </div>
-  
-<br>
-
-  <div class="card shadow">
-    <div class="row">
-       <div class="card-body">
-        <div class="card-header border-2">
-          <div class="row align-items-center">
-            <div class="col">
-              <h3 class="mb-0">Histórico de Mensagens Enviadas</h3>
+          <div class="form-group mb-0 focused mr-3 input-search" >
+            <div class="input-group input-group-alternative">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-search"></i></span>
+              </div>
+              <input class="form-control" placeholder="Procurar arquivo" type="text" [(ngModel)]="nameFileSearch" (keyup)="searchFile($event)">
             </div>
           </div>
+          <button class="btn btn-secondary" (click)="openModal()">  <i class="fa-solid fa-cloud-arrow-up mr-2"></i>Importar Arquivo</button>
         </div>
-        <div class="table-responsive">
-          <!-- Projects table -->
-          <table class="table align-items-center table-flush">
-            <thead class="thead-purple">
-              <tr>
-                <th scope="col">Nome do Arquivo</th>
-                <th scope="col">Quantidade de Linhas</th>
-                <th scope="col">Data da Importação</th>
-                <th scope="col">Mensagem de Error</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let item of historyInputFile">
-                <th scope="row">
-                 {{item.fileName}}
-                </th>
-                <td>
-                  {{item.lines | number :'4.0-0':'pt-BR'}}
-                </td>
-                <td>
-                  {{item.dateTime  | date: 'dd/MM/yyyy hh:MM:ss' : '+0300'}}
-                 </td>
-                <td>
-                  {{item.messageError}}
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+
       </div>
-       </div>
     </div>
+  </div>
+  <div class="table-responsive shadow">
+    <table class="table align-items-center table-flush">
+      <thead class="thead-purple">
+        <tr>
+          <th scope="col">Nome do Arquivo</th>
+          <th scope="col">Quantidade de Linhas</th>
+          <th scope="col">Data da Importação</th>
+          <th scope="col">Mensagem de Error</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of historyInputFile">
+          <th scope="row">
+           {{item.fileName}}
+          </th>
+          <td>
+            {{item.lines | number :'4.0-0':'pt-BR'}}
+          </td>
+          <td>
+            {{item.dateTime  | date: 'dd/MM/yyyy hh:MM:ss' : '+0300'}}
+           </td>
+          <td>
+            {{item.messageError}}
+          </td>
+        </tr>
+        <tr *ngIf="historyInputFile?.length === 0">
+          <th scope="row" colspan="4" class="text-center" >
+            Nenhum registro encontrado
+          </th>
+        </tr>
+        <tr *ngIf="loading"> 
+          <th colspan="4" class="text-center">
+            <div class="spinner-border spinner-primary-green" role="status">
+              <span class="sr-only">Carregando...</span>
+            </div>
+          </th>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
 </div>
+

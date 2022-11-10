@@ -1,0 +1,31 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Importar Arquivo</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="close()"> <i class="fas  fa-close"></i></button>
+</div>
+<div class="modal-body">
+
+
+<div class="import-box" #importBox>
+  <i class="ni ni-cloud-upload-96 text-info upload-icon"></i>
+  <p>Arraste o arquivo e solte aqui, ou clique no botão abaixo:</p>
+  <input id="file-input" #fileUpload type="file" name="name" style="display: none;" [accept]="fileAccept" />
+  <button type="button" (click)="openFileUpload()" class="btn btn-purple-secondary mt-1">Selecionar arquivo</button>
+</div>
+
+<div class="row">
+  <div class="col">
+
+    <div class="line d-flex " *ngFor="let item of files">
+        <i class="fa-solid fa-file-csv mr-2"></i>
+        <span class="number">{{item.name}}</span>
+    </div>
+
+    <!-- <button class="btn btn-success" [disabled]="!files?.length" (click)="sendFile()">Enviar Arquivo</button> -->
+  </div>
+</div>
+
+
+</div>
+<div class="modal-footer bg-purple-primary">
+    <button type="button" class="btn btn-secondary" (click)="sendFile()">Enviar Aquivo</button>
+</div>

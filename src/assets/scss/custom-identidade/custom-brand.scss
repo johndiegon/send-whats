@@ -68,6 +68,11 @@ html,body {
     background-color: var(--color-primary-green-2) !important;
     border-color: none;
 }
+.btn-primary.disabled, .btn-primary:disabled {
+    color: #fff;
+    background-color: var(--color-primary-green-2) !important;
+    border-color: var(--color-primary-green-2) !important;
+}
 .btn-primary:focus, .btn-primary.focus {
     color: #fff;
     background-color: var(--color-primary-green-2) !important;
@@ -79,8 +84,32 @@ html,body {
     background-color: var(--color-secondary-green);
 }
 
+.btn-purple-secondary {
+    background: var(--color-secondary-purple) !important;
+    color: #fff;
+}
 // ####################
 
+
+
+// ##################  SPINNER 
+// .spinner-border {
+//     width: 4rem;
+//     height: 4rem;
+//     border: 0.4em solid currentColor;
+// }
+.spinner-primary-green {
+    color: var(--color-primary-green) !important;
+}
+
+.spinner-secondary-green {
+    color: var(--color-secondary-green) !important;
+}
+
+.spinner-primary-purple {
+    color: var(--color-primary-purple) !important;
+}
+// #########################
 
 
 

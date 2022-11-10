@@ -1,5 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
 
+.page-content {
+    padding-top: 90px;
+    padding-bottom: 60px;
+}
+
+
 .btn-close {
     background: var(--color-secondary-green);
     border: none;
@@ -58,4 +64,17 @@
 
 .bg-green-secondary {
     background-color: var(--color-secondary-green);
+}
+
+
+
+
+
+
+
+
+
+.input-group > .input-group-prepend > .btn, .input-group > .input-group-prepend > .input-group-text, .input-group:not(.has-validation) > .input-group-append:not(:last-child) > .btn, .input-group:not(.has-validation) > .input-group-append:not(:last-child) > .input-group-text, .input-group.has-validation > .input-group-append:nth-last-child(n+3) > .btn, .input-group.has-validation > .input-group-append:nth-last-child(n+3) > .input-group-text, .input-group > .input-group-append:last-child > .btn:not(:last-child):not(.dropdown-toggle), .input-group > .input-group-append:last-child > .input-group-text:not(:last-child) {
+    border-top-left-radius: 25px;
+    border-bottom-left-radius: 25px;
 }

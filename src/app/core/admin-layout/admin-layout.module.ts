@@ -16,6 +16,7 @@ import { SendMessageComponent } from 'src/app/pages/send-message/send-message.co
 import { ClientStatusChartComponent } from 'src/app/pages/dashboard/client-status-chart/client-status-chart.component';
 import { OrdersDayNightChartComponent } from 'src/app/pages/dashboard/orders-day-night-chart/orders-day-night-chart.component';
 import { OrdersWeekChartComponent } from 'src/app/pages/dashboard/orders-week-chart/orders-week-chart.component';
+import { ModalImportComponent } from 'src/app/pages/import-orders/modal-import/modal-import.component';
 
 @NgModule({
   imports: [
@@ -33,6 +34,7 @@ import { OrdersWeekChartComponent } from 'src/app/pages/dashboard/orders-week-ch
     UserProfileComponent,
     IconsComponent,
     ImportOrdersComponent,
+    ModalImportComponent,
     SendMessageComponent,
     ClientStatusChartComponent,
     OrdersDayNightChartComponent,

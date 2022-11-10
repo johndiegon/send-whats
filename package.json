@@ -38,6 +38,7 @@
     "moment": "^2.29.1",
     "moment-timezone": "^0.5.34",
     "ngx-clipboard": "14.0.1",
+    "ngx-loading": "^14.0.0",
     "ngx-order-pipe": "^2.2.0",
     "ngx-spinner": "^13.1.1",
     "ngx-toastr": "14.0.0",

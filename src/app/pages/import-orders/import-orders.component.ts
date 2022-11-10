@@ -4,6 +4,8 @@ import { catchError, map,  throwError } from 'rxjs';
 import {  ReportFile } from 'src/app/models/HistoryInputFile';
 import { ReponseWrapper } from 'src/app/models/response-api-default';
 import { ContactListService } from 'src/app/services/contact-list.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ModalImportComponent } from './modal-import/modal-import.component';
 declare const google: any;
 
 @Component({
@@ -11,103 +13,71 @@ declare const google: any;
   templateUrl: './import-orders.component.html',
   styleUrls: ['./import-orders.component.scss']
 })
-export class ImportOrdersComponent implements OnInit, AfterViewInit {
-
-  @ViewChild('fileUpload') fileUpload: ElementRef<HTMLInputElement>;
-  @ViewChild('importBox') importBox: ElementRef<HTMLDivElement>;
-  files: File[] = [];
-  fileAccept = 'text/csv';
-  fileReader = new FileReader();
+export class ImportOrdersComponent implements OnInit {
   historyInputFile: ReportFile[];
+  historyInputFileBkp: ReportFile[];
+  nameFileSearch = '';
+  loading = false;
 
-  constructor(private toastr: ToastrService, private contactListService: ContactListService) { }
+  pageSize = 20;
+  page = 1;
+  pages: any = [];
 
-  ngAfterViewInit(): void {
-    this.fileUpload.nativeElement.addEventListener('change', this.onSelectFile.bind(this))
+  constructor(
+    private toastr: ToastrService,
+    private contactListService: ContactListService,
+    private modalService: NgbModal
+  ) { }
 
-    this.importBox.nativeElement.addEventListener("dragenter", this.dragenter.bind(this));
-    this.importBox.nativeElement.addEventListener("dragover", this.dragover.bind(this));
-    this.importBox.nativeElement.addEventListener("dragleave", this.dragleave.bind(this));
-    this.importBox.nativeElement.addEventListener("drop", this.drop.bind(this));
-
-  }
 
   ngOnInit() {
-
-    
+    this.loading = true;
     this.contactListService.getHistory()
     .pipe(catchError(error => {
-      this.toastr.error('Não foi possivel encontrar a lista de contatos')
+      this.toastr.error('Não foi possivel encontrar a lista de contatos');
+      this.loading = false;
       return throwError(() => new Error(error.message));
     }))
     .subscribe(res => {
       // debugger
+      this.historyInputFileBkp = res.reportFile;
       this.historyInputFile = res.reportFile;
+      const maxPage = Math.ceil(this.historyInputFileBkp.length / this.pageSize);
+      for (let i = 0; i < maxPage; i++) {
+        this.pages.push(i + 1);
+      }
+      // this.pagination(1);
+      console.log(this.historyInputFile);
+      this.loading = false;
     });
 
   }
 
-  sendFile() {
-    const formData = new FormData();
-
-    this.files.forEach(file => {
-      formData.append('file', file);
-
-      this.contactListService.ImportListOrders(formData)
-      .pipe(map(e => e))
-      .pipe<ReponseWrapper>(catchError<any, any>(e => {
-        this.toastr.error('Não foi possivel importar o arquivo, entre em contato com suporte.')
-        return e;
-      }))
-      .subscribe(res => {
-        this.toastr.success('Arquivo importado com sucesso');
-        this.resetImport();
-      });
-      
-    })
-
+  pagination(page: number) {
+    this.page = page;
+    this.historyInputFile = JSON.parse(JSON.stringify(this.historyInputFileBkp));
+    this.historyInputFile = this.historyInputFile.slice(page * this.pageSize - this.pageSize, page * this.pageSize);
+  }
+  // searchFile() {
+  //   console.log(this.nameFileSearch);
+  // }
+  assignCopy() {
+    this.historyInputFile = Object.assign([], this.historyInputFileBkp);
+  }
+  searchFile(value) {
+    console.log(value);
+    console.log(this.nameFileSearch);
+    if (!this.nameFileSearch) {
+        this.assignCopy();
+    } // when nothing has typed
+    this.historyInputFile = Object.assign([], this.historyInputFileBkp).filter(
+      item => item.fileName?.toLowerCase().indexOf(this.nameFileSearch.toLowerCase()) > -1
+    );
   }
 
-  resetImport(){
-    this.fileUpload.nativeElement.files = undefined;
-    this.files = [];
+
+  openModal() {
+    this.modalService.open(ModalImportComponent, { windowClass : 'modal-md', ariaLabelledBy: 'modal-basic-title' });
   }
-
-  onSelectFile(_: InputEvent) {
-    this.files = Object.values(this.fileUpload.nativeElement.files);
-  }
-
-  openFileUpload() {
-    this.fileUpload.nativeElement.click();
-  }
-
-  dragenter(e) {
-    e.stopPropagation();
-    e.preventDefault();
-  }
-
-  dragover(e) {
-    e.stopPropagation();
-    e.preventDefault();
-    this.importBox?.nativeElement?.classList.add('drag-over');
-  }
-
-  dragleave(_) {
-    this.importBox?.nativeElement?.classList.remove('drag-over');
-  }
-
-  drop(e) {
-    e.stopPropagation();
-    e.preventDefault();
-    this.importBox?.nativeElement?.classList.remove('drag-over');
-    const dt = e.dataTransfer as DataTransfer;
-
-    const filesValidated = Object.values(dt.files).filter(item => this.fileAccept.includes(item.type))
-    if (!filesValidated.length) {
-      return this.toastr.error('Apenas .csv podem ser importados!');
-    }
-
-    this.files = filesValidated;
-  }
-
 }
+
