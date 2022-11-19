@@ -13,3 +13,40 @@
         display: flex;
     }
 }
+
+.line {
+    background: var(--color-secondary-purple-2);
+    margin-bottom: 5px;
+    padding: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-radius: 25px;
+
+    &:hover {
+        background: var(--color-secondary-purple);
+    }
+
+    .number {
+        font-weight: 700;
+        color: var(--color-primary-purple);
+    }
+}
+
+.card-header-custom {
+    min-height: 80px;
+    h2 {
+        font-size: 24px;
+    }
+}
+
+.card {
+    border: none;
+}
+.card .card-body {
+    padding-bottom: 45px;
+}
+.card .footer-custom {
+    width: 113%;
+    margin-left: -21px;
+    margin-top: 20px;
+}

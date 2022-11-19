@@ -33,7 +33,7 @@ export class SendMessageComponent implements OnInit {
   fileIsProcessing:boolean;
   client: ClientStoreType;
   showModal: boolean;
-  
+  loading = false;
   whatsSession: {
     session: string,
     qrCode: string,
@@ -53,15 +53,17 @@ export class SendMessageComponent implements OnInit {
   // })
 
   ngOnInit() {
-
+    this.loading = true;
     this.contactListService.getContactList()
       .pipe(catchError(error => {
         this.toastr.error('Não foi possivel encontrar a lista de contatos')
+        this.loading = false;
         return throwError(() => new Error(error.message));
       }))
       .subscribe(res => {
         this.fileIsProcessing = res.resume.fileIsProcessing;
         this.listContactList = res.resume.contactLists;
+        this.loading = false;
       });
 
     this.store.select(selectClient).subscribe(client => {
@@ -158,7 +160,7 @@ export class SendMessageComponent implements OnInit {
   sendMessage(item:ContactListType){
       this.router.navigateByUrl('/send', {
       state: { item: item }
-      })
+      });
   }
 
 }

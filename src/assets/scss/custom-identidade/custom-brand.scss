@@ -125,15 +125,73 @@ html,body {
 .spinner-primary-purple {
     color: var(--color-primary-purple) !important;
 }
+.box-loading {
+    padding-top: 300px;
+}
 // #########################
 
-
-
+// CARD
 
 .card {
     border-radius: 40px;
 }
 
+.card-header-custom {
+    background-color: var(--color-primary-purple);
+    color: var(--color-secondary-green) !important;
+    min-height: 95px;
+    border-radius: 30px;
+    padding: 5px;
+    padding-right: 30px;
+
+    img {
+        max-width: 120px;
+    }
+    h2 {
+        margin-top: 20px;
+        font-weight: 500;
+        color: var(--color-secondary-green) !important;
+
+    }
+}
+
+.card {
+    .footer-custom {
+        margin-left: -48px;
+        width: 138%;
+        margin-bottom: -48px;
+        border-radius: 25px;
+        height: 70px;
+
+        @media screen and (max-width: 600px) {
+            width: 100vw;
+            border-radius: 15px;
+            margin-left: -35px;
+            // margin-top: -53px;
+            // height: 280px;
+            // border-top-left-radius: 0;
+            // border-top-right-radius: 0;
+        }
+
+        .link {
+            padding-right: 40px;
+            padding-top: 22px;
+            a {
+                color: var(--color-primary-purple);
+                font-size: 16px;
+                font-weight: 600 !important;
+                // --font-family-monospace
+            }
+        }
+
+        .logo-lines {
+            width: 70px;
+            margin-left: 20px;
+            margin-top: 20px;
+        }
+    }
+}
+// ###################
 
 
 // ####### stepper

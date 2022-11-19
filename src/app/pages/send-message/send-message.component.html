@@ -1,33 +1,79 @@
-<div class="header bg-gradient-green2 pb-8 pt-5 pt-md-8">
+<!-- <div class="header bg-gradient-green2 pb-8 pt-5 pt-md-8">
   <div class="container-fluid">
     <div class="row">
       <div class="ps-1">
-        <span *ngIf="fileIsProcessing">Arquivo novo está sendo processado!</span>
+       
       </div>
     </div>
   </div>
-</div>
-<div class="container-fluid mt--7 ">
-  <div class="col-12">
-    <div class="card bg-gradient-green2 shadow">
-      <div class="card-group bg-gradient-n bg-gradient-green2">
-        <div class="card-header p-2 mx-2 mt-4 position-relative z-index-2 bg-gradient-neutral" (click)="sendMessage(item)" *ngFor="let item of listContactList" style="width: 18rem;" >
-          <div [ngClass]="{'card-body bg-gradient-success': item.id === idSelected, 'card-body bg-gradient-neutral' :  item.id != idSelected }">
-            <h5 class="card-title">{{item.name}}</h5>
-            <div class="ps-3">
-              <span class="text-sm" *ngIf="item.creationDate">Data de criação : {{item.creationDate | date: 'd, MMM y' : '+0300'}}</span>
-            </div>
-            <div class="ps-3">
-              <span class="text-sm" *ngIf="item.count">{{item.count}} contatos.</span>
-            </div>
-            <div class="ps-3">
-              <span class="text-sm" *ngIf="item.unity">Unidade: {{item.unity}}</span>
+</div> -->
+<div class="page-content container-fluid mt-4">
+  <span *ngIf="fileIsProcessing">Arquivo novo está sendo processado!</span>
+  
+  <div class="row" >
+    <div class="col-md-3 col-sm-12 mb-4" *ngFor="let item of listContactList">
+      <div class="card shadow" >
+        <div class="card-header-custom d-flex justify-content-end">
+          <!-- <img class="logo" src="assets/img/brand/logo-horizontal-verde.png" routerLink="/login"> -->
+          <h2>
+            {{item.name}}
+          </h2>
+        </div>
+        <div class="card-body">
+          <div class="line d-flex justify-content-between">
+            <span>Data de Criação </span>
+            <span class="number">{{item.creationDate | date: 'd, MMM y' : '+0300'}}</span>
+          </div>
+          <div class="line d-flex justify-content-between">
+            <span>Contatos </span>
+            <span class="number">{{item.count | number}}</span>
+          </div>
+          <div class="line d-flex justify-content-between">
+            <span>Unidade </span>
+            <span class="number">{{item.unity}}</span>
+          </div>
+          <div class="bg-secondary-green footer-custom">
+            <div class="row">
+              <div class="col-3">
+                <img class="logo-lines" src="assets/img/brand/lines-logo-purple.png">
+              </div>
+              <div class="col-9 text-right link">
+                <a (click)="sendMessage(item)" ><small>Enviar Mensagem</small></a>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+
+  <div class="box-loading text-center" *ngIf="loading">
+    <div class="spinner-border spinner-primary-green" role="status">
+      <span class="sr-only">Carregando...</span>
+    </div>
+  </div>
 </div>
 
 
+
+
+<!-- <div class="col-12">
+  <div class="card shadow">
+    <div class="card-group shadow">
+      <div class="card-header p-2 mx-2 mt-4 position-relative z-index-2 bg-gradient-neutral" (click)="sendMessage(item)" *ngFor="let item of listContactList" style="width: 18rem;" >
+        <div [ngClass]="{'card-body bg-gradient-success': item.id === idSelected, 'card-body bg-gradient-neutral' :  item.id != idSelected }">
+          <h5 class="card-title">{{item.name}}</h5>
+          <div class="ps-3">
+            <span class="text-sm" *ngIf="item.creationDate">Data de criação : {{item.creationDate | date: 'd, MMM y' : '+0300'}}</span>
+          </div>
+          <div class="ps-3">
+            <span class="text-sm" *ngIf="item.count">{{item.count}} contatos.</span>
+          </div>
+          <div class="ps-3">
+            <span class="text-sm" *ngIf="item.unity">Unidade: {{item.unity}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
