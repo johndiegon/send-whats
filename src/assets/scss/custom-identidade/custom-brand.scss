@@ -87,7 +87,23 @@ html,body {
 .btn-purple-secondary {
     background: var(--color-secondary-purple) !important;
     color: #fff;
+    &:hover, &:active {
+        color: var(--color-primary-purple);
+       }
 }
+
+.btn-secondary {
+    background-color: var(--color-secondary-green);
+}
+
+// .btn-danger {
+//     background-color: var(--color-primary-green);
+    
+ 
+//     &:hover, &:active {
+//      background-color: var(--color-primary-green-2);
+//     }
+//  }
 // ####################
 
 
@@ -137,4 +153,49 @@ html,body {
 
 ul.stepper li.active a .label, ul.stepper li.completed a .label {
     color: var(--color-primary-purple);
+}
+
+
+
+
+
+// WHATSAPP
+.whatsapp {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    .whatsapp-toolbar {
+        background-color: var(--color-primary-purple) !important;
+        padding: 10px !important;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+        // border-bottom: 1px solid rgb(234 234 234);
+        display: flex;
+
+        button {
+            cursor: pointer;
+            border: 0px;
+            padding: 4px 6px;
+            border-radius: 4px;
+            margin: 0 2px;
+            background-color: transparent;
+            color: var(--color-secondary-green);
+            &:hover {
+                background-color: var(--color-secondary-purple);
+                color: var(--color-primary-purple);
+            }
+        }
+    }
+
+    .whatsapp-editor {
+        padding: 10px;
+        min-height: 280px;
+        outline: none;
+        border: 1px !important;
+        color:  var(--color-primary-purple) !important;
+        background-color: var(--color-secondary-purple-2);
+        border-bottom-left-radius: 15px;
+        border-bottom-right-radius: 15px;
+    }
 }

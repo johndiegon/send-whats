@@ -1,13 +1,7 @@
-<div class="header bg-gradient-green2 pb-8 pt-5 pt-md-8">
-    <div class="container-fluid">
-        <div class="header-body">
 
-        </div>
-    </div>
-</div>
 <!-- Page content -->
-<div class="container-fluid mt--7">
-    <div class="row">
+<div class="page-content container-fluid mt-4">
+    <!-- <div class="row">
         <div class="col-xl-4 col-lg-12 mb-5">
             <div class="card shadow">
                 <div class="card-header">
@@ -27,61 +21,103 @@
             </div>
         </div>
 
-        <div class="col-xl-8 col-lg-12">
-            <div class="card shadow">
-                <div class="card-header">
-                    <h3 class="mb-0">Editar/Criar</h3>
+        
+    </div> -->
+
+
+
+
+    <div class="card-header border-2">
+        <div class="row align-items-center">
+          <div class="col d-flex justify-content-between">
+            <h3 class="mb-0 mt-2">Mensagens Cadastradas</h3>
+            <div class="d-flex">
+    
+              <div class="form-group mb-0 focused mr-3 input-search" >
+                <div class="input-group input-group-alternative">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-search"></i></span>
+                  </div>
+                  <input class="form-control" placeholder="Procurar mensagem" type="text" [(ngModel)]="nameMsgSearch" (keyup)="searchFile($event)" >
+                  <!-- [(ngModel)]="nameMsgSearch" (keyup)="searchFile($event)" -->
                 </div>
-                <div class="card-body">
-                    <form [formGroup]="msgForm" (submit)="onSubmitForm($event)">
-                        <div class="row">
-                            <div class="col-12">
-                                <dsw-input-control label="Nome do template - Deve ser idêntico ao do facebook." for="title">
-                                    <input dwsInputSlot class="form-control" id="title" formControlName="title"
-                                        placeholder="" type="text" />
-                                </dsw-input-control>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12">
-                                <dsw-input-control label="Mensagem" for="msg">
-                                    <dsw-text-edit dwsInputSlot formControlName="msg"></dsw-text-edit>
-                                </dsw-input-control>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12">
-                                <dsw-input-control label="Reposta Automática" for="positiveAnswer">
-                                    <dsw-text-edit dwsInputSlot formControlName="positiveAnswer"></dsw-text-edit>
-                                </dsw-input-control>
-                            </div>
-                        </div>
-                        <!-- <div class="row">
-                            <div class="col-12">
-                                <dsw-input-control label="Reposta Automática - Negativa" for="positiveAnswer">
-                                    <dsw-text-edit dwsInputSlot formControlName="negativeAnswer"></dsw-text-edit>
-                                </dsw-input-control>
-                            </div>
-                        </div> -->
-                        <div class="row">
-                            <div class="col-12">
-                                <button type="submit" class="btn btn-success">Salvar</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+              </div>
+              <button class="btn btn-secondary" (click)="openModalEdit(modalEdit, null)">  <i class="fa-solid fa-plus mr-2"></i>Nova Mensagem</button>
+              <!-- (click)="openModal()" -->
             </div>
+    
+          </div>
         </div>
-    </div>
+      </div>
+      <div class="table-responsive shadow">
+        <table class="table align-items-center table-flush">
+          <thead class="thead-purple">
+            <tr>
+              <th scope="col">Mensagem</th>
+              <th scope="col" style="width:20%; text-align: center;">Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of listMsg">
+                <th scope="row">
+                    {{item.title}}
+                </th>
+                <td style="width:20%; text-align: center;">
+                    <div class="d-flex box-btns">
+                        <button class="btn btn-primary" (click)="openModalEdit(modalEdit, item)">  <i class="fa-solid fa-edit mr-2"></i>Editar</button>
+                        <button class="btn btn-purple-secondary" (click)="openModal(item)">  <i class="fa-solid fa-trash  mr-2"></i>Excluir</button>
+                    </div>
+                    <!-- <i class="msg-edit fas fa-edit text-blue mr-3" ></i>
+                    <i class="msg-trash fas fa-trash text-warning" ></i>  -->
+                </td>
+            </tr>
+            <tr *ngIf="listMsg?.length === 0">
+              <th scope="row" colspan="4" class="text-center" >
+                Nenhum registro encontrado
+              </th>
+            </tr>
+            <tr *ngIf="loading"> 
+              <th colspan="4" class="text-center">
+                <div class="spinner-border spinner-primary-green" role="status">
+                  <span class="sr-only">Carregando...</span>
+                </div>
+              </th>
+            </tr>
+          </tbody>
+        </table>
+    
+      </div>
 </div>
 
-<dsw-modal-base [showModal]="showModal" (closeModal)="closeModal()">
-    <div class="container p-5">
-        <p>Você realmente deseja excluir esta mensagem?</p>
-
-        <p class="">
-            <button class="btn btn-success" (click)="deleteMsg()">Sim</button>
-            <button class="btn btn-warning" (click)="closeModal()">Não</button>
-        </p>
+<ng-template #modalEdit let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Editar Mensagem</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.close()"> <i class="fas  fa-close"></i></button>
     </div>
-</dsw-modal-base>
+    <div class="modal-body">
+        <form [formGroup]="msgForm" >
+            <div class="row">
+                <div class="col-12">
+                    <dsw-input-control label="Nome do template - Deve ser idêntico ao do facebook." for="title">
+                        <input dwsInputSlot class="form-control" id="title" formControlName="title"
+                            placeholder="" type="text" />
+                    </dsw-input-control>
+                </div>
+                <div class="col-6 box-editor">
+                    <dsw-input-control label="Mensagem" for="msg">
+                        <dsw-text-edit dwsInputSlot formControlName="msg"></dsw-text-edit>
+                    </dsw-input-control>
+                </div>
+                <div class="col-6 box-editor">
+                    <dsw-input-control label="Reposta Automática" for="positiveAnswer">
+                        <dsw-text-edit dwsInputSlot formControlName="positiveAnswer"></dsw-text-edit>
+                    </dsw-input-control>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer bg-purple-primary">
+        <button class="btn btn-purple-secondary" (click)="modal.close()">Cancelar</button>
+        <button type="button" class="btn btn-secondary" (click)="onSubmitForm(modal)">Salvar</button>
+    </div>
+</ng-template>

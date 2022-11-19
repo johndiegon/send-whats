@@ -18,6 +18,7 @@ import { TextEditComponent } from './tex-edit/text-edit.component';
 import { MsgDefaultComponent } from '../pages/msg-default/msg-default.component';
 import { FileImageViewComponent } from './file-image-view/file-image-view.component';
 import { ModalBaseComponent } from './modal-base/modal-base.component';
+import { ModalConfirmComponent } from './modal-confirm/modal-confirm.component';
 
 @NgModule({
   imports: [
@@ -42,7 +43,8 @@ import { ModalBaseComponent } from './modal-base/modal-base.component';
     TextEditComponent,
     MsgDefaultComponent,
     FileImageViewComponent,
-    ModalBaseComponent
+    ModalBaseComponent,
+    ModalConfirmComponent
   ],
   exports: [
     FooterComponent,
@@ -58,7 +60,8 @@ import { ModalBaseComponent } from './modal-base/modal-base.component';
     TextEditComponent,
     MsgDefaultComponent,
     FileImageViewComponent,
-    ModalBaseComponent
+    ModalBaseComponent,
+    ModalConfirmComponent
   ]
 })
 export class SharedModule { }

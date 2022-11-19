@@ -7,6 +7,8 @@ import { MessageTemplate } from 'src/app/models/MessageTemplate';
 import { MessagePutType, MessageType } from 'src/app/models/MessageType';
 import { selectMessages } from 'src/app/redux/selectors.store';
 import { MessageService } from 'src/app/services/message.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ModalConfirmComponent } from 'src/app/shared/modal-confirm/modal-confirm.component';
 
 @Component({
   selector: 'dsw-msg-default',
@@ -17,23 +19,7 @@ export class MsgDefaultComponent implements OnInit {
   showModal: boolean;
   msgToDelete: MessageType;
   editMsgFlag: boolean;
-
-  constructor(
-    private messageService: MessageService,
-    private toastr: ToastrService,
-    private store: Store,
-    private fb: FormBuilder
-  ) { }
-
-  listMsg: MessageType[];
-
-  ngOnInit(): void {
-
-    this.store.select(selectMessages).subscribe(messages => {
-      this.listMsg = messages;
-    });
-  }
-
+  loading = false;
   msgForm = this.fb.group({
     id: [''],
     idClient: [''],
@@ -42,7 +28,31 @@ export class MsgDefaultComponent implements OnInit {
     positiveAnswer:[''],
     // negativeAnswer:[''],
     image: ['']
-  })
+  });
+  listMsg: MessageType[];
+  listMsgCopy: MessageType[];
+
+  nameMsgSearch = '';
+  modalEdit: any;
+
+  constructor(
+    private messageService: MessageService,
+    private toastr: ToastrService,
+    private store: Store,
+    private fb: FormBuilder,
+    private modalService: NgbModal
+  ) { }
+
+
+  ngOnInit(): void {
+    this.loading = true;
+    this.store.select(selectMessages).subscribe(messages => {
+      this.loading = false;
+      this.listMsg = messages;
+      this.listMsgCopy = messages;
+    });
+  }
+
 
   private getMessages() {
     this.messageService.get()
@@ -60,11 +70,12 @@ export class MsgDefaultComponent implements OnInit {
       positiveAnswer: msg.positiveAnswer,
       // negativeAnswer: msg.negativeAnswer,
       image: msg.picture
-    })
+    });
   }
 
-  onSubmitForm(event: Event) {
-    event.preventDefault();
+  onSubmitForm(modal: any) {
+    this.modalEdit = modal;
+    // event.preventDefault();
 
     if (this.msgForm.invalid) {
       this.msgForm.markAllAsTouched();
@@ -86,7 +97,6 @@ export class MsgDefaultComponent implements OnInit {
       positiveAnswer: this.msgForm.value.positiveAnswer, 
       title: this.msgForm.value.title
      };
-    
 
     this.messageService.post(message)
       .pipe(catchError(error => {
@@ -98,6 +108,7 @@ export class MsgDefaultComponent implements OnInit {
         this.getMessages();
         this.msgForm.reset({ title: '', msg: '', image: '', positiveAnswer: '', negativeAnswer:'' });
         this.editMsgFlag = false;
+        this.modalEdit.close();
       });
   }
 
@@ -123,6 +134,7 @@ export class MsgDefaultComponent implements OnInit {
         this.getMessages();
         this.msgForm.reset({ title: '', msg: '', image: '' });
         this.editMsgFlag = false;
+        this.modalEdit.close();
       });
   }
 
@@ -134,18 +146,53 @@ export class MsgDefaultComponent implements OnInit {
       }))
       .subscribe(_ => {
         this.msgToDelete = undefined;
-        this.closeModal();
         this.toastr.success('Mensagem deletada com sucesso!');
         this.getMessages();
       });
   }
 
   openModal(msg: MessageType) {
-    this.showModal = true;
+    // this.showModal = true;
     this.msgToDelete = msg;
+
+    const modalRef = this.modalService.open(ModalConfirmComponent, {  ariaLabelledBy: 'modal-basic-title' });
+
+    const data = {
+      text: 'Você realmente deseja excluir esta mensagem?',
+      btn1: 'Não',
+      btn2: 'Sim'
+    };
+    modalRef.componentInstance.data = data;
+    modalRef.result.then((result) => {
+      console.log(result);
+      if (result) {
+        this.deleteMsg();
+      }
+    }, (reason) => {
+    });
   }
 
-  closeModal() {
-    this.showModal = false;
+  searchFile(value) {
+    if (!this.nameMsgSearch) {
+        this.assignCopy();
+    }
+    this.listMsg = Object.assign([], this.listMsgCopy).filter(
+      item => item.title?.toLowerCase().indexOf(this.nameMsgSearch.toLowerCase()) > -1
+    );
+  }
+
+  assignCopy() {
+    this.listMsg = Object.assign([], this.listMsgCopy);
+  }
+
+  openModalEdit(content, msg: MessageType | null) {
+    this.msgForm.reset();
+    this.editMsgFlag = false;
+    if (msg) {
+      this.editMsg(msg);
+    }
+    setTimeout(() => {
+      this.modalService.open(content, { windowClass : 'modal-large', ariaLabelledBy: 'modal-basic-title' }).result.then();
+    }, 100);
   }
 }

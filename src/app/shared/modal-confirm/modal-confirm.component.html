@@ -1,0 +1,13 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Confirmação</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="close(null)"> <i class="fas  fa-close"></i></button>
+</div>
+<div class="modal-body">
+
+  <p>{{data?.text}}</p>
+
+</div>
+<div class="modal-footer bg-purple-primary">
+  <button type="button" class="btn btn-purple-secondary" (click)="close(false)">{{data?.btn1}}</button>
+  <button type="button" class="btn btn-secondary" (click)="close(true)">{{data?.btn2}}</button>
+</div>
