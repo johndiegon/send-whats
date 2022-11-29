@@ -56,8 +56,6 @@ export class SendMessageComponent implements OnInit {
   // })
 
   ngOnInit() {
-    this.modalService.open(SendComponent, { windowClass : 'modal-md', ariaLabelledBy: 'modal-basic-title' });
-
     this.loading = true;
     this.contactListService.getContactList()
       .pipe(catchError(error => {
