@@ -22,7 +22,7 @@
           </dsw-input-control>
   
           <div formArrayName="inputParam" >
-            <div *ngFor="let param of params; index as i"  class="col-lg-12">
+            <div *ngFor="let param of params; index as i"  class="col-lg-12" >
               <dsw-input-control label="{{param}}" >
                 <input dwsInputSlot class="form-control" [formControlName]="i" type="text" />
               </dsw-input-control>
@@ -80,6 +80,8 @@
 </div>
 
 
+
+ <!-- SEGUNDA VISÃO DO MODAL -->
 <div *ngIf="showModal">
   <div class="modal-body">
     <div class="row p-3">

@@ -248,9 +248,14 @@ export class SendComponent implements OnInit, AfterViewInit {
         value : this.msgForm.controls.inputMinCountOrders.value.toString()
       });
      }
-
-     if(this.msgForm.controls.inputParam){
+     if (this.msgForm.controls.inputParam) {
       const control = <FormArray>this.msgForm.get('inputParam');
+      control.value.forEach(element => {
+        msgToSend.params.push({
+          name : 'inputParam',
+          value : element
+        });
+      });
      }
 
      if(this.msgForm.controls.inputNameProduct.value){
