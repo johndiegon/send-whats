@@ -8,6 +8,8 @@ import { ContactListType, FilterWeekDays } from 'src/app/models/ContactListType'
 import { selectClient } from 'src/app/redux/selectors.store';
 import { ContactListService } from 'src/app/services/contact-list.service';
 import { Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { SendComponent } from './send/send.component';
 
 @Component({
   selector: 'dsw-send-message',
@@ -23,9 +25,10 @@ export class SendMessageComponent implements OnInit {
     private toastr: ToastrService,
     private contactListService: ContactListService,
     private store: Store,
-    router: Router
-  ) 
-  {
+    router: Router,
+    private modalService: NgbModal
+
+  ) {
     this.router = router;
   }
 
@@ -158,9 +161,14 @@ export class SendMessageComponent implements OnInit {
   }
 
   sendMessage(item:ContactListType){
-      this.router.navigateByUrl('/send', {
-      state: { item: item }
-      });
+      // this.router.navigateByUrl('/send', {
+      // state: { item: item }
+      // });
+      sessionStorage.setItem('MSG', JSON.stringify(item));
+      this.modalService.open(SendComponent, { windowClass : 'modal-md', ariaLabelledBy: 'modal-basic-title' });
   }
+
+
+
 
 }

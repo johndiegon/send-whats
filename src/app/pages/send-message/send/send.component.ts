@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder,  FormControl,  Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -11,25 +11,37 @@ import { selectMessages } from 'src/app/redux/selectors.store';
 import { MessageService } from 'src/app/services/message.service';
 import { ChartTemplate } from 'src/app/shared/helpers/chart-template';
 import { colorsChart } from 'src/app/variables/charts';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { ReponseWrapper } from 'src/app/models/response-api-default';
 
 @Component({
   selector: 'dsw-send',
   templateUrl: './send.component.html',
   styleUrls: ['./send.component.scss']
 })
-export class SendComponent implements OnInit {
+export class SendComponent implements OnInit, AfterViewInit {
+  showInputImage = false;
 
+
+  @ViewChild('fileUpload') fileUpload: ElementRef<HTMLInputElement>;
+  @ViewChild('importBox') importBox: ElementRef<HTMLDivElement>;
+  files: File[] = [];
+  fileAccept = 'image';
+  fileReader = new FileReader();
  
   constructor(private store: Store,
               private router: Router,
               private fb: FormBuilder,
               private messageService: MessageService,
               private toastr: ToastrService,
+              public activeModal: NgbActiveModal
+
               ) 
   {
-    const nav = this.router.getCurrentNavigation();
-    this.item = nav.extras.state.item;
-    
+    const msg = sessionStorage.getItem('MSG');
+    if (msg) {
+      this.item = JSON.parse(msg);
+    }
   }
   
   listMsg: MessageType[] = [];
@@ -74,6 +86,8 @@ export class SendComponent implements OnInit {
     }
   };
   
+
+
   private _chart: ChartTemplate;
   _typeDatas = [
     { type: 'ordersOnSunday', label: 'Domingo', color: colorsChart.theme['success'] },
@@ -120,14 +134,14 @@ export class SendComponent implements OnInit {
      })
   }
 
-  pushParam(param)
-  {
-    if(param != "name")
-    {
+  pushParam(param) {
+    if (param === 'image') {
+      this.showInputImage = true;
+    }
+    if (param !== 'name') {
       this.inputParam.push( new FormControl(null, [Validators.required] ))
-      this.params.push(param)
-    }else
-    {
+      this.params.push(param);
+    } else {
       this.paramName = true;
     }
   }
@@ -143,7 +157,7 @@ export class SendComponent implements OnInit {
     }
   }
   
-  sendMessage(){
+  sendMessage() {
     if(this.msgForm.valid)
     {
       this.showModalProcess()
@@ -154,7 +168,8 @@ export class SendComponent implements OnInit {
         return throwError(() => new Error(error.message));
       }))
       .subscribe( res=> {
-        this.closeModal()
+        this.closeModal();
+        this.activeModal.close();
         this.toastr.success('Mensagem enviada com sucesso!');
       });
     } else{
@@ -162,9 +177,9 @@ export class SendComponent implements OnInit {
     }
   }
 
- showCountToSendMessage(){
-    if(this.msgForm.valid)
-    {
+ showCountToSendMessage() {
+    if (this.msgForm.valid) {
+      // this.sendFile();
       this.openModal()
       var msgTosend = this.getParam();
       this.messageService.getCount(msgTosend)
@@ -312,5 +327,91 @@ export class SendComponent implements OnInit {
     this.showProcess = true;
   }
 
+  close() {
+    this.activeModal.close();
+  }
+
+
+
+
+
+
+
+
+  
+
+  ngAfterViewInit(): void {
+    this.fileUpload.nativeElement.addEventListener('change', this.onSelectFile.bind(this))
+
+    this.importBox.nativeElement.addEventListener('dragenter', this.dragenter.bind(this));
+    this.importBox.nativeElement.addEventListener('dragover', this.dragover.bind(this));
+    this.importBox.nativeElement.addEventListener('dragleave', this.dragleave.bind(this));
+    this.importBox.nativeElement.addEventListener('drop', this.drop.bind(this));
+
+  }
+
+  sendFile() {
+    if (this.showInputImage) {
+      const formData = new FormData();
+
+      this.files.forEach(file => {
+        formData.append('file', file);
+        this.messageService.ImportImage(formData)
+        .pipe<any>(catchError<any, any>(e => {
+          this.toastr.error('Não foi possivel importar o arquivo, entre em contato com suporte.');
+          return e;
+        }))
+        .subscribe(res => {
+          this.msgForm.get('inputParam').get('0').setValue(res?.url);
+          // this.resetImport();
+          this.showCountToSendMessage();
+        });
+      });
+    } else {
+      this.showCountToSendMessage();
+    }
+  }
+
+  resetImport(){
+    this.fileUpload.nativeElement.files = undefined;
+    this.files = [];
+  }
+
+  onSelectFile(_: InputEvent) {
+    this.files = Object.values(this.fileUpload.nativeElement.files);
+  }
+
+  openFileUpload() {
+    this.fileUpload.nativeElement.click();
+  }
+
+  dragenter(e) {
+    e.stopPropagation();
+    e.preventDefault();
+  }
+
+  dragover(e) {
+    e.stopPropagation();
+    e.preventDefault();
+    this.importBox?.nativeElement?.classList.add('drag-over');
+  }
+
+  dragleave(_) {
+    this.importBox?.nativeElement?.classList.remove('drag-over');
+  }
+
+  drop(e) {
+    e.stopPropagation();
+    e.preventDefault();
+    this.importBox?.nativeElement?.classList.remove('drag-over');
+    const dt = e.dataTransfer as DataTransfer;
+    console.log(dt.files);
+    const filesValidated = Object.values(dt.files).filter(item => item.type.includes(this.fileAccept));
+    if (!filesValidated.length) {
+      return this.toastr.error('Apenas .csv podem ser importados!');
+    }
+
+    this.files = filesValidated;
+  }
 }
 

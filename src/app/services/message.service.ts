@@ -9,6 +9,7 @@ import { updateAll } from '../redux/actions/message.action';
 import { Store } from '@ngrx/store';
 import { MessageTemplate } from '../models/MessageTemplate';
 import { ContactsCountResponse } from '../models/ContactsCountResponse';
+import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class MessageService {
@@ -89,6 +90,15 @@ export class MessageService {
                 return throwError(() => new Error(error.message));
             })
         );
+    }
+
+    ImportImage(formData: FormData): Observable<any> {
+        return this.httpClient.post<any>(`${environment.FEATURE_API}/FileInput/UploadMedia`, formData, {
+            headers: {
+                'Access-Control-Allow-Credentials': 'true'
+                , 'Access-Control-Allow-Origin': '*'
+            }
+        });
     }
 }
 
