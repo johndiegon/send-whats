@@ -1,75 +1,18 @@
-<div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center"
-  style="min-height: 100px;  background-size: cover; background-position: center top;">
-  <!-- Mask -->
-  <span class="mask bg-gradient-green2 opacity-8"></span>
-  <!-- Header container -->
-  <div class="container-fluid d-flex align-items-center">
-    <div class="row">
-      <div class="col-12">
-        <h1 class="display-2 text-white">Ola, {{client.name}}</h1>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="container-fluid mt--7">
-  <div class="row">
 
-    <!-- PasswordForm -->
-    <div class="col-xl-4 order-xl-2 mb-5 mb-xl-0">
-      <div class="card card-profile shadow">
-        <div class="card-header bg-light shadow">
-          <div class="row align-items-center">
-            <div class="col-8">
-              <h3 class="mb-0">Minha Senha</h3>
-            </div>
-            <div class="col-4 text-right">
-              <button type="button" (click)="togglePassword()"  [ngClass]="{'btn btn-sm': true,'btn-primary': !openPassword, 'btn-danger': openPassword }">{{!openPassword ? 'Trocar' : 'Cancelar'}}</button>
-            </div>
-          </div>
-        </div>
-        <div class="card-body" *ngIf="openPassword" [ngClass]="{'card-body': true, 'close-Password': !openPassword, 'open-Password': openPassword}">
-          <form role="form" [formGroup]="passwordForm" (submit)="onSubmitPassword($event)">
-            <div class="row">
-              <div class="col-lg-12">
-                <dsw-input-control label="Senha Antiga" for="oldPassword">
-                  <input dwsInputSlot dwsShowPassword class="form-control" id="oldPassword"
-                    formControlName="oldPassword" placeholder="" type="password" />
+<div class="page-content container-fluid mt-4">
 
-                </dsw-input-control>
-              </div>
-
-              <div class="col-lg-12">
-                <dsw-input-control label="Senha Nova" for="password">
-                  <input dwsInputSlot dwsShowPassword class="form-control" id="password"
-                    formControlName="password" placeholder="" type="password" />
-                </dsw-input-control>
-              </div>
-            </div>
-
-            <div class="text-center">
-              <button type="submit" class="btn btn-primary mt-4">
-                Salvar
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-
-    <!-- RegisterForm -->
-    <div class="col-xl-8 order-xl-1">
-      <div class="card bg-gradient-lighter shadow">
-        <div class="card-header bg-white border-0">
-          <div class="row align-items-center">
-            <div class="col-8">
-              <h3 class="mb-0">Meus Dados</h3>
-            </div>
-            <div class="col-4 text-right">
-              <button type="button" (click)="toggleRegister()"  [ngClass]="{'btn btn-sm': true,'btn-primary': !openFormRegister, 'btn-danger': openFormRegister }">{{!openFormRegister ? 'Editar' : 'Cancelar'}}</button>
-            </div>
-          </div>
+  <div class="row" >
+    <div class="col-md-12 col-sm-12 mb-4" >
+      <div class="card shadow" >
+        <div class="card-header-custom d-flex justify-content-between">
+          <button type="submit" class="btn btn-secondary btn-edit-pass" (click)="togglePassword(content)">Editar senha</button>
+          <!-- <img class="logo" src="assets/img/brand/logo-horizontal-verde.png" routerLink="/login"> -->
+          <h2>
+            Meus Dados
+          </h2>
         </div>
         <div class="card-body">
+          
           <form role="form" [formGroup]="registerForm" (submit)="onSubmit($event)">
 
             <div class="row">
@@ -176,30 +119,75 @@
 
             <!-- WhatsApp -->
             <h4 class="heading-small text-muted mb-4">WhatssApp</h4>
-            <dsw-multi-input-list classInput="form-control" formControlName="phone"
-              [touched]="registerForm.controls?.phone?.touched" placeholder="numero" type="text"></dsw-multi-input-list>
+            <div class="row">
+              <div class="col-md-4">
+                <!-- <dsw-multi-input-list classInput="form-control" formControlName="phone"
+                  [touched]="registerForm.controls?.phone?.touched" placeholder="numero" type="text"></dsw-multi-input-list> -->
+
+                  <dsw-input-control label="" for="phone">
+                    <input dwsInputSlot class="form-control" id="phone" formControlName="phone"
+                      placeholder="Ex.: (00) 00000-0000" type="text" [dwsMask]="'(00) 00000-0000'" />
+                  </dsw-input-control>
+              </div>
+            </div>
 
             <span class="text-danger text-xs"
               *ngIf="!!registerForm.controls?.phone?.errors?.minlength && !!registerForm.controls?.phone?.touched">Minimo
               obrigatório de "{{registerForm.controls?.phone?.errors?.minlength?.requiredLength}}" telefone(s)</span>
             <hr class="my-4" />
 
-            <div class="row">
+            <div class="row resp-aut">
               <div class="col-12">
                   <dsw-input-control label="Reposta Automática" for="answerDefault">
                       <dsw-text-edit dwsInputSlot formControlName="answerDefault"></dsw-text-edit>
                   </dsw-input-control>
               </div>
-          </div>
+            </div>
 
-            <div class="text-center">
-              <button type="submit" [disabled]="!openFormRegister" class="btn btn-primary mt-4">
+            <div class="d-flex justify-content-end ">
+              <button type="submit" class="btn btn-primary mt-4">
                 Salvar
               </button>
             </div>
           </form>
+          
         </div>
       </div>
     </div>
   </div>
 </div>
+
+
+
+<!-- MODAL detail-button -->
+<ng-template #content let-modal>
+	<div class="modal-header">
+		<h4 class="modal-title" id="modal-basic-title">Alterar senha</h4>
+		<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"> <i class="fas  fa-close"></i></button>
+	</div>
+  <form role="form" [formGroup]="passwordForm" (submit)="onSubmitPassword($event)">
+	  <div class="modal-body">
+      <div class="row">
+        <div class="col-lg-12">
+          <dsw-input-control label="Senha Antiga" for="oldPassword">
+            <input dwsInputSlot dwsShowPassword class="form-control" id="oldPassword"
+              formControlName="oldPassword" placeholder="" type="password" />
+
+          </dsw-input-control>
+        </div>
+
+        <div class="col-lg-12">
+          <dsw-input-control label="Senha Nova" for="password">
+            <input dwsInputSlot dwsShowPassword class="form-control" id="password"
+              formControlName="password" placeholder="" type="password" />
+          </dsw-input-control>
+        </div>
+      </div>
+    </div>
+    
+    <div class="modal-footer bg-purple-primary">
+      <button type="button" class="btn btn-purple-secondary" (click)="modal.close()">Cancelar</button>
+      <button type="submit" class="btn btn-secondary">Salvar</button>
+    </div>
+  </form>
+</ng-template>

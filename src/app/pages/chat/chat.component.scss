@@ -38,8 +38,8 @@
 }
 
 .scrollbar-light-blue::-webkit-scrollbar-track {
-  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
-  background-color: #F5F5F5;
+  // -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  // background-color: #F5F5F5;
   border-radius: 10px;
 }
 
@@ -50,18 +50,66 @@
 
 .scrollbar-light-blue::-webkit-scrollbar-thumb {
   border-radius: 5px;
-  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  // -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
   background-color: #82B1FF;
 }
 
 .chat-out {
-  background-color: #00a884;
+  background-color: #07a777;
 }
 
 .chat-in {
- background-color: #728795;
+ background-color: #aeb4d7;
 }
 
 .dialog-chat {
   bottom: 0;
+}
+
+.friend-list {
+  border-bottom: 1px solid #575c9030;
+
+  &:hover {
+    background: #575c9030;;
+  }
+}
+.box-list {
+  max-height: 620px;
+  border-right: 1px solid #575c906e;
+  overflow-y: scroll;
+}
+
+.message-list {
+  max-height: 534px;
+  overflow-y: scroll;
+}
+
+.teste {
+  background-image: url(../../../assets/img/brand/background.png);
+}
+.card {
+  background-color: #575c9024 !important;
+  padding: 0 !important;
+}
+
+.modal-footer {
+  justify-content: space-between;
+  border-bottom-right-radius: 26px;
+}
+
+.msg-select {
+  background-color: var(--color-primary-purple);
+  color: #fff;
+  border-radius: 10px;
+  
+  .last-message {
+    color: #e9e9f14f !important;
+  }
+  .text-smaller {
+    color: var(--color-secondary-green) !important;
+  }
+}
+.form-group {
+  width: 87%;
+  margin-top: -2px;
 }

@@ -12,6 +12,7 @@ import { AddressService } from 'src/app/services/address.service';
 import { ClientService } from 'src/app/services/client.service';
 import { MultiInputValidators } from 'src/app/shared/multi-input-list/multi-input-validator.directive';
 import { samePasswordValidator } from 'src/app/shared/validators/same-password.directive';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'dsw-user-profile',
@@ -32,7 +33,8 @@ export class UserProfileComponent implements OnInit {
     private addressService: AddressService,
     private toastr: ToastrService,
     private clienService: ClientService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private modalService: NgbModal
   ) {
   }
 
@@ -53,14 +55,14 @@ export class UserProfileComponent implements OnInit {
       country: ['', Validators.required],
       complemento: ['']
     }),
-    phone: [[], [Validators.required, MultiInputValidators.minItemValidator(1)]],
+    phone: ['', Validators.required],
     answerDefault: ['', Validators.required],
   });
 
   passwordForm = this.fb.group({
     oldPassword: ['', Validators.required],
     password: ['', Validators.required]
-  })
+  });
 
   ngOnInit() {
     this.store.select(selectClient).subscribe(data => {
@@ -69,7 +71,6 @@ export class UserProfileComponent implements OnInit {
       this.fillForm(this.client);
     });
 
-    this.registerForm.disable();
   }
 
   fillForm(client: ClientStoreType) {
@@ -81,9 +82,9 @@ export class UserProfileComponent implements OnInit {
       docType: client.docType,
       email: client.email,
       address: client.address,
-      phone: client.phone,
+      phone: client.phone[0].slice(2),
       answerDefault: client.answerDefault
-    })
+    });
   }
 
   toggleRegister() {
@@ -97,8 +98,9 @@ export class UserProfileComponent implements OnInit {
     this.openFormRegister = !this.openFormRegister;
   }
 
-  togglePassword() {
+  togglePassword(content) {
     this.openPassword = !this.openPassword;
+    this.modalService.open(content, { windowClass : 'modal-md', ariaLabelledBy: 'modal-basic-title' });
   }
 
   onSubmit(event: Event) {
@@ -108,15 +110,14 @@ export class UserProfileComponent implements OnInit {
     if (this.registerForm.valid) {
 
       const { role, id, login } = this.client.user;
-
       const clientNew = {
         ...this.client,
         ...this.registerForm.value,
         user: {
           role, id, login
         }
-      }
-
+      };
+      clientNew.phone = [clientNew.phone];
       this.clienService.update(clientNew)
         .pipe(catchError(error => {
 
@@ -127,7 +128,7 @@ export class UserProfileComponent implements OnInit {
         .subscribe((res: ReponseWrapper<{ client: ClientApiType }>) => {
           this.toastr.success('Dados alterados com sucesso!');
           this.toggleRegister();
-
+          res.client.phone = res.client.phone.slice(2);
           this.store.dispatch(updateClient(res.client));
         });
 
