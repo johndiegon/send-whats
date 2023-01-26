@@ -1,12 +1,3 @@
-<!-- <div class="header bg-gradient-green2 pb-8 pt-5 pt-md-8">
-  <div class="container-fluid">
-    <div class="row">
-      <div class="ps-1">
-       
-      </div>
-    </div>
-  </div>
-</div> -->
 <div class="page-content container-fluid mt-4">
   <span *ngIf="fileIsProcessing">Arquivo novo está sendo processado!</span>
   
@@ -53,27 +44,3 @@
     </div>
   </div>
 </div>
-
-
-
-
-<!-- <div class="col-12">
-  <div class="card shadow">
-    <div class="card-group shadow">
-      <div class="card-header p-2 mx-2 mt-4 position-relative z-index-2 bg-gradient-neutral" (click)="sendMessage(item)" *ngFor="let item of listContactList" style="width: 18rem;" >
-        <div [ngClass]="{'card-body bg-gradient-success': item.id === idSelected, 'card-body bg-gradient-neutral' :  item.id != idSelected }">
-          <h5 class="card-title">{{item.name}}</h5>
-          <div class="ps-3">
-            <span class="text-sm" *ngIf="item.creationDate">Data de criação : {{item.creationDate | date: 'd, MMM y' : '+0300'}}</span>
-          </div>
-          <div class="ps-3">
-            <span class="text-sm" *ngIf="item.count">{{item.count}} contatos.</span>
-          </div>
-          <div class="ps-3">
-            <span class="text-sm" *ngIf="item.unity">Unidade: {{item.unity}}</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div> -->

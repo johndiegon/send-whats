@@ -60,7 +60,8 @@ export class SendComponent implements OnInit, AfterViewInit {
   showProcess:boolean = false;
   params:string[] = [];
   paramName:boolean = false;
- 
+  urlImage:string;
+
   config: ChartConfiguration = {
     type: 'bar',
     options: {
@@ -139,7 +140,7 @@ export class SendComponent implements OnInit, AfterViewInit {
       this.showInputImage = true;
     }
     if (param !== 'name') {
-      this.inputParam.push( new FormControl(null, [Validators.required] ))
+      this.inputParam.push( new FormControl(null, null ))
       this.params.push(param);
     } else {
       this.paramName = true;
@@ -178,8 +179,10 @@ export class SendComponent implements OnInit, AfterViewInit {
   }
 
  showCountToSendMessage() {
+    if(this.showInputImage){
+       this.sendFile();
+    }
     if (this.msgForm.valid) {
-      // this.sendFile();
       this.openModal()
       var msgTosend = this.getParam();
       this.messageService.getCount(msgTosend)
@@ -248,14 +251,27 @@ export class SendComponent implements OnInit, AfterViewInit {
         value : this.msgForm.controls.inputMinCountOrders.value.toString()
       });
      }
+     
+     debugger
      if (this.msgForm.controls.inputParam) {
       const control = <FormArray>this.msgForm.get('inputParam');
-      control.value.forEach(element => {
+      control.controls.forEach(element => {
+       if(element.value){
         msgToSend.params.push({
           name : 'inputParam',
-          value : element
+          value : element.value
         });
+       }
       });
+     }
+
+     debugger
+     if(this.showInputImage){
+      msgToSend.params.push({
+        name : 'image',
+        value : this.urlImage
+      });
+      
      }
 
      if(this.msgForm.controls.inputNameProduct.value){
@@ -356,9 +372,7 @@ export class SendComponent implements OnInit, AfterViewInit {
   }
 
   sendFile() {
-    if (this.showInputImage) {
       const formData = new FormData();
-
       this.files.forEach(file => {
         formData.append('file', file);
         this.messageService.ImportImage(formData)
@@ -367,15 +381,14 @@ export class SendComponent implements OnInit, AfterViewInit {
           return e;
         }))
         .subscribe(res => {
+          debugger
           this.msgForm.get('inputParam').get('0').setValue(res?.url);
+          this.urlImage = res?.url;
           // this.resetImport();
-          this.showCountToSendMessage();
+          // this.showCountToSendMessage();
         });
       });
-    } else {
-      this.showCountToSendMessage();
-    }
-  }
+   }
 
   resetImport(){
     this.fileUpload.nativeElement.files = undefined;

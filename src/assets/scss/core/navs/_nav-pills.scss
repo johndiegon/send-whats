@@ -40,7 +40,7 @@
 @include media-breakpoint-down(sm) {
     .nav-pills:not(.nav-pills-circle) {
         .nav-item {
-            padding-right: 0;
+            padding-right: 1000;
         }
     }
 }
