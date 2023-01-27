@@ -21,7 +21,7 @@
           <div class="card-body">
             <div class="row">
               <div class="col">
-                <h6 class="card-title text-uppercase text-muted mb-1">Mensagens Enviadas / {{getMonth()}}</h6>
+                <h6 class="card-title text-uppercase text-muted mb-1">Mensagens Enviadas /  {{data | date: 'MMMM'}}</h6>
                 <span class="h3 font-weight-bold mb-0">{{countSendMessageThisMonth | number}}</span>
               </div>
               <div class="col-auto">
@@ -51,7 +51,7 @@
           <div class="card-body">
             <div class="row">
               <div class="col">
-                <h6 class="card-title text-uppercase text-muted mb-1">Mensagens Recebidas / {{getMonth()}}</h6>
+                <h6 class="card-title text-uppercase text-muted mb-1">Mensagens Recebidas /  {{ data | date: 'MMMM'}}</h6>
                 <span class="h3 font-weight-bold mb-1">{{countReceiverAnswerThisMonth | number :'4.0-0':'pt-BR'}}</span>
               </div>
               <div class="col-auto">

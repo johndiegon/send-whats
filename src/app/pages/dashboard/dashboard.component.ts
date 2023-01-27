@@ -27,6 +27,7 @@ export class DashboardComponent implements OnInit {
   countReceiverAnswer: number;
   countSendMessageThisMonth: number;
   countReceiverAnswerThisMonth: number;
+  data: Date;
 
   constructor(
     private contactListService: ContactListService,
@@ -37,6 +38,8 @@ export class DashboardComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+
+    this.data = new Date();
 
 
     this.dashboardService.get()
@@ -62,11 +65,6 @@ export class DashboardComponent implements OnInit {
       });
   }
 
-  getMonth(){
-    var dt = new Date()
-    var str = ""
-    return str.concat(dt.getMonth().toString() + "-" + dt.getFullYear().toString())
-  }
   isOdd(num: number): Boolean {
     let i = 0;
     let odd = false;

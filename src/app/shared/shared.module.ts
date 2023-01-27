@@ -19,6 +19,7 @@ import { MsgDefaultComponent } from '../pages/msg-default/msg-default.component'
 import { FileImageViewComponent } from './file-image-view/file-image-view.component';
 import { ModalBaseComponent } from './modal-base/modal-base.component';
 import { ModalConfirmComponent } from './modal-confirm/modal-confirm.component';
+import { CalendarMessageComponent } from '../pages/calendar-message/calendar-message.component';
 
 @NgModule({
   imports: [
@@ -44,7 +45,7 @@ import { ModalConfirmComponent } from './modal-confirm/modal-confirm.component';
     MsgDefaultComponent,
     FileImageViewComponent,
     ModalBaseComponent,
-    ModalConfirmComponent
+    ModalConfirmComponent,
   ],
   exports: [
     FooterComponent,
@@ -61,7 +62,7 @@ import { ModalConfirmComponent } from './modal-confirm/modal-confirm.component';
     MsgDefaultComponent,
     FileImageViewComponent,
     ModalBaseComponent,
-    ModalConfirmComponent
+    ModalConfirmComponent,
   ]
 })
 export class SharedModule { }

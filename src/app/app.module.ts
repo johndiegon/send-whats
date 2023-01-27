@@ -33,6 +33,7 @@ import { ChatComponent } from './pages/chat/chat.component';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { SendComponent } from './pages/send-message/send/send.component';
 import { OrderModule } from 'ngx-order-pipe';
+import { FullCalendarModule } from '@fullcalendar/angular';
 
 registerLocaleData(localePt)
 
@@ -51,14 +52,15 @@ export const metaReducers: MetaReducer<any>[] = [hydrationMetaReducer];
     ToastrModule.forRoot(),
     StoreModule.forRoot({ client: clientReducer, messages: messageReducer }, { metaReducers }),
     MDBBootstrapModule.forRoot(),
-    OrderModule
+    OrderModule,
+    FullCalendarModule 
   ],
   declarations: [
     AppComponent,
     AdminLayoutComponent,
     AuthLayoutComponent,
     ChatComponent,
-    SendComponent
+    SendComponent,
   ],
   providers: [
     AuthService,

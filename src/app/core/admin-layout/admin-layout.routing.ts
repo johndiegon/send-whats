@@ -7,6 +7,7 @@ import { SendMessageComponent } from 'src/app/pages/send-message/send-message.co
 import { MsgDefaultComponent } from 'src/app/pages/msg-default/msg-default.component';
 import { ChatComponent } from 'src/app/pages/chat/chat.component';
 import { SendComponent } from 'src/app/pages/send-message/send/send.component';
+import { CalendarMessageComponent } from 'src/app/pages/calendar-message/calendar-message.component';
 
 export const AdminLayoutRoutes: Routes = [
      { path: 'dashboard',      component: DashboardComponent },
@@ -15,5 +16,6 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'msg-default',          component: MsgDefaultComponent },
     { path: 'import-orders',  component: ImportOrdersComponent },
     { path: 'chat',  component: ChatComponent },
-    { path: 'send', component: SendComponent}
+    { path: 'send', component: SendComponent},
+    { path: 'calendar', component: CalendarMessageComponent},
 ];
