@@ -181,24 +181,30 @@ export class SendComponent implements OnInit, AfterViewInit {
  showCountToSendMessage() {
     if(this.showInputImage){
        this.sendFile();
+    }else{
+      this.countToSendMessage();
     }
-    if (this.msgForm.valid) {
-      this.openModal()
-      var msgTosend = this.getParam();
-      this.messageService.getCount(msgTosend)
-      .pipe(catchError(error => {
-        this.toastr.error('Erro ao enviar mensagem para a lista!');
-        return throwError(() => new Error(error.message));
-      }))
-      .subscribe( res => {
-        this.showButton = true;
-        this.showLoad = false;
-        this.countContacts= res.total;
-        });
-    } else{
-      this.toastr.error('Preencha os campos obrigatórios.');
-    }
+   
   }
+
+ countToSendMessage(){
+  if (this.msgForm.valid) {
+    this.openModal()
+    var msgTosend = this.getParam();
+    this.messageService.getCount(msgTosend)
+    .pipe(catchError(error => {
+      this.toastr.error('Erro ao enviar mensagem para a lista!');
+      return throwError(() => new Error(error.message));
+    }))
+    .subscribe( res => {
+      this.showButton = true;
+      this.showLoad = false;
+      this.countContacts= res.total;
+      });
+  } else{
+    this.toastr.error('Preencha os campos obrigatórios.');
+  }
+ }
 
   getParam(): MessageSendType{
     var msgToSend : MessageSendType = {
@@ -381,11 +387,8 @@ export class SendComponent implements OnInit, AfterViewInit {
           return e;
         }))
         .subscribe(res => {
-          debugger
-          this.msgForm.get('inputParam').get('0').setValue(res?.url);
           this.urlImage = res?.url;
-          // this.resetImport();
-          // this.showCountToSendMessage();
+          this.countToSendMessage();
         });
       });
    }
