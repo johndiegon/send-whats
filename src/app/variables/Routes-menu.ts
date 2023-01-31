@@ -11,9 +11,7 @@ export const ROUTES_MENU: RouteInfo[] = [
     { path: '/msg-default', title: 'Mensagem Padrão',  icon:'ni-single-copy-04', class: '' },
     { path: '/send-message', title: 'Enviar Mensagem',  icon:'ni-send', class: '' },
     { path: '/chat', title: 'Chat',  icon:'ni-chat-round', class: '' },
-    { path: '/calendar', title: 'Agendar Mensagem',  icon:'ni-calendar-grid-58', class: '' },
- 
-    
+    { path: '/calendar', title: 'Agendar Mensagem',  icon:'ni-calendar-grid-58', class: '' },  
 ];
 
 export const ROUTES_MENU_SECUNDARY: RouteInfo[] = [

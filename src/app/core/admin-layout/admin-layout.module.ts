@@ -17,6 +17,9 @@ import { ClientStatusChartComponent } from 'src/app/pages/dashboard/client-statu
 import { OrdersDayNightChartComponent } from 'src/app/pages/dashboard/orders-day-night-chart/orders-day-night-chart.component';
 import { OrdersWeekChartComponent } from 'src/app/pages/dashboard/orders-week-chart/orders-week-chart.component';
 import { ModalImportComponent } from 'src/app/pages/import-orders/modal-import/modal-import.component';
+import { CalendarMessageComponent } from 'src/app/pages/calendar-message/calendar-message.component';
+import { FullCalendarComponent, FullCalendarModule } from '@fullcalendar/angular';
+import { TaskMenssageComponent } from 'src/app/pages/calendar-message/task-message/task-message.component';
 
 @NgModule({
   imports: [
@@ -27,7 +30,8 @@ import { ModalImportComponent } from 'src/app/pages/import-orders/modal-import/m
     NgbModule,
     ClipboardModule,
     ReactiveFormsModule,
-    SharedModule
+    SharedModule,
+    FullCalendarModule
   ],
   declarations: [
     DashboardComponent,
@@ -38,7 +42,9 @@ import { ModalImportComponent } from 'src/app/pages/import-orders/modal-import/m
     SendMessageComponent,
     ClientStatusChartComponent,
     OrdersDayNightChartComponent,
-    OrdersWeekChartComponent
+    OrdersWeekChartComponent,
+    CalendarMessageComponent,
+    TaskMenssageComponent
   ]
 })
 

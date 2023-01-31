@@ -19,7 +19,7 @@ import { MsgDefaultComponent } from '../pages/msg-default/msg-default.component'
 import { FileImageViewComponent } from './file-image-view/file-image-view.component';
 import { ModalBaseComponent } from './modal-base/modal-base.component';
 import { ModalConfirmComponent } from './modal-confirm/modal-confirm.component';
-import { CalendarMessageComponent } from '../pages/calendar-message/calendar-message.component';
+import { FullCalendarModule } from '@fullcalendar/angular';
 
 @NgModule({
   imports: [
@@ -27,7 +27,8 @@ import { CalendarMessageComponent } from '../pages/calendar-message/calendar-mes
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
-    NgbModule    
+    NgbModule,
+    FullCalendarModule
   ],
   declarations: [
     FooterComponent,

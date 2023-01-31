@@ -1,0 +1,127 @@
+
+
+
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-basic-title">Agendamento de Mensagem</h4>
+  <button type="button" class="btn-close" aria-label="Close" (click)="close()"> <i class="fas  fa-close"></i></button>
+</div>
+
+<!-- VISÃO INICIAL -->
+<div [hidden]="showModal">
+  <div class="modal-body">
+    <div class="row p-3">
+      <div class="col-12">
+  
+        <form role="form" [formGroup]="msgForm">
+
+          <dsw-input-control label="Lista de Contato" for="inputListContact" >
+            <select dwsInputSlot (change)="setItem()" id="inputListContact" class="custom-select form-control" formControlName="inputListContact">
+              <option value=""></option>
+              <option *ngFor="let item of listContactList" [value]="item.id">{{item.name}} {{item.unity}}</option>
+            </select>
+          </dsw-input-control>
+
+          <dsw-input-control label="Hora de Envio" for="timeSend" >
+            <input dwsInputSlot class="form-control" id="timeSend" formControlName="timeSend" type="time" />
+          </dsw-input-control>
+  
+          <dsw-input-control label="slider" for="sliderTest">
+            <input dwsInputSlot id="sliderTest" class="form-control" type="range"/>
+          </dsw-input-control>
+
+          <dsw-input-control *ngIf="item" label="Mensagem a ser enviada" for="inputListMsg" >
+            <select dwsInputSlot (change)="setParams()" id="inputListMsg" class="custom-select form-control" formControlName="inputListMsg">
+              <option value=""></option>
+              <option *ngFor="let item of listMsg" [value]="item.id">{{item.title}}</option>
+            </select>
+          </dsw-input-control>
+  
+          <div formArrayName="inputParam" *ngIf="item">
+            <div *ngFor="let param of params; index as i"  class="col-lg-12" >
+              <dsw-input-control label="{{param}}" [hidden]="param === 'image' || param === 'video'">
+                <input dwsInputSlot class="form-control" [formControlName]="i" type="text" />
+              </dsw-input-control>
+            </div>
+          </div>
+  
+          <div class="mt-4 mb-4" [hidden]="!showInputImage" *ngIf="item">
+            <div class="import-box" #importBox>
+              <i class="ni ni-cloud-upload-96 text-info upload-icon"></i>
+              <p>Arraste o arquivo e solte aqui, ou clique no botão abaixo:</p>
+              <input id="file-input" #fileUpload type="file" name="name" style="display: none;" [accept]="fileAccept" />
+              <button type="button" (click)="openFileUpload()" class="btn btn-purple-secondary mt-1">Selecionar arquivo</button>
+            </div>
+            
+            <div class="row" *ngIf="item">
+              <div class="col">
+            
+                <div class="line d-flex " *ngFor="let file of files">
+                    <i class="ni ni-image mr-2"></i>
+                    <span class="number">{{file.name}}</span>
+                </div>
+            
+              </div>
+            </div>
+          </div>
+  
+          <dsw-input-control label="Quantidade Minima de pedidos" for="inputMinCountOrders"  *ngIf="item && item.countOrders > 0">
+            <input dwsInputSlot class="form-control" id="inputMinCountOrders" formControlName="inputMinCountOrders"
+              placeholder="Ex.: 5" type="number" />
+          </dsw-input-control>
+  
+          <dsw-input-control label="Quantidade Máxima de pedidos" for="inputMaxCountOrders" *ngIf="item && item.countOrders > 0">
+            <input dwsInputSlot class="form-control" id="inputMaxCountOrders" formControlName="inputMaxCountOrders"
+              placeholder="Ex.: 5" type="number" />
+          </dsw-input-control>
+  
+          <dsw-input-control label="Quantidade Minima de dias do ultimo pedido" for="inputMinDays" *ngIf="item && item.countOrders > 0">
+            <input dwsInputSlot class="form-control" id="inputMinDays" formControlName="inputMinDays"
+              placeholder="Ex.: 5" type="number" />
+          </dsw-input-control>
+  
+          <dsw-input-control label="Quantidade Máxima de dias do ultimo pedido" for="inputMaxDays" *ngIf="item && item.countOrders > 0">
+            <input dwsInputSlot class="form-control" id="inputMaxDays" formControlName="inputMaxDays"
+              placeholder="Ex.: 5" type="number" />
+          </dsw-input-control>  
+        </form>
+      </div>
+    </div>
+  
+  
+  </div>
+  <div class="modal-footer bg-purple-primary">
+    <button type="button" class="btn btn-secondary" (click)="showCountToSendMessage()">Salvar mensagem</button>
+  </div>
+</div>
+
+
+
+ <!-- SEGUNDA VISÃO DO MODAL -->
+<div *ngIf="showModal">
+  <div class="modal-body">
+    <div class="row p-3">
+      <p *ngIf="showButton">Você confirma o envio da mensagem {{this.nameTemplate}} para {{countContacts}} contatos?</p>
+
+      <div class=" box" *ngIf="showLoad">
+        <div class="spinner-border spinner-primary-green" role="status">
+          <span class="sr-only">Buscando os contatos...</span>
+        </div>
+        <p>Buscando os contatos...</p>
+      </div>
+      
+      <div class="box" *ngIf="showProcess">
+        <div class="spinner-border spinner-primary-green" role="status">
+          <span class="sr-only">Enviando as mensagens...</span>
+        </div>
+        <p>Enviando as mensagens...</p>
+      </div>
+        
+    </div>
+  
+  
+  </div>
+  <div class="modal-footer bg-purple-primary" >
+    <button *ngIf="showButton" class="btn btn-purple-secondary" (click)="closeModal()">Não</button>
+    <button *ngIf="showButton" type="button" class="btn btn-secondary" (click)="sendMessage()">Sim</button>
+  </div>
+</div>

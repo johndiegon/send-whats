@@ -47,14 +47,6 @@ export class SendMessageComponent implements OnInit {
       session: undefined
     };
 
-  // msgForm = this.fb.group({
-  //   listSend: ['', Validators.required],
-  //   numberWhatsApp: ['', Validators.required],
-  //   msgTemplate: [''],
-  //   inputListMsg: ['', Validators.required],
-  //   image: ['']
-  // })
-
   ngOnInit() {
     this.loading = true;
     this.contactListService.getContactList()
@@ -74,61 +66,6 @@ export class SendMessageComponent implements OnInit {
     });
 
   }
-
-  // tryGetSessionWhatsapp() {
-  //   this.msgForm.controls.numberWhatsApp.valueChanges.subscribe(value => {
-  //     this.sessionWhatsappService.get(value)
-  //       .pipe(catchError(error => {
-  //         this.toastr.error(`Problema ao recuperar a sessão do WhatsApp, por favor contacte o suporte!`);
-  //         return throwError(() => new Error(error.message));
-  //       }))
-  //       .subscribe(res => {
-  //         console.log('GET session', res);
-  //         if (res.sessionWhtas?.session) {
-  //           this.whatsSession.connected = true;
-  //           this.whatsSession.session =  res.sessionWhtas.session;
-  //         }
-  //       });
-  //   });
-  // }
-
- 
-
-  // get inputListMsg() {
-  //   return this.msgForm.get('inputListMsg');
-  // }
-
-  // // openModal(item:ContactListType) {
-
-  // //   if(item.orign && item.orign == 'order'){
-  // //     this.showParamOrder = true;
-  // //   }
-    
-  // //   this.showModal = true;
-  // //   this.idSelected = item.id;
-  // // }
-
-  // onSubmitForm() {
-  //   const { listSend, numberWhatsApp, msg } = this.msgForm.value;
-
-  //   this.messageService.send({ message: msg, phone: numberWhatsApp, idList: listSend, picture: '' })
-  //     .pipe(catchError(error => {
-  //       this.toastr.error(`Não foi possivel enviar a mensagem: ${error.error.message}`)
-  //       return throwError(() => new Error(error.message));
-  //     }))
-  //     .subscribe(_ => {
-
-  //       this.toastr.success(`Mensagem enviada com sucesso`);
-
-  //       this.msgForm.reset({
-  //         listSend: '',
-  //         numberWhatsApp: '',
-  //         msgTemplate: '',
-  //         msg: '',
-  //         image: ''
-  //       })
-  //     });
-  // }
 
   getCountDays(dateOrder){
     var today = new Date(Date.now());
@@ -160,14 +97,8 @@ export class SendMessageComponent implements OnInit {
   }
 
   sendMessage(item:ContactListType){
-      // this.router.navigateByUrl('/send', {
-      // state: { item: item }
-      // });
       sessionStorage.setItem('MSG', JSON.stringify(item));
       this.modalService.open(SendComponent, { windowClass : 'modal-md', ariaLabelledBy: 'modal-basic-title' });
   }
-
-
-
 
 }
