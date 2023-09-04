@@ -1,3 +1,26 @@
+# MessageDeliveryManagement
+
+Message Delivery Management
+
+## Description
+A front end project made to manage mass whats messages sent to a list of clients.
+Developed in Angular 
+
+<h4 align="left"> 
+🚧 Api MessageDeliveryManagement 🚀 Under construction... 🚧
+</h4>
+
+### Features
+ - [x] Address
+ - [x] Authenticate
+ - [x] Calendar
+ - [x] Chat
+ - [x] Clients
+ - [x] ContactListResume
+ - [x] DashBoard
+ - [x] FileInput
+ - [x] Message
+ 
 
 ## Table of Contents
 
